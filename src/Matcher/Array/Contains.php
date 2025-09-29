@@ -22,7 +22,7 @@ final readonly class Contains implements \Membrane\MockServer\Matcher
 
     public function matches(DTO $dto): bool
     {
-        $fieldValues = $this->field->find($dto->request);
+        $fieldValues = $this->field->find($dto);
 
         if (!is_array($fieldValues)) {
             return false;

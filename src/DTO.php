@@ -28,6 +28,6 @@ final class DTO
 
     public static function fromArray(array $value): DTO
     {
-        return new DTO($value);
+        return new DTO($value['request']);
     }
 }

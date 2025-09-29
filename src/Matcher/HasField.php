@@ -22,7 +22,7 @@ final class HasField implements \Membrane\MockServer\Matcher
     public function matches(DTO $dto): bool
     {
         foreach ($this->fields as $field) {
-            if ($field->find($dto->request) === null) {
+            if ($field->find($dto) === null) {
                 return false;
             };
         }

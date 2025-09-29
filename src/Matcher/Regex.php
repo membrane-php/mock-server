@@ -17,7 +17,7 @@ final readonly class Regex implements \Membrane\MockServer\Matcher
 
     public function matches(DTO $dto): bool
     {
-        $value = $this->field->find($dto->request);
+        $value = $this->field->find($dto);
 
         return is_string($value)
             && preg_match($this->regex, $value) === 1;

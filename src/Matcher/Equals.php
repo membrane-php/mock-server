@@ -17,7 +17,7 @@ final readonly class Equals implements \Membrane\MockServer\Matcher
 
     public function matches(DTO $dto): bool
     {
-        $value = $this->field->find($dto->request);
+        $value = $this->field->find($dto);
 
         return $value === $this->value;
     }

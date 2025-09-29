@@ -16,11 +16,10 @@ final readonly class Field
         $this->path = $path;
     }
 
-    /**
-     * @param array<string, mixed> $data
-     */
-    public function find(array $data): mixed
+    public function find(DTO $dto): mixed
     {
+        $data = $dto->request;
+
         foreach ($this->path as $item) {
             $data = $data[$item] ?? [];
         }

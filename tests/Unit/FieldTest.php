@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Tests\Unit;
 
+use Membrane\MockServer\DTO;
 use Membrane\MockServer\Field;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
@@ -13,7 +14,6 @@ final class FieldTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @param list<string> $path
-     * @param array<string, mixed> $data
      */
     #[Test]
     #[DataProvider('provideFieldsToFind')]
@@ -21,9 +21,9 @@ final class FieldTest extends \PHPUnit\Framework\TestCase
         mixed $expected,
         string $name,
         array $path,
-        array $data,
+        DTO $dto,
     ): void {
-        self::assertEquals($expected, (new Field($name, ...$path))->find($data));
+        self::assertEquals($expected, (new Field($name, ...$path))->find($dto));
     }
 
     /**
@@ -36,13 +36,13 @@ final class FieldTest extends \PHPUnit\Framework\TestCase
      */
     public static function provideFieldsToFind(): \Generator
     {
-        yield 'no data' => [null, 'example', [], []];
+        yield 'no data' => [null, 'example', [], new DTO([])];
 
         yield 'field exists' => [
             'Hello, World!',
             'example',
             ['path'],
-            [
+            new DTO([
                 'path' => [
                     'example' => 'Hello, World!',
                     'not-example' => 'Howdy, planet!',
@@ -51,14 +51,14 @@ final class FieldTest extends \PHPUnit\Framework\TestCase
                     'example' => 'Good day, globe.',
                 ],
                 'example' => 'Greetings, Gaia!'
-            ],
+            ]),
         ];
 
         yield 'field does not exist' => [
             null,
             'example',
             ['path'],
-            [
+            new DTO([
                 'path' => [
                     'not-example' => 'Howdy, planet!',
                 ],
@@ -66,7 +66,7 @@ final class FieldTest extends \PHPUnit\Framework\TestCase
                     'example' => 'Good day, globe.',
                 ],
                 'example' => 'Greetings, Gaia!'
-            ],
+            ])
         ];
     }
 }

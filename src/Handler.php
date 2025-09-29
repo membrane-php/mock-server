@@ -8,8 +8,6 @@ use Psr\Http\Message\ResponseInterface;
 
 final readonly class Handler
 {
-    private ?ResponseInterface $defaultResponse;
-
     /**
      * @param array{
      *     matchers?: array{response: ResponseInterface, matcher: Matcher},

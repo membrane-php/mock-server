@@ -13,7 +13,6 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\CoversClass(HasField::class)]
 final class HasFieldTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * @param Field[] $fields
      */

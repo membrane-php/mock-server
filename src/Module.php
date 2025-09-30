@@ -26,19 +26,11 @@ final class Module implements ModuleInterface
     public function getConfig(): array
     {
         return [
-            'mockServer' => [
-                'get-weave-action-actionId' => [
-                    'matchers' => [
-                        [
-                            'matcher' => new Matcher\Equals(new Field('actionId', 'request', 'path'), 1),
-                            'response' => new Response(200, [], json_encode(['action' => 'move']))
-                        ],
-                    ],
-                    'defaultResponse' => new Response(200),
-                ]
-            ],
             'membrane' => ['default' => [
-                'dto' => \Membrane\MockServer\DTO::class,
+                'dto' => [
+                    'class' => \Membrane\MockServer\DTO::class,
+                    'useFlattener' => false,
+                ],
                 'handler' => \Membrane\MockServer\Handler::class,
             ]],
         ];

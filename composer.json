@@ -2,6 +2,7 @@
   "name": "membrane/mock-server",
   "type": "library",
   "license": "MPL-2.0",
+  "minimum-stability": "dev",
   "autoload": {
     "psr-4": {
       "Membrane\\MockServer\\": "src/",
@@ -13,10 +14,16 @@
       "Membrane\\MockServer\\Tests\\": "tests/"
     }
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/charjr/atto-php-membrane.git"
+    }
+  ],
   "require": {
     "php": "^8.3.0",
     "atto/framework": "^0.1",
-    "atto/membrane-module": "^0.1.7",
+    "atto/membrane-module": "dev-add-default-config",
     "membrane/membrane": "^0.8",
     "membrane/openapi-reader": "^2.0",
     "membrane/openapi-router": "0.5.1",

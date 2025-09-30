@@ -9,25 +9,32 @@ use Membrane\Attribute\Placement;
 use Membrane\Attribute\SetFilterOrValidator;
 use Membrane\Filter\CreateObject\FromArray;
 
+/**
+ * @phpstan-type DTOArray array{
+ *     request: array{
+ *         method: string,
+ *         operationId: string,
+ *     },
+ *     path?: array<string, mixed>,
+ *     query?: array<string, mixed>,
+ *     header?: array<string, mixed>,
+ *     cookie?: array<string, mixed>,
+ *     body?: mixed,
+ *  }
+ */
 #[SetFilterOrValidator(new FromArray(DTO::class), Placement::AFTER)]
 final class DTO
 {
-    /**
-     * @param array{
-     *     path?: array<string, mixed>,
-     *     query?: array<string, mixed>,
-     *     header?: array<string, mixed>,
-     *     cookie?: array<string, mixed>,
-     *     body?: mixed
-     * } $request
-     */
+    /** @param array{request: DTOArray} $request */
     public function __construct(
         #[Ignored]
         public array $request,
-    ) {}
+    ) {
+    }
 
+    /** @param array{request: DTOArray} $value */
     public static function fromArray(array $value): DTO
     {
-        return new DTO($value['request']);
+        return new DTO($value);
     }
 }

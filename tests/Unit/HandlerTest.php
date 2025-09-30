@@ -125,7 +125,10 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
                     ],
                 ],
             ],
-            new DTO(['request' => ['operationId' => 'example', 'path' => ['field' => 'Hello, world!']]]),
+            new DTO([
+                'request' => ['operationId' => 'example'],
+                'path' => ['field' => 'Hello, world!'],
+            ]),
         ];
     }
 }

@@ -13,7 +13,6 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\CoversClass(Contains::class)]
 final class ContainsTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * @param mixed[] $values
      */

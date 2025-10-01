@@ -11,7 +11,7 @@ final readonly class Field
 
     public function __construct(
         private string $name,
-        string ...$path
+        string ...$path,
     ) {
         $this->path = $path;
     }

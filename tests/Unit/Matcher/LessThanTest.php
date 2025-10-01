@@ -25,7 +25,7 @@ final class LessThanTest extends \PHPUnit\Framework\TestCase
         self::assertSame($expected, (new LessThan(
             $field,
             $limit,
-            $inclusive
+            $inclusive,
         ))->matches($dto));
     }
 

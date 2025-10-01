@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace Membrane\MockServer;
 
 use Atto\Framework\Module\ModuleInterface;
-use GuzzleHttp\Psr7\Response;
-use Membrane\MockServer\Matcher\AllOf;
 
 final class Module implements ModuleInterface
 {
-
     /**
      * @return array[]
      */

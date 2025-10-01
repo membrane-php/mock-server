@@ -12,8 +12,7 @@ final readonly class Regex implements \Membrane\MockServer\Matcher
     public function __construct(
         private Field $field,
         private string $regex,
-    ) {
-    }
+    ) {}
 
     public function matches(DTO $dto): bool
     {

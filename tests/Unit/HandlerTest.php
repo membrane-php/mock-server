@@ -20,7 +20,6 @@ use Psr\Http\Message\ResponseInterface;
 #[\PHPUnit\Framework\Attributes\CoversClass(Handler::class)]
 final class HandlerTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * @param array<string, mixed> $config
      */

@@ -29,8 +29,7 @@ final class DTO
     public function __construct(
         #[Ignored]
         public array $request,
-    ) {
-    }
+    ) {}
 
     /** @param array{request: DTOArray} $value */
     public static function fromArray(array $value): DTO

@@ -23,7 +23,7 @@ final class RegexTest extends \PHPUnit\Framework\TestCase
     ): void {
         self::assertSame($expected, (new Regex(
             $field,
-            $regex
+            $regex,
         ))->matches($dto));
     }
 
@@ -54,14 +54,14 @@ final class RegexTest extends \PHPUnit\Framework\TestCase
             true,
             new Field('pi', 'cookie'),
             '#^\d\.\d{6}$#',
-            new DTO(['cookie' => ['pi' => '3.141592']])
+            new DTO(['cookie' => ['pi' => '3.141592']]),
         ];
 
         yield 'false if field differs from ^\d\.\d{6}$' => [
             false,
             new Field('pi', 'cookie'),
             '#^\d\.\d{6}$#',
-            new DTO(['cookie' => ['pi' => '3.14']])
+            new DTO(['cookie' => ['pi' => '3.14']]),
         ];
     }
 }

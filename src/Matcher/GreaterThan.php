@@ -13,8 +13,7 @@ final readonly class GreaterThan implements \Membrane\MockServer\Matcher
         private Field $field,
         private int|float $limit,
         private bool $inclusive = true,
-    ) {
-    }
+    ) {}
 
     public function matches(DTO $dto): bool
     {

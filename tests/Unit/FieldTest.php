@@ -50,7 +50,7 @@ final class FieldTest extends \PHPUnit\Framework\TestCase
                 'not-path' => [
                     'example' => 'Good day, globe.',
                 ],
-                'example' => 'Greetings, Gaia!'
+                'example' => 'Greetings, Gaia!',
             ]),
         ];
 
@@ -65,8 +65,8 @@ final class FieldTest extends \PHPUnit\Framework\TestCase
                 'not-path' => [
                     'example' => 'Good day, globe.',
                 ],
-                'example' => 'Greetings, Gaia!'
-            ])
+                'example' => 'Greetings, Gaia!',
+            ]),
         ];
     }
 }

@@ -25,7 +25,7 @@ final class GreaterThanTest extends \PHPUnit\Framework\TestCase
         self::assertSame($expected, (new GreaterThan(
             $field,
             $limit,
-            $inclusive
+            $inclusive,
         ))->matches($dto));
     }
 

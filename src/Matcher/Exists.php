@@ -7,7 +7,7 @@ namespace Membrane\MockServer\Matcher;
 use Membrane\MockServer\DTO;
 use Membrane\MockServer\Field;
 
-final class HasField implements \Membrane\MockServer\Matcher
+final class Exists implements \Membrane\MockServer\Matcher
 {
     /** @var Field[] */
     private array $fields;

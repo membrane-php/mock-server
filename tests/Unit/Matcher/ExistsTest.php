@@ -6,12 +6,12 @@ namespace Membrane\MockServer\Tests\Unit\Matcher;
 
 use Membrane\MockServer\DTO;
 use Membrane\MockServer\Field;
-use Membrane\MockServer\Matcher\HasField;
+use Membrane\MockServer\Matcher\Exists;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(HasField::class)]
-final class HasFieldTest extends \PHPUnit\Framework\TestCase
+#[\PHPUnit\Framework\Attributes\CoversClass(Exists::class)]
+final class ExistsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @param Field[] $fields
@@ -25,7 +25,7 @@ final class HasFieldTest extends \PHPUnit\Framework\TestCase
     ): void {
         self::assertSame(
             $expected,
-            (new HasField(...$fields))
+            (new Exists(...$fields))
                 ->matches($dto),
         );
     }

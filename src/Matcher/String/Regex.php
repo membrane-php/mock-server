@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Membrane\MockServer\Matcher;
+namespace Membrane\MockServer\Matcher\String;
 
 use Membrane\MockServer\DTO;
 use Membrane\MockServer\Field;

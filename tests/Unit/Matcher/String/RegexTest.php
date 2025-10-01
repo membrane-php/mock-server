@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Membrane\MockServer\Tests\Unit\Matcher;
+namespace Membrane\MockServer\Tests\Unit\Matcher\String;
 
 use Membrane\MockServer\DTO;
 use Membrane\MockServer\Field;
-use Membrane\MockServer\Matcher\Regex;
+use Membrane\MockServer\Matcher\String\Regex;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 

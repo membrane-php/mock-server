@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Membrane\MockServer\Tests\Unit;
 
 use GuzzleHttp\Psr7\Response;
+use Membrane\MockServer\ConfigLocator;
 use Membrane\MockServer\DTO;
 use Membrane\MockServer\Field;
 use Membrane\MockServer\Handler;
@@ -30,7 +31,7 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
         array $config,
         DTO $dto,
     ): void {
-        self::assertEquals($expected, (new Handler($config))($dto));
+        self::assertEquals($expected, (new Handler(new ConfigLocator($config)))($dto));
     }
 
     /**
@@ -47,7 +48,7 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
 
         yield 'no matchers, default applies' => [
             new Response(200),
-            ['example' => ['default' => ['response' => new Response(200)]]],
+            ['example' => ['default' => ['response' => 200]]],
             new DTO(['request' => ['operationId' => 'example']]),
         ];
 
@@ -57,10 +58,10 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
                 'example' => [
                     'matchers' => [[
                         'matcher' => new AlwaysMatch(),
-                        'response' => new Response(200),
+                        'response' => 200,
                     ]],
                     'default' => [
-                        'response' => new Response(400),
+                        'response' => 400,
                     ],
                 ],
             ],
@@ -73,13 +74,13 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
                 'example' => [
                     'matchers' => [[
                         'matcher' => new AlwaysMatch(),
-                        'response' => new Response(200),
+                        'response' => 200,
                     ], [
                         'matcher' => new AlwaysMatch(),
-                        'response' => new Response(401),
+                        'response' => 401,
                     ]],
                     'default' => [
-                        'response' => new Response(400),
+                        'response' => 402,
                     ],
                 ],
             ],
@@ -92,16 +93,16 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
                 'example' => [
                     'matchers' => [[
                         'matcher' => new NeverMatch(),
-                        'response' => new Response(401),
+                        'response' => 401,
                     ], [
                         'matcher' => new AlwaysMatch(),
-                        'response' => new Response(200),
+                        'response' => 200,
                     ], [
                         'matcher' => new AlwaysMatch(),
-                        'response' => new Response(402),
+                        'response' => 402,
                     ]],
                     'default' => [
-                        'response' => new Response(403),
+                        'response' => 403,
                     ],
                 ],
             ],
@@ -114,13 +115,13 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
                 'example' => [
                     'matchers' => [[
                         'matcher' => new Equals(new Field('field', 'path'), 'Howdy, planet!'),
-                        'response' => new Response(401),
+                        'response' => 401,
                     ], [
                         'matcher' => new Equals(new Field('field', 'path'), 'Hello, world!'),
-                        'response' => new Response(200),
+                        'response' => 200,
                     ]],
                     'default' => [
-                        'response' => new Response(403),
+                        'response' => 403,
                     ],
                 ],
             ],

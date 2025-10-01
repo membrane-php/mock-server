@@ -15,7 +15,7 @@ final readonly class Handler
      * } $config
      */
     public function __construct(
-        private array $config,
+        private ConfigLocator $configLocator,
     ) {}
 
     public function __invoke(DTO $dto): ?ResponseInterface
@@ -23,7 +23,7 @@ final readonly class Handler
         $operationId = $dto->request['request']['operationId']
             ?? throw new \RuntimeException('No operation id'); // in practice this cannot happen.
 
-        $operationConfig = $this->config[$operationId] ?? [];
+        $operationConfig = $this->configLocator->getOperationConfig($operationId);
 
         foreach ($operationConfig['matchers'] ?? [] as ['matcher' => $matcher, 'response' => $response]) {
             if ($matcher->matches($dto)) {

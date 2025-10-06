@@ -2,25 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Fixture;
+namespace Membrane\MockServer\Tests\Fixture;
 
 use Membrane\MockServer\Matcher;
-use Membrane\MockServer\MatcherFactory;
-use Membrane\MockServer\Tests\Fixture;
 
-final readonly class WantsConfig implements MatcherFactory
+final readonly class MatcherFactory implements \Membrane\MockServer\MatcherFactory
 {
-    /** @param array<mixed> $expectedConfig */
+    /** @param array<mixed> $expects */
     public function __construct(
-        private array $expectedConfig,
-        private Matcher $returnedMatcher,
+        private array $expects,
+        private Matcher $creates,
     ) {}
 
-    /** @param array<mixed> $config */
+    /**
+     * @param array<mixed> $config
+     * @throws Exception\FailedExpectation if config does not match expected
+     */
     public function create(array $config): Matcher
     {
-        if ($config = $this->expectedConfig) {
-            throw new \RuntimeException(sprintf(
+        if ($config !== $this->expects) {
+            throw new Exception\FailedExpectation(sprintf(
                 <<<MESSAGE
                 Unexpected config.
 
@@ -30,11 +31,11 @@ final readonly class WantsConfig implements MatcherFactory
                 Actual:
                 %s
                 MESSAGE,
-                json_encode($this->expectedConfig, JSON_PRETTY_PRINT),
+                json_encode($this->expects, JSON_PRETTY_PRINT),
                 json_encode($config, JSON_PRETTY_PRINT),
             ));
         }
 
-        return $this->returnedMatcher;
+        return $this->creates;
     }
 }

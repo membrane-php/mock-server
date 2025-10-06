@@ -8,6 +8,10 @@ use Psr\Container\ContainerInterface;
 /**
  * @phpstan-import-type MatcherConfig from MatcherFactory
  *
+ * @phpstan-type FactoryConfig array{
+ *     parameters?: MatcherConfig,
+ *     type: string,
+ * }
  * @phpstan-type AliasesConfig array<string, class-string<MatcherFactory>>
  */
 final readonly class FactoryLocator
@@ -18,10 +22,10 @@ final readonly class FactoryLocator
         private array $aliases,
     ) {}
 
-    /** @param MatcherConfig $matcherConfig */
-    public function locate(array $matcherConfig): MatcherFactory
+    /** @param MatcherConfig $config */
+    public function locate(array $config): MatcherFactory
     {
-        $matcherType = $matcherConfig['type'];
+        $matcherType = $config['type'];
 
         $factoryClass = $this->aliases[$matcherType]
             ?? throw new \RuntimeException(sprintf(

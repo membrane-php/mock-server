@@ -5,31 +5,85 @@ declare(strict_types=1);
 namespace Membrane\MockServer;
 
 use Atto\Framework\Module\ModuleInterface;
+use Psr\Container\ContainerInterface;
 
 final class Module implements ModuleInterface
 {
     /**
-     * @return array[]
+     * @return array<class-string, array<mixed>>
      */
     public function getServices(): array
     {
         return [
-            Handler::class => ['args' => [
-                'config.mockServer',
-            ]],
+            ConfigLocator::class =>
+                ['args' => ['config.mockServer.operationMap']],
+            FactoryLocator::class =>
+                ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
+            Handler::class =>
+                ['args' => [ConfigLocator::class, FactoryLocator::class, ResponseFactory::class]],
+            MatcherFactory\AllOf::class =>
+                ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
+            MatcherFactory\AnyOf::class =>
+                ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
+            MatcherFactory\Array\Contains::class =>
+                [],
+            MatcherFactory\Equals::class =>
+                [],
+            MatcherFactory\Exists::class =>
+                [],
+            MatcherFactory\GreaterThan::class =>
+                [],
+            MatcherFactory\LessThan::class =>
+                [],
+            MatcherFactory\Not::class =>
+                ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
+            MatcherFactory\String\Regex::class =>
+                [],
+            ResponseFactory::class =>
+                [],
+            //MatcherFactory => args => ContainerInterface
         ];
     }
 
     public function getConfig(): array
     {
         return [
-            'membrane' => ['default' => [
-                'dto' => [
-                    'class' => \Membrane\MockServer\DTO::class,
-                    'useFlattener' => false,
+            'mockServer' => [
+                'aliases' => [
+                    'allOf' => MatcherFactory\AllOf::class,
+                    Matcher\AllOf::class => MatcherFactory\AllOf::class,
+
+                    'anyOf' => MatcherFactory\AnyOf::class,
+                    Matcher\AnyOf::class => MatcherFactory\AnyOf::class,
+
+                    'array.contains' => MatcherFactory\Array\Contains::class,
+                    Matcher\Array\Contains::class => MatcherFactory\Array\Contains::class,
+
+                    'equals' => MatcherFactory\Equals::class,
+                    Matcher\Equals::class => MatcherFactory\Equals::class,
+
+                    'exists' => MatcherFactory\Exists::class,
+                    Matcher\Exists::class => MatcherFactory\Exists::class,
+
+                    'greater-than' => MatcherFactory\GreaterThan::class,
+                    Matcher\GreaterThan::class => MatcherFactory\GreaterThan::class,
+
+                    'less-than' => MatcherFactory\LessThan::class,
+                    Matcher\LessThan::class => MatcherFactory\LessThan::class,
+
+                    'not' => MatcherFactory\Not::class,
+                    Matcher\Not::class => MatcherFactory\Not::class,
+
+                    'string.regex' => MatcherFactory\String\Regex::class,
+                    Matcher\String\Regex::class => MatcherFactory\String\Regex::class,
                 ],
-                'handler' => \Membrane\MockServer\Handler::class,
-            ]],
+            ],
+            'membrane' => [
+                'default' => [
+                    'dto' => ['class' => DTO::class, 'useFlattener' => false],
+                    'handler' => \Membrane\MockServer\Handler::class,
+                ],
+            ],
         ];
     }
 }

@@ -11,7 +11,7 @@ final readonly class Regex implements \Membrane\MockServer\Matcher
 {
     public function __construct(
         private Field $field,
-        private string $regex,
+        private string $pattern,
     ) {}
 
     public function matches(DTO $dto): bool
@@ -19,6 +19,6 @@ final readonly class Regex implements \Membrane\MockServer\Matcher
         $value = $this->field->find($dto);
 
         return is_string($value)
-            && preg_match($this->regex, $value) === 1;
+            && preg_match($this->pattern, $value) === 1;
     }
 }

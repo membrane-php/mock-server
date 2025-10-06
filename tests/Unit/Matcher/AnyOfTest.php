@@ -7,14 +7,12 @@ namespace Membrane\MockServer\Tests\Unit\Matcher;
 use Membrane\MockServer\DTO;
 use Membrane\MockServer\Matcher;
 use Membrane\MockServer\Matcher\AnyOf;
-use Membrane\MockServer\Tests\Fixture\Matcher\AlwaysMatch;
-use Membrane\MockServer\Tests\Fixture\Matcher\NeverMatch;
+use Membrane\MockServer\Tests\Fixture;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 
-#[UsesClass(NeverMatch::class)]
-#[UsesClass(AlwaysMatch::class)]
+#[UsesClass(Fixture\Matcher::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(AnyOf::class)]
 final class AnyOfTest extends \PHPUnit\Framework\TestCase
 {
@@ -34,23 +32,31 @@ final class AnyOfTest extends \PHPUnit\Framework\TestCase
     /* @return \Generator<array{0: bool, ...Matcher}> */
     public static function provideDTOsToCompare(): \Generator
     {
-        yield 'one match' => [true, new AlwaysMatch()];
-        yield 'one non-match' => [false, new NeverMatch()];
+        yield 'one match' => [true, new Fixture\Matcher(matches: true)];
+        yield 'one non-match' => [false, new Fixture\Matcher(matches: false)];
 
-        yield 'two matches' => [true, new AlwaysMatch(), new AlwaysMatch()];
-        yield 'two non-matches' => [false, new NeverMatch(), new NeverMatch()];
+        yield 'two matches' => [
+            true,
+            new Fixture\Matcher(matches: true),
+            new Fixture\Matcher(matches: true),
+        ];
+        yield 'two non-matches' => [
+            false,
+            new Fixture\Matcher(matches: false),
+            new Fixture\Matcher(matches: false),
+        ];
 
         yield 'one match, one non-match' => [
             true,
-            new AlwaysMatch(),
-            new NeverMatch(),
+            new Fixture\Matcher(matches: true),
+            new Fixture\Matcher(matches: false),
         ];
         yield 'several matches & non-matches' => [
             true,
-            new NeverMatch(),
-            new AlwaysMatch(),
-            new NeverMatch(),
-            new AlwaysMatch(),
+            new Fixture\Matcher(matches: false),
+            new Fixture\Matcher(matches: true),
+            new Fixture\Matcher(matches: false),
+            new Fixture\Matcher(matches: true),
         ];
     }
 }

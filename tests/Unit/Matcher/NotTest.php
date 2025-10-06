@@ -7,14 +7,12 @@ namespace Membrane\MockServer\Tests\Unit\Matcher;
 use Membrane\MockServer\DTO;
 use Membrane\MockServer\Matcher;
 use Membrane\MockServer\Matcher\Not;
-use Membrane\MockServer\Tests\Fixture\Matcher\AlwaysMatch;
-use Membrane\MockServer\Tests\Fixture\Matcher\NeverMatch;
+use Membrane\MockServer\Tests\Fixture;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 
-#[UsesClass(NeverMatch::class)]
-#[UsesClass(AlwaysMatch::class)]
+#[UsesClass(Fixture\Matcher::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(Not::class)]
 final class NotTest extends \PHPUnit\Framework\TestCase
 {
@@ -33,7 +31,7 @@ final class NotTest extends \PHPUnit\Framework\TestCase
     /* @return \Generator<array{0: bool, ...Matcher}> */
     public static function provideDTOsToCompare(): \Generator
     {
-        yield 'not: always-match' => [new AlwaysMatch()];
-        yield 'not: never-match' => [new NeverMatch()];
+        yield 'not: always-match' => [new Fixture\Matcher(matches: true)];
+        yield 'not: never-match' => [new Fixture\Matcher(matches: false)];
     }
 }

@@ -11,8 +11,7 @@ final readonly class Not implements Matcher
 {
     public function __construct(
         private Matcher $matcher,
-    ) {
-    }
+    ) {}
 
     public function matches(DTO $dto): bool
     {

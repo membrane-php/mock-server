@@ -8,6 +8,7 @@ namespace Membrane\MockServer;
  * @phpstan-import-type MatcherConfig from MatcherFactory
  * @phpstan-import-type ResponseConfig from ResponseFactory
  *
+ * @phpstan-type OperationMap array<string, OperationConfig>
  * @phpstan-type OperationConfig array{
  *     matchers?: list<array{matcher: MatcherConfig, response: ResponseConfig}>,
  *     default?: array{response: ResponseConfig}
@@ -15,7 +16,7 @@ namespace Membrane\MockServer;
  */
 final readonly class ConfigLocator
 {
-    /** @param array<string, OperationConfig> $operationMap */
+    /** @param OperationMap $operationMap */
     public function __construct(
         private array $operationMap,
     ) {}

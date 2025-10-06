@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Fixture\Exception;
+namespace Membrane\MockServer\Tests\Fixture\Exception;
 
 use Membrane\MockServer\Exception;
 
-final class Unexpected extends \RuntimeException implements Exception {}
+final class FailedExpectation extends \RuntimeException implements Exception {}

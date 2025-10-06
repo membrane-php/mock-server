@@ -21,7 +21,7 @@ final class FactoryLocatorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @param AliasesConfig $aliases
-     * @param MatcherConfig $config
+     * @param FactoryConfig $config
      */
     #[Test]
     #[DataProvider('provideConfigsToLocate')]
@@ -31,8 +31,8 @@ final class FactoryLocatorTest extends \PHPUnit\Framework\TestCase
         array $aliases,
         array $config,
     ): void {
-        self::assertSame($expected, (new FactoryLocator($container, $aliases))
-            ->locate($config));
+        $factoryLocator = new FactoryLocator($container, $aliases);
+        self::assertSame($expected, $factoryLocator->locate($config));
     }
 
     /**

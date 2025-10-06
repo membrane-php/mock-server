@@ -25,7 +25,7 @@ use Membrane\Filter\CreateObject\FromArray;
 #[SetFilterOrValidator(new FromArray(DTO::class), Placement::AFTER)]
 final class DTO
 {
-    /** @param array{request: DTOArray} $request */
+    /** @param DTOArray $request */
     public function __construct(
         #[Ignored]
         public array $request,

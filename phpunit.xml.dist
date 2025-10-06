@@ -11,8 +11,7 @@
          displayDetailsOnPhpunitDeprecations="true"
          failOnPhpunitDeprecation="true"
          failOnRisky="true"
-         failOnWarning="true"
-         testdox="true">
+         failOnWarning="true">
     <testsuites>
         <testsuite name="default">
             <directory>tests</directory>

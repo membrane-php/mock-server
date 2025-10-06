@@ -9,5 +9,5 @@ return (new PhpCsFixer\Config())
     ->setCacheFile(__DIR__ . '/.cache/php-cs-fixer')
     ->setFinder($finder)
     ->setRules([
-        '@PER-CS3.0' => true,
+        '@PER-CS3x0' => true,
     ]);

@@ -5,15 +5,21 @@ declare(strict_types=1);
 namespace Membrane\MockServer;
 
 use Psr\Container\ContainerInterface;
-
-final readonly class MatcherFactory
+/**
+ * @phpstan-import-type MatcherConfig from MatcherFactory
+ *
+ * @phpstan-type AliasesConfig array<string, class-string<MatcherFactory>>
+ */
+final readonly class FactoryLocator
 {
+    /** @param AliasesConfig $aliases */
     public function __construct(
         private ContainerInterface $container,
         private array $aliases,
     ) {}
 
-    public function __invoke(array $matcherConfig): Matcher
+    /** @param MatcherConfig $matcherConfig */
+    public function locate(array $matcherConfig): MatcherFactory
     {
         $matcherType = $matcherConfig['type'];
 
@@ -25,14 +31,14 @@ final readonly class MatcherFactory
 
         $factory = $this->container->get($factoryClass);
 
-        if (! class_implements(Matcher::class)) {
-
-
+        if (!$factory instanceof MatcherFactory) {
             throw new \RuntimeException(sprintf(
                 '%s must implement the %s interface',
-                $matcherClass,
+                $factoryClass,
                 Matcher::class,
             ));
         }
+
+        return $factory;
     }
 }

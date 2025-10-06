@@ -4,7 +4,52 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer;
 
-final class ResponseFactory
-{
+use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 
+/**
+ * @phpstan-type ResponseConfig int|array{
+ *     headers?: array{string, string|list<string>},
+ *     body?: ResponseBody,
+ *     code: int,
+ * }
+ * @phpstan-type ResponseBody string|array{
+ *     content: array<mixed>,
+ *     type: string,
+ * }
+ */
+final readonly class ResponseFactory
+{
+    /** @param ResponseConfig $config */
+    public function create(array|int $config): ResponseInterface
+    {
+        if (is_int($config)) {
+            return new Response($config);
+        }
+
+        return new Response(
+            $config['code'],
+            $config['headers'] ?? [],
+            $this->getResponseBody($config['body'] ?? ''),
+        );
+    }
+
+    /** @param ResponseBody $body */
+    private function getResponseBody(array|string $body): string
+    {
+        if (is_string($body)) {
+            return $body;
+        }
+
+        switch ($body['type']) {
+            case 'application/json':
+                return json_encode($body['content'])
+                    ?: throw new \RuntimeException(json_last_error_msg());
+            default:
+                throw new \RuntimeException(<<<MESSAGE
+                    Encoding to "{$body['type']}" is currently unsupported.
+                    Instead, pass as a (already encoded) string.
+                    MESSAGE);
+        }
+    }
 }

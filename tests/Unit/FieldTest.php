@@ -27,6 +27,18 @@ final class FieldTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @param non-empty-list<string> $config
+     */
+    #[Test]
+    #[DataProvider('provideConfigs')]
+    public function itConstructsFromConfig(
+        Field $expected,
+        array $config,
+    ): void {
+        self::assertEquals($expected, Field::fromConfig($config));
+    }
+
+    /**
      * @return \Generator<array{
      *     0: mixed,
      *     1: string,
@@ -68,5 +80,18 @@ final class FieldTest extends \PHPUnit\Framework\TestCase
                 'example' => 'Greetings, Gaia!',
             ]),
         ];
+    }
+
+    /**
+     * @return \Generator<array{
+     *     0: Field,
+     *     1: non-empty-list<string>
+     *  }>
+     */
+    public static function provideConfigs(): \Generator
+    {
+        yield 'id' => [new Field('id'), ['id']];
+        yield 'path->id' => [new Field('id', 'path'), ['path', 'id']];
+        yield 'path->pet->id' => [new Field('id', 'path', 'pet'), ['path', 'pet', 'id']];
     }
 }

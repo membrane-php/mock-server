@@ -6,7 +6,7 @@ namespace Membrane\MockServer;
 
 final readonly class Field
 {
-    /** @var string[] */
+    /** @var non-empty-list<string> */
     private array $path;
 
     public function __construct(
@@ -25,5 +25,12 @@ final readonly class Field
         }
 
         return $data[$this->name] ?? null;
+    }
+
+    /** @param non-empty-list<string> $path */
+    public static function fromConfig(array $path): self
+    {
+        $name = array_pop($path);
+        return new self($name, ...$path);
     }
 }

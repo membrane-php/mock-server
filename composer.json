@@ -22,8 +22,11 @@
   ],
   "require": {
     "php": "^8.3.0",
+    "atto/db-module": "dev-main",
     "atto/framework": "^0.1",
+    "atto/hydrator": "dev-nest-serialisation",
     "atto/membrane-module": "dev-add-default-config",
+    "atto/orm": "dev-main",
     "membrane/membrane": "^0.8",
     "membrane/openapi-reader": "^2.0",
     "membrane/openapi-router": "0.5.1",

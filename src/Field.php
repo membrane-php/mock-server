@@ -6,25 +6,29 @@ namespace Membrane\MockServer;
 
 final readonly class Field
 {
-    /** @var non-empty-list<string> */
+    /** @var list<string> */
     private array $path;
 
     public function __construct(
         private string $name,
         string ...$path,
     ) {
-        $this->path = $path;
+        $this->path = array_values($path);
     }
 
     public function find(DTO $dto): mixed
     {
         $data = $dto->request;
 
-        foreach ($this->path as $item) {
-            $data = $data[$item] ?? [];
+        foreach ([...$this->path, $this->name] as $key) {
+            if (!is_array($data) || !array_key_exists($key, $data)) {
+                return null;
+            }
+
+            $data = $data[$key];
         }
 
-        return $data[$this->name] ?? null;
+        return $data;
     }
 
     /** @param non-empty-list<string> $path */

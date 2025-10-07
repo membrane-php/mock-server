@@ -31,7 +31,7 @@ final class DTO
         public array $request,
     ) {}
 
-    /** @param array{request: DTOArray} $value */
+    /** @param DTOArray $value */
     public static function fromArray(array $value): DTO
     {
         return new DTO($value);

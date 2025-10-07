@@ -88,7 +88,7 @@ final class AnyOfTest extends \PHPUnit\Framework\TestCase
             ],
             [
                 'matchers' => [
-                    ['type' => 'hello', 'parameters' => $helloAlias],
+                    ['type' => 'hello', 'args' => $helloAlias],
                 ],
             ],
         ];
@@ -112,9 +112,9 @@ final class AnyOfTest extends \PHPUnit\Framework\TestCase
             ],
             [
                 'matchers' => [
-                    ['type' => 'hello', 'parameters' => $helloAlias],
-                    ['type' => 'howdy', 'parameters' => $howdyAlias],
-                    ['type' => 'good-day', 'parameters' => $goodDayAlias],
+                    ['type' => 'hello', 'args' => $helloAlias],
+                    ['type' => 'howdy', 'args' => $howdyAlias],
+                    ['type' => 'good-day', 'args' => $goodDayAlias],
                 ],
             ],
         ];

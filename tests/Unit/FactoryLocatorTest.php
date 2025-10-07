@@ -29,10 +29,10 @@ final class FactoryLocatorTest extends \PHPUnit\Framework\TestCase
         MatcherFactory $expected,
         ContainerInterface $container,
         array $aliases,
-        array $config,
+        string $alias,
     ): void {
         $factoryLocator = new FactoryLocator($container, $aliases);
-        self::assertSame($expected, $factoryLocator->locate($config));
+        self::assertSame($expected, $factoryLocator->locate($alias));
     }
 
     /**
@@ -40,29 +40,26 @@ final class FactoryLocatorTest extends \PHPUnit\Framework\TestCase
      *     0: MatcherFactory,
      *     1: ContainerInterface,
      *     2: AliasesConfig,
-     *     3: FactoryConfig,
+     *     3: string,
      * }>
      */
     public static function provideConfigsToLocate(): \Generator
     {
         yield 'matches only configured matcher' => (function () {
             $matcherConfig = ['greeting' => 'Hello, World!'];
-            $config = [
-                'type' => 'my-matcher',
-                'parameters' => $matcherConfig,
-            ];
+            $alias = 'my-matcher';
 
             $factory = new Fixture\MatcherFactory(
                 expects: $matcherConfig,
                 creates: new Fixture\Matcher(),
             );
 
-            $aliases = ['my-matcher' => $factory::class];
+            $aliases = [$alias => $factory::class];
 
             $container = new Container();
             $container->add($factory::class, $factory);
 
-            return [$factory, $container, $aliases, $config];
+            return [$factory, $container, $aliases, $alias];
         })();
     }
 }

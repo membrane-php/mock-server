@@ -4,7 +4,4 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Exception;
 
-final readonly class ConfigFailedVerification
-{
-
-}
+final class InvalidConfig extends \RuntimeException implements \Membrane\MockServer\Exception {}

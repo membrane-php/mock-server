@@ -6,7 +6,7 @@ namespace Membrane\MockServer\Tests\Unit;
 
 use GuzzleHttp\Psr7\Response;
 use League\Container\Container;
-use Membrane\MockServer\ConfigLocator;
+use Membrane\MockServer\ConfigLocator\FromApplicationConfig;
 use Membrane\MockServer\DTO;
 use Membrane\MockServer\FactoryLocator;
 use Membrane\MockServer\Field;
@@ -21,7 +21,7 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * @phpstan-import-type OperationMap from ConfigLocator
+ * @phpstan-import-type OperationMap from FromApplicationConfig
  * @phpstan-import-type AliasesConfig from FactoryLocator
  */
 #[UsesClass(DTO::class)]
@@ -29,7 +29,7 @@ use Psr\Http\Message\ResponseInterface;
 #[UsesClass(Equals::class)]
 #[UsesClass(Fixture\Matcher::class)]
 #[UsesClass(Fixture\MatcherFactory::class)]
-#[UsesClass(ConfigLocator::class)]
+#[UsesClass(FromApplicationConfig::class)]
 #[UsesClass(FactoryLocator::class)]
 #[UsesClass(ResponseFactory::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(Handler::class)]
@@ -48,7 +48,7 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
         array $aliases,
         DTO $dto,
     ): void {
-        $configLocator = new ConfigLocator($operationMap);
+        $configLocator = new FromApplicationConfig($operationMap);
 
         $factoryLocator = new FactoryLocator($container, $aliases);
 
@@ -82,10 +82,10 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
             $alias = 'my-matcher';
             $dto = new DTO(['request' => ['operationId' => 'example']]);
             $matcherConfig = ['string-arg' => 'Hello, World!'];
-            $matcherFactoryConfig = ['type' => $alias, 'parameters' => $matcherConfig];
+            $matcherFactoryConfig = ['type' => $alias, 'args' => $matcherConfig];
 
             $matcherFactory = new Fixture\MatcherFactory(
-                expects: $matcherFactoryConfig,
+                expects: $matcherConfig,
                 creates: new Fixture\Matcher(expects: $dto, matches: true),
             );
 
@@ -120,10 +120,10 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
             $alias = 'a';
             $dto = new DTO(['request' => ['operationId' => 'example']]);
             $matcherConfig = ['string-arg' => 'Hello, World!'];
-            $matcherFactoryConfig = ['type' => $alias, 'parameters' => $matcherConfig];
+            $matcherFactoryConfig = ['type' => $alias, 'args' => $matcherConfig];
 
             $matcherFactory = new Fixture\MatcherFactory(
-                expects: $matcherFactoryConfig,
+                expects: $matcherConfig,
                 creates: new Fixture\Matcher(expects: $dto, matches: true),
             );
 
@@ -138,7 +138,7 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
                             'response' => 200,
                         ],
                         [
-                            'matcher' => ['type' => 'b', 'parameters' => []],
+                            'matcher' => ['type' => 'b', 'args' => []],
                             'response' => 300,
                         ]
                     ],
@@ -166,15 +166,15 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
             $matcherConfigA = ['string-arg' => 'Hello, World!'];
             $matcherConfigB = ['int-arg' => 3.14];
 
-            $factoryConfigA = ['type' => $aliasA, 'parameters' => $matcherConfigA];
-            $factoryConfigB = ['type' => $aliasB, 'parameters' => $matcherConfigB];
+            $factoryConfigA = ['type' => $aliasA, 'args' => $matcherConfigA];
+            $factoryConfigB = ['type' => $aliasB, 'args' => $matcherConfigB];
 
             $matcherFactoryA = new Fixture\MatcherFactory(
-                expects: $factoryConfigA,
+                expects: $matcherConfigA,
                 creates: new Fixture\Matcher($dto, matches: false),
             );
             $matcherFactoryB = new Fixture\MatcherFactory(
-                expects: $factoryConfigB,
+                expects: $matcherConfigB,
                 creates: new Fixture\Matcher($dto, matches: true),
             );
 

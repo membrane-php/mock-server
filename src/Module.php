@@ -5,8 +5,16 @@ declare(strict_types=1);
 namespace Membrane\MockServer;
 
 use Atto\Framework\Module\ModuleInterface;
+use Membrane\MockServer\ConfigLocator\FromApplicationConfig;
 use Psr\Container\ContainerInterface;
 
+/**
+ * @phpstan-type Config array{
+ *     aliases: AliasesConfig,
+ * }
+ *
+ * @phpstan-type AliasesConfig array<string, class-string<MatcherFactory>>
+ */
 final class Module implements ModuleInterface
 {
     /**
@@ -15,12 +23,12 @@ final class Module implements ModuleInterface
     public function getServices(): array
     {
         return [
-            ConfigLocator::class =>
+            FromApplicationConfig::class =>
                 ['args' => ['config.mockServer.operationMap']],
             FactoryLocator::class =>
                 ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
             Handler::class =>
-                ['args' => [ConfigLocator::class, FactoryLocator::class, ResponseFactory::class]],
+                ['args' => [FromApplicationConfig::class, FactoryLocator::class, ResponseFactory::class]],
             MatcherFactory\AllOf::class =>
                 ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
             MatcherFactory\AnyOf::class =>
@@ -45,6 +53,17 @@ final class Module implements ModuleInterface
         ];
     }
 
+    /**
+     * @return array{
+     *     mockServer: Config,
+     *     membrane: array{
+     *         default: array{
+     *             dto: array{class: class-string, useFlattener: bool},
+     *             handler: class-string,
+     *         },
+     *     },
+     * }
+     */
     public function getConfig(): array
     {
         return [

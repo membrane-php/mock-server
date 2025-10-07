@@ -81,7 +81,7 @@ final class NotTest extends \PHPUnit\Framework\TestCase
                 'hello' => 'HelloWorld',
             ],
             [
-                'matcher' => ['type' => 'hello', 'parameters' => $helloAlias],
+                'matcher' => ['type' => 'hello', 'args' => $helloAlias],
             ],
         ];
     }

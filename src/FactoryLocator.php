@@ -9,7 +9,7 @@ use Psr\Container\ContainerInterface;
  * @phpstan-import-type MatcherConfig from MatcherFactory
  *
  * @phpstan-type FactoryConfig array{
- *     parameters?: MatcherConfig,
+ *     args?: MatcherConfig,
  *     type: string,
  * }
  * @phpstan-type AliasesConfig array<string, class-string<MatcherFactory>>
@@ -22,15 +22,13 @@ final readonly class FactoryLocator
         private array $aliases,
     ) {}
 
-    /** @param MatcherConfig $config */
-    public function locate(array $config): MatcherFactory
-    {
-        $matcherType = $config['type'];
 
-        $factoryClass = $this->aliases[$matcherType]
+    public function locate(string $alias): MatcherFactory
+    {
+        $factoryClass = $this->aliases[$alias]
             ?? throw new \RuntimeException(sprintf(
                 '%s must be an alias defined by your config',
-                $matcherType,
+                $alias,
             ));
 
         $factory = $this->container->get($factoryClass);

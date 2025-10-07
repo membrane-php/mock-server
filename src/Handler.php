@@ -4,22 +4,13 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer;
 
+use Membrane\MockServer\ConfigLocator\FromApplicationConfig;
 use Psr\Http\Message\ResponseInterface;
 
-/**
- * @phpstan-import-type MatcherConfig from ConfigLocator
- * @phpstan-import-type ResponseConfig from ConfigLocator
- */
 final readonly class Handler
 {
-    /**
-     * @param array{
-     *     matchers?: array{response: ResponseConfig, matcher: MatcherConfig},
-     *     default?: array{response: ResponseConfig},
-     * } $config
-     */
     public function __construct(
-        private ConfigLocator $configLocator,
+        private FromApplicationConfig $configLocator,
         private FactoryLocator $factoryLocator,
         private ResponseFactory $responseFactory,
     ) {}
@@ -31,10 +22,11 @@ final readonly class Handler
 
         $operationConfig = $this->configLocator->getOperationConfig($operationId);
 
+
         foreach ($operationConfig['matchers'] ?? [] as ['matcher' => $matcherConfig, 'response' => $responseConfig]) {
             $matcher = $this->factoryLocator
-                ->locate($matcherConfig)
-                ->create($matcherConfig);
+                ->locate($matcherConfig['type'])
+                ->create($matcherConfig['args'] ?? []);
 
 
             if ($matcher->matches($dto)) {

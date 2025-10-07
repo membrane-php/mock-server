@@ -2,31 +2,35 @@
 
 declare(strict_types=1);
 
-use GuzzleHttp\Psr7\Response;
-use Membrane\MockServer\Field;
 use Membrane\MockServer\Matcher;
 
 return [
     'modules' => [
         \Atto\Framework\Module::class,
+        \Atto\Db\Module::class,
         \Atto\Membrane\Module::class,
         \Atto\Psr7\Module::class,
         \Membrane\MockServer\Module::class,
     ],
     'globalConfig' => [
         'mockServer' => [
-            'get-weave-action-actionId' => [
-                'matchers' => [
-                    [
-                        'matcher' => new Matcher\Equals(
-                            new Field('actionId', 'path'),
-                            '1',
-                        ),
-                        'response' => new Response(202, [], json_encode(['action' => 'move'])),
+            'operationMap' => [
+                'get-weave-action-actionId' => [
+                    'matchers' => [
+                        [
+                            'matcher' => [
+                                'type' => 'equals',
+                                'args'=> [
+                                    'field' => ['path', 'actionId'],
+                                    'value' => 2,
+                                ],
+                            ],
+                            'response' => 200,
+                        ],
                     ],
+                    'default' => ['response' => 203],
                 ],
-                'default' => ['response' => new Response(203)]
-            ]
+            ],
         ],
         'membrane' => [
             'openAPISpec' => __DIR__ . '/../api/openapi.json',
@@ -37,5 +41,5 @@ return [
         ],
     ],
     'debug' => true,
-    'application' => \Atto\Membrane\Application\MembraneOpenApi::class
+    'application' => \Atto\Membrane\Application\MembraneOpenApi::class,
 ];

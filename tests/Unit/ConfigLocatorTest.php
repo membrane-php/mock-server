@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Tests\Unit;
 
-use Membrane\MockServer\ConfigLocator;
+use Membrane\MockServer\ConfigLocator\FromApplicationConfig;
 use Membrane\MockServer\DTO;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
-use Psr\Http\Message\ResponseInterface;
 
 /**
- * @phpstan-import-type OperationMap from ConfigLocator
- * @phpstan-import-type OperationConfig from ConfigLocator
+ * @phpstan-import-type OperationMap from FromApplicationConfig
+ * @phpstan-import-type OperationConfig from FromApplicationConfig
  */
 #[UsesClass(DTO::class)]
-#[\PHPUnit\Framework\Attributes\CoversClass(ConfigLocator::class)]
+#[\PHPUnit\Framework\Attributes\CoversClass(FromApplicationConfig::class)]
 final class ConfigLocatorTest extends \PHPUnit\Framework\TestCase
 {
     /**
@@ -30,7 +29,7 @@ final class ConfigLocatorTest extends \PHPUnit\Framework\TestCase
         array $operationMap,
         string $operationId,
     ): void {
-        self::assertSame($expected, (new ConfigLocator($operationMap))
+        self::assertSame($expected, (new FromApplicationConfig($operationMap))
             ->getOperationConfig($operationId));
     }
 

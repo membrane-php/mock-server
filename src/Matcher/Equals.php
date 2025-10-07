@@ -7,6 +7,11 @@ namespace Membrane\MockServer\Matcher;
 use Membrane\MockServer\DTO;
 use Membrane\MockServer\Field;
 
+/**
+ * Equals performs non-strict equality checks.
+ *
+ * This is necessary for 'path' and 'query' parameters encoded in URI strings
+ */
 final readonly class Equals implements \Membrane\MockServer\Matcher
 {
     public function __construct(
@@ -18,6 +23,7 @@ final readonly class Equals implements \Membrane\MockServer\Matcher
     {
         $value = $this->field->find($dto);
 
-        return $value === $this->value;
+        // Non-strict comparison for 'path' and 'query' parameters
+        return $value == $this->value;
     }
 }

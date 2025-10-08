@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Membrane\MockServer\Tests\Unit;
+namespace Membrane\MockServer\Tests\Unit\ConfigLocator;
 
 use Membrane\MockServer\ConfigLocator\FromApplicationConfig;
 use Membrane\MockServer\DTO;
@@ -16,7 +16,7 @@ use PHPUnit\Framework\Attributes\UsesClass;
  */
 #[UsesClass(DTO::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(FromApplicationConfig::class)]
-final class ConfigLocatorTest extends \PHPUnit\Framework\TestCase
+final class FromApplicationConfigTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @param OperationConfig $expected

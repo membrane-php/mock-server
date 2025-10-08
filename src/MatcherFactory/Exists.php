@@ -18,7 +18,7 @@ final class Exists implements \Membrane\MockServer\MatcherFactory
     public function create(array $config): Matcher
     {
         return new Matcher\Exists(...array_map(
-            fn ($f) => Field::fromConfig($f),
+            fn($f) => Field::fromConfig($f),
             $config['fields'],
         ));
     }

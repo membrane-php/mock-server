@@ -60,8 +60,8 @@ final class ResponseFactoryTest extends \PHPUnit\Framework\TestCase
                 'body' => [
                     'type' => 'application/json',
                     'content' => ['greeting' => 'Hello, World!'],
-                ]
-            ]
+                ],
+            ],
         ];
 
     }

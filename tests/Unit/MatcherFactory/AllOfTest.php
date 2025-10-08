@@ -69,11 +69,11 @@ final class AllOfTest extends \PHPUnit\Framework\TestCase
         );
         $goodDayFactory = new Fixture\MatcherFactory(
             expects: $goodDayAlias,
-            creates: $goodDayMatcher
+            creates: $goodDayMatcher,
         );
         $helloFactory = new Fixture\MatcherFactory(
             expects: $helloAlias,
-            creates: $helloMatcher
+            creates: $helloMatcher,
         );
 
         yield 'one sub-matcher' => [

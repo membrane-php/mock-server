@@ -63,7 +63,7 @@ final class NotTest extends \PHPUnit\Framework\TestCase
 
         $helloFactory = new Fixture\MatcherFactory(
             expects: $helloAlias,
-            creates: $helloMatcher
+            creates: $helloMatcher,
         );
         $howdyFactory = new Fixture\MatcherFactory(
             expects: $howdyAlias,

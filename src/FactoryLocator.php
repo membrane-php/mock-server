@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Membrane\MockServer;
 
 use Psr\Container\ContainerInterface;
+
 /**
  * @phpstan-import-type MatcherConfig from MatcherFactory
  *

@@ -98,7 +98,7 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
                         [
                             'matcher' => $matcherFactoryConfig,
                             'response' => 200,
-                        ]
+                        ],
                     ],
                     'default' => [
                         'response' => 400,
@@ -140,7 +140,7 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
                         [
                             'matcher' => ['type' => 'b', 'args' => []],
                             'response' => 300,
-                        ]
+                        ],
                     ],
                     'default' => [
                         'response' => 400,
@@ -192,7 +192,7 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
                         [
                             'matcher' => $factoryConfigB,
                             'response' => 201,
-                        ]
+                        ],
                     ],
                     'default' => [
                         'response' => 202,

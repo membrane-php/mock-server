@@ -37,7 +37,7 @@ final readonly class AllOf implements \Membrane\MockServer\MatcherFactory
             $factory = $this->container->get($this->aliases[$matcher['type']]);
             assert($factory instanceof MatcherFactory);
 
-            $matchers []= $factory->create($matcher['args'] ?? []);
+            $matchers [] = $factory->create($matcher['args'] ?? []);
         }
 
         return new Matcher\AllOf(...$matchers);

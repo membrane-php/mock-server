@@ -23,32 +23,32 @@ final class Module implements ModuleInterface
     public function getServices(): array
     {
         return [
-            FromApplicationConfig::class =>
-                ['args' => ['config.mockServer.operationMap']],
-            FactoryLocator::class =>
-                ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
-            Handler::class =>
-                ['args' => [FromApplicationConfig::class, FactoryLocator::class, ResponseFactory::class]],
-            MatcherFactory\AllOf::class =>
-                ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
-            MatcherFactory\AnyOf::class =>
-                ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
-            MatcherFactory\Array\Contains::class =>
-                [],
-            MatcherFactory\Equals::class =>
-                [],
-            MatcherFactory\Exists::class =>
-                [],
-            MatcherFactory\GreaterThan::class =>
-                [],
-            MatcherFactory\LessThan::class =>
-                [],
-            MatcherFactory\Not::class =>
-                ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
-            MatcherFactory\String\Regex::class =>
-                [],
-            ResponseFactory::class =>
-                [],
+            FromApplicationConfig::class
+                => ['args' => ['config.mockServer.operationMap']],
+            FactoryLocator::class
+                => ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
+            Handler::class
+                => ['args' => [FromApplicationConfig::class, FactoryLocator::class, ResponseFactory::class]],
+            MatcherFactory\AllOf::class
+                => ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
+            MatcherFactory\AnyOf::class
+                => ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
+            MatcherFactory\Array\Contains::class
+                => [],
+            MatcherFactory\Equals::class
+                => [],
+            MatcherFactory\Exists::class
+                => [],
+            MatcherFactory\GreaterThan::class
+                => [],
+            MatcherFactory\LessThan::class
+                => [],
+            MatcherFactory\Not::class
+                => ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
+            MatcherFactory\String\Regex::class
+                => [],
+            ResponseFactory::class
+                => [],
             //MatcherFactory => args => ContainerInterface
         ];
     }

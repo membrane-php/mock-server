@@ -13,6 +13,10 @@ use Atto\Orm\Attribute\Id;
 #[\Atto\Hydrator\Attribute\Hydratable]
 final readonly class Operation implements \JsonSerializable
 {
+    /**
+     * @param array<string, string|string[]> $headers
+     * @param mixed[] $body
+     */
     public function __construct(
         #[Id]
         private string $operationId,

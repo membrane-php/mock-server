@@ -15,6 +15,11 @@ use Atto\Orm\Attribute\Id;
 #[\Atto\Hydrator\Attribute\Hydratable]
 final readonly class Matcher implements \JsonSerializable
 {
+    /**
+     * @param array<mixed> $matcherArgs
+     * @param array<string, string|string[]> $headers
+     * @param mixed[] $body
+     */
     public function __construct(
         #[Id]
         private string $id,

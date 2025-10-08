@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Membrane\MockServer\Repository;
+namespace Membrane\MockServer\Repository\Matcher;
 
 use Membrane\MockServer\Generated\Repository\MockServer\Model\SQLite;
-use Membrane\MockServer\Model\Matcher;
 
-final class MatcherRepository extends Sqlite\MatcherRepository
+final class Sql extends Sqlite\MatcherRepository implements \Membrane\MockServer\Repository\Matcher
 {
-    /** @return Matcher[] */
     public function fetchByOperationId(string $operationId): array
     {
         $qb = $this->connection->createQueryBuilder();

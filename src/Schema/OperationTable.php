@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Membrane\MockServer\Schema;
 
 use Doctrine\DBAL\Schema\PrimaryKeyConstraint;
-use Doctrine\DBAL\Schema\PrimaryKeyConstraintEditor;
 use Doctrine\DBAL\Schema\Schema;
 
 final readonly class OperationTable implements \Atto\Db\TableSchema

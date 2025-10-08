@@ -4,19 +4,25 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\ConfigLocator;
 
-use Membrane\MockServer\ConfigLocator;
-use Membrane\MockServer\Generated\Repository\MockServer\Model\SQLite\MatcherRepository;
-use Membrane\MockServer\Generated\Repository\MockServer\Model\SQLite\OperationRepository;
+use Membrane\MockServer\Repository;
 
-final readonly class FromDatabase implements ConfigLocator
+final readonly class FromDatabase implements \Membrane\MockServer\ConfigLocator
 {
     public function __construct(
-        OperationRepository $operationRepository,
-        MatcherRepository $matcherRepository,
+        private Repository\Operation $operationRepository,
+        private Repository\Matcher $matcherRepository,
     ) {}
 
     public function getOperationConfig(string $operationId): ?array
     {
+        $operation = $this->operationRepository->fetchById($operationId)
+            ?? throw new \RuntimeException();
 
+        $matchers = $this->matcherRepository->fetchByOperationId($operationId);
+
+        return array_merge(
+            $operation->jsonSerialize(),
+            ['matchers' => array_map(fn($m) => $m->jsonSerialize(), $matchers)],
+        );
     }
 }

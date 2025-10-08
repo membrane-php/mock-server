@@ -4,19 +4,15 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\MatcherFactory;
 
-use Membrane\MockServer\ConfigLocator\FromApplicationConfig;
-use Membrane\MockServer\FactoryLocator;
 use Membrane\MockServer\Matcher;
 use Membrane\MockServer\MatcherFactory;
 use Psr\Container\ContainerInterface;
 
 /**
  * @phpstan-import-type AliasesConfig from \Membrane\MockServer\Module
- * @phpstan-import-type FactoryConfig from FactoryLocator
+ * @phpstan-import-type MatcherFactoryConfig from \Membrane\MockServer\Module
  *
- * @phpstan-type Config array{
- *     matchers: list<FactoryConfig>,
- * }
+ * @phpstan-type Config array{matchers: list<MatcherFactoryConfig>}
  */
 final readonly class AllOf implements \Membrane\MockServer\MatcherFactory
 {

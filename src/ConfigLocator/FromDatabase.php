@@ -15,8 +15,11 @@ final readonly class FromDatabase implements \Membrane\MockServer\ConfigLocator
 
     public function getOperationConfig(string $operationId): ?array
     {
-        $operation = $this->operationRepository->fetchById($operationId)
-            ?? throw new \RuntimeException();
+        $operation = $this->operationRepository->fetchById($operationId) ?? null;
+
+        if ($operation === null) {
+            return null;
+        }
 
         $matchers = $this->matcherRepository->fetchByOperationId($operationId);
 

@@ -7,13 +7,7 @@ namespace Membrane\MockServer;
 use Psr\Container\ContainerInterface;
 
 /**
- * @phpstan-import-type MatcherConfig from MatcherFactory
- *
- * @phpstan-type FactoryConfig array{
- *     args?: MatcherConfig,
- *     type: string,
- * }
- * @phpstan-type AliasesConfig array<string, class-string<MatcherFactory>>
+ * @phpstan-import-type AliasesConfig from \Membrane\MockServer\Module
  */
 final readonly class FactoryLocator
 {

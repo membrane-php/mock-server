@@ -8,15 +8,8 @@ use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * @phpstan-type ResponseConfig int|array{
- *     headers?: array{string, string|list<string>},
- *     body?: ResponseBody,
- *     code: int,
- * }
- * @phpstan-type ResponseBody string|array{
- *     content: array<mixed>,
- *     type: string,
- * }
+ * @phpstan-import-type ResponseConfig from \Membrane\MockServer\Module
+ * @phpstan-import-type ResponseBodyConfig from \Membrane\MockServer\Module
  */
 final readonly class ResponseFactory
 {
@@ -34,7 +27,7 @@ final readonly class ResponseFactory
         );
     }
 
-    /** @param ResponseBody $body */
+    /** @param ResponseBodyConfig $body */
     private function getResponseBody(array|string $body): string
     {
         if (is_string($body)) {

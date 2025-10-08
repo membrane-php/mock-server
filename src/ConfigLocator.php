@@ -5,14 +5,7 @@ declare(strict_types=1);
 namespace Membrane\MockServer;
 
 /**
- * @phpstan-import-type FactoryConfig from FactoryLocator
- * @phpstan-import-type ResponseConfig from ResponseFactory
- *
- *
- * @phpstan-type OperationConfig array{
- *      matchers?: list<array{matcher: FactoryConfig, response: ResponseConfig}>,
- *      default?: array{response: ResponseConfig}
- *  }
+ * @phpstan-import-type OperationConfig from \Membrane\MockServer\Module
  */
 interface ConfigLocator
 {

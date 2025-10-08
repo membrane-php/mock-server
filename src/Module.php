@@ -10,10 +10,32 @@ use Psr\Container\ContainerInterface;
 
 /**
  * @phpstan-type Config array{
- *     aliases: AliasesConfig,
+ *     aliases?: AliasesConfig,
+ *     operationMap?: array<string, OperationConfig>,
  * }
  *
  * @phpstan-type AliasesConfig array<string, class-string<MatcherFactory>>
+ *
+ * @phpstan-type OperationConfig array{
+ *      matchers?: list<array{matcher: MatcherFactoryConfig, response: ResponseConfig}>,
+ *      default?: array{response: ResponseConfig}
+ *  }
+ *
+ * @phpstan-type MatcherFactoryConfig array{
+ *      args?: MatcherConfig,
+ *      type: string,
+ *  }
+ * @phpstan-type MatcherConfig array<string,mixed>
+ *
+ * @phpstan-type ResponseConfig int|array{
+ *      headers?: array{string, string|list<string>},
+ *      body?: ResponseBodyConfig,
+ *      code: int,
+ *  }
+ * @phpstan-type ResponseBodyConfig string|array{
+ *      content: array<mixed>,
+ *      type: string,
+ *  }
  */
 final class Module implements ModuleInterface
 {

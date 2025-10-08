@@ -22,8 +22,8 @@ final readonly class Matcher implements \JsonSerializable
      */
     public function __construct(
         #[Id]
-        private string $id,
-        private string $operationId,
+        public string $id,
+        public string $operationId,
         private string $matcherAlias,
         #[Subtype('string')]
         #[SerializationStrategy(SerializationStrategyType::Json)]

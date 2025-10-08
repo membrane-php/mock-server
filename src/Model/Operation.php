@@ -19,7 +19,7 @@ final readonly class Operation implements \JsonSerializable
      */
     public function __construct(
         #[Id]
-        private string $operationId,
+        public string $operationId,
         private int $responseCode,
         #[Subtype('array')]
         #[SerializationStrategy(SerializationStrategyType::Json)]

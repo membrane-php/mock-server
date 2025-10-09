@@ -12,8 +12,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 
 /**
- * @phpstan-import-type OperationMap from FromDatabase
- * @phpstan-import-type OperationConfig from FromDatabase
+ * @phpstan-import-type OperationConfig from \Membrane\MockServer\Module
  */
 #[UsesClass(Model\Matcher::class)]
 #[UsesClass(Model\Operation::class)]
@@ -42,7 +41,7 @@ final class FromDatabaseTest extends \PHPUnit\Framework\TestCase
             $matcherRepository->save($matcher);
         }
 
-        self::assertSame($expected, (new FromDatabase($operationRepository, $matcherRepository))
+        self::assertEqualsCanonicalizing($expected, (new FromDatabase($operationRepository, $matcherRepository))
             ->getOperationConfig($operationId));
     }
 
@@ -61,7 +60,34 @@ final class FromDatabaseTest extends \PHPUnit\Framework\TestCase
             null,
             [],
             'find-pet-by-id',
+        ];
 
+        yield 'config with array body' => [
+            [
+                'operationId' => 'listPets',
+                'matchers' => [],
+                'default' => [
+                    'response' => [
+                        'code' => 200,
+                        'headers' => ['Cache-control' => ['max=age=180', 'public']],
+                        'body' => [
+                            'type' => 'application/json',
+                            'content' => [['id' => 5, 'name' => 'Blink'], ['id' => 6, 'name' => 'Harley']],
+                        ],
+                    ],
+                ],
+            ],
+            new Model\Operation(
+                'listPets',
+                200,
+                ['Cache-control' => ['max=age=180', 'public']],
+                [
+                    'type' => 'application/json',
+                    'content' => [['id' => 5, 'name' => 'Blink'], ['id' => 6, 'name' => 'Harley']],
+                ],
+            ),
+            [],
+            'listPets',
         ];
     }
 }

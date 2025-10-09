@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Tests\Fixture;
 
-use Membrane\MockServer\DTO;
+use Membrane\MockServer\Mocking\DTO;
 
-final readonly class Matcher implements \Membrane\MockServer\Matcher
+final readonly class Matcher implements \Membrane\MockServer\Mocking\Matcher
 {
     public function __construct(
         private ?DTO $expects = null,

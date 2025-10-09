@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Membrane\MockServer\Tests\Unit\ConfigLocator;
 
 use Membrane\MockServer\ConfigLocator\FromApplicationConfig;
-use Membrane\MockServer\DTO;
+use Membrane\MockServer\Mocking\DTO;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;

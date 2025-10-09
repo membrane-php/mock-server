@@ -11,7 +11,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
 /**
- * @phpstan-import-type OperationConfig from \Membrane\MockServer\Module
+ * @phpstan-import-type OperationConfig from \Membrane\MockServer\Mocking\Module
  */
 #[\PHPUnit\Framework\Attributes\CoversClass(FromMultipleSources::class)]
 final class FromMultipleSourcesTest extends \PHPUnit\Framework\TestCase
@@ -73,7 +73,7 @@ final class FromMultipleSourcesTest extends \PHPUnit\Framework\TestCase
                 $expected,
                 [
                     new Fixture\ConfigLocator(['listPets' => $unexpected]),
-                    new Fixture\ConfigLocator(['find-pet-by-id' => $expected])
+                    new Fixture\ConfigLocator(['find-pet-by-id' => $expected]),
                 ],
                 'find-pet-by-id',
             ];

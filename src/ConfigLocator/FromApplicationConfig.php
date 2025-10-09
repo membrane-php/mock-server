@@ -7,7 +7,7 @@ namespace Membrane\MockServer\ConfigLocator;
 use Membrane\MockServer\ConfigLocator;
 
 /**
- * @phpstan-import-type OperationConfig from \Membrane\MockServer\Module
+ * @phpstan-import-type OperationConfig from \Membrane\MockServer\Mocking\Module
  */
 final readonly class FromApplicationConfig implements ConfigLocator
 {

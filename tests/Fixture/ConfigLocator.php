@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Membrane\MockServer\Tests\Fixture;
 
 /**
- * @phpstan-import-type OperationConfig from \Membrane\MockServer\Module
+ * @phpstan-import-type OperationConfig from \Membrane\MockServer\Mocking\Module
  */
 final readonly class ConfigLocator implements \Membrane\MockServer\ConfigLocator
 {

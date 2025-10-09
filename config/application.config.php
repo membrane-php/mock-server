@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Atto\Framework\Config\Reference;
 use Membrane\MockServer\Matcher;
 
 return [
@@ -20,7 +21,7 @@ return [
                         [
                             'matcher' => [
                                 'type' => 'equals',
-                                'args'=> [
+                                'args' => [
                                     'field' => ['path', 'actionId'],
                                     'value' => 2,
                                 ],
@@ -38,6 +39,10 @@ return [
             'cached_builders' => [
                 \Membrane\MockServer\Generated\CachedRequestBuilder::class,
             ],
+        ],
+        'database' => [
+            'driver' => 'pdo_sqlite',
+            'path' => __DIR__ . '/../storage/db_sqlite',
         ],
     ],
     'debug' => true,

@@ -83,6 +83,7 @@ final class Module implements ModuleInterface
      *             handler: class-string,
      *         },
      *     },
+     *     schemas: list<class-string<\Atto\Db\TableSchema>>,
      * }
      */
     public function getConfig(): array
@@ -123,6 +124,10 @@ final class Module implements ModuleInterface
                     'dto' => ['class' => DTO::class, 'useFlattener' => false],
                     'handler' => \Membrane\MockServer\Handler::class,
                 ],
+            ],
+            'schemas' => [
+                Schema\MatcherTable::class,
+                Schema\OperationTable::class,
             ],
         ];
     }

@@ -6,6 +6,10 @@ namespace Membrane\MockServer\Repository\Matcher;
 
 use Membrane\MockServer\Generated\Repository\MockServer\Model\SQLite;
 
+/**
+ * @TODO this cannot handle shorthand `int` responses, they must be arrays
+ * @TODO this cannot handle shorthand `string` response bodies, they must be arrays
+ */
 final class Sql extends Sqlite\MatcherRepository implements \Membrane\MockServer\Repository\Matcher
 {
     public function fetchByOperationId(string $operationId): array

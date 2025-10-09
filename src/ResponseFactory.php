@@ -13,7 +13,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 final readonly class ResponseFactory
 {
-    /** @param ResponseConfig $config */
+    /** @param ResponseConfig|int $config */
     public function create(array|int $config): ResponseInterface
     {
         if (is_int($config)) {
@@ -27,7 +27,7 @@ final readonly class ResponseFactory
         );
     }
 
-    /** @param ResponseBodyConfig $body */
+    /** @param ResponseBodyConfig|string $body */
     private function getResponseBody(array|string $body): string
     {
         if (is_string($body)) {

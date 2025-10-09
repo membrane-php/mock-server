@@ -9,13 +9,17 @@ use Atto\Hydrator\Attribute\SerializationStrategyType;
 use Atto\Hydrator\Attribute\Subtype;
 use Atto\Orm\Attribute\Id;
 
+/**
+ * @phpstan-import-type OperationConfig from \Membrane\MockServer\Module
+ * @phpstan-import-type ResponseBodyConfig from \Membrane\MockServer\Module
+ */
 #[\Atto\Orm\Attribute\Entity]
 #[\Atto\Hydrator\Attribute\Hydratable]
 final readonly class Operation implements \JsonSerializable
 {
     /**
      * @param array<string, string|string[]> $headers
-     * @param mixed[] $body
+     * @param ResponseBodyConfig $body
      */
     public function __construct(
         #[Id]
@@ -29,14 +33,19 @@ final readonly class Operation implements \JsonSerializable
         private array $body,
     ) {}
 
-    public function jsonSerialize(): mixed
+    /**
+     * @return OperationConfig
+     */
+    public function jsonSerialize(): array
     {
         return [
             'operationId' => $this->operationId,
-            'response' => [
-                'code' => $this->responseCode,
-                'headers' => $this->headers,
-                'body' => $this->body,
+            'default' => [
+                'response' => [
+                    'code' => $this->responseCode,
+                    'headers' => $this->headers,
+                    'body' => $this->body,
+                ],
             ],
         ];
     }

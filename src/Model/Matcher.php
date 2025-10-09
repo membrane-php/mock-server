@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Model;
 
-use Atto\Hydrator\Attribute\HydrationStrategy;
-use Atto\Hydrator\Attribute\HydrationStrategyType;
 use Atto\Hydrator\Attribute\SerializationStrategy;
 use Atto\Hydrator\Attribute\SerializationStrategyType;
 use Atto\Hydrator\Attribute\Subtype;
 use Atto\Orm\Attribute\Id;
 
+/**
+ * @phpstan-import-type MatcherFactoryConfig from \Membrane\MockServer\Module
+ * @phpstan-import-type ResponseConfig from \Membrane\MockServer\Module
+ * @phpstan-import-type ResponseBodyConfig from \Membrane\MockServer\Module
+ */
 #[\Atto\Orm\Attribute\Entity]
 #[\Atto\Hydrator\Attribute\Hydratable]
 final readonly class Matcher implements \JsonSerializable
@@ -18,7 +21,7 @@ final readonly class Matcher implements \JsonSerializable
     /**
      * @param array<mixed> $matcherArgs
      * @param array<string, string|string[]> $headers
-     * @param mixed[] $body
+     * @param ResponseBodyConfig $body
      */
     public function __construct(
         #[Id]
@@ -37,11 +40,10 @@ final readonly class Matcher implements \JsonSerializable
         private array $body,
     ) {}
 
-    public function jsonSerialize(): mixed
+    /** @return array{matcher: MatcherFactoryConfig, response: ResponseConfig} */
+    public function jsonSerialize(): array
     {
         return [
-            'id' => $this->id,
-            'operationId' => $this->operationId,
             'matcher' => [
                 'type' => $this->matcherAlias,
                 'args' => $this->matcherArgs,

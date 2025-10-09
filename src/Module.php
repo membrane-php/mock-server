@@ -18,7 +18,7 @@ use Psr\Container\ContainerInterface;
  *
  * @phpstan-type OperationConfig array{
  *      matchers?: list<array{matcher: MatcherFactoryConfig, response: ResponseConfig}>,
- *      default?: array{response: ResponseConfig}
+ *      default?: array{response: int|ResponseConfig}
  *  }
  *
  * @phpstan-type MatcherFactoryConfig array{
@@ -27,12 +27,12 @@ use Psr\Container\ContainerInterface;
  *  }
  * @phpstan-type MatcherConfig array<string,mixed>
  *
- * @phpstan-type ResponseConfig int|array{
- *      headers?: array{string, string|list<string>},
- *      body?: ResponseBodyConfig,
+ * @phpstan-type ResponseConfig array{
+ *      headers?: array<string, string|list<string>>,
+ *      body?: ResponseBodyConfig|string,
  *      code: int,
  *  }
- * @phpstan-type ResponseBodyConfig string|array{
+ * @phpstan-type ResponseBodyConfig array{
  *      content: array<mixed>,
  *      type: string,
  *  }
@@ -40,7 +40,7 @@ use Psr\Container\ContainerInterface;
 final class Module implements ModuleInterface
 {
     /**
-     * @return array<class-string, array<mixed>>
+     * @return array<class-string, array{args?: array<mixed>}>
      */
     public function getServices(): array
     {
@@ -71,7 +71,6 @@ final class Module implements ModuleInterface
                 => [],
             ResponseFactory::class
                 => [],
-            //MatcherFactory => args => ContainerInterface
         ];
     }
 

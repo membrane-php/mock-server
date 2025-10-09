@@ -1,0 +1,7 @@
+#!/bin/sh
+
+vendor/bin/generate-hydrators src/ generated/ --hydrator_namespace_prefix="Membrane\\MockServer\\Generated\\Hydrator" --psr4_namespace_prefix="Membrane\\MockServer\\Generated"
+vendor/bin/generate-repositories src/ generated/ --repositories_namespace_prefix="Membrane\\MockServer\\Generated\\Repository" --psr4_namespace_prefix="Membrane\\MockServer\\Generated"
+
+vendor/bin/membrane membrane:membrane:generate-processors -vvv `pwd`/api/openapi.json ./generated/ --namespace="Membrane\\MockServer\\Generated"
+vendor/bin/membrane-router m:r:g `pwd`/api/openapi.json generated/routes.php

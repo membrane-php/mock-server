@@ -1,5 +1,4 @@
-vendor/
-codegen.sh
-generated/
-server-up
 .cache/
+.env
+generated/
+vendor/

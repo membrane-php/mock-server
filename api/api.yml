@@ -1,7 +1,9 @@
 openapi: 3.1.0
+
 info:
   title: Membrane MockServer API
   version: 1.0.0
+
 paths:
   /reset:
     post:
@@ -10,28 +12,27 @@ paths:
       responses:
         204:
           description: Mock Server Reset
+
   /operation/{operationId}:
     parameters:
       - name: operationId
         in: path
         required: true
         schema:
-          type: string
-          description:
-            This is the operationId in your OpenAPI spec, bla bla bla
+          $ref: "#/components/schemas/OperationId"
     post:
       operationId: add-operation
+      responses:
+        201:
+          description: Operation Created
       requestBody:
         content:
           application/json:
             schema:
               type: object
               required:
-                - operationId
                 - default
               properties:
-                operationId:
-                  type: string
                 default:
                   type: object
                   required:
@@ -39,17 +40,11 @@ paths:
                   properties:
                     response:
                       $ref: "#/components/schemas/Response"
-      responses:
-        201:
-          description: Operation Created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-
     delete:
       operationId: delete-operation
+      responses:
+        204:
+          description: Operation Deleted
 
   /operation/{operationId}/matcher:
     parameters:
@@ -60,6 +55,17 @@ paths:
           type: string
     post:
       operationId: add-matcher
+      responses:
+        201:
+          description: Matcher Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
       requestBody:
         content:
           application/json:
@@ -72,8 +78,15 @@ paths:
                   $ref: "#/components/schemas/Response"
     delete:
       operationId: delete-matcher
+      responses:
+        204:
+          description: Matcher Deleted
+
 components:
   schemas:
+    OperationId:
+      type: string
+      description: This MUST be an operationId from your OpenAPI Specification
     Response:
       type:
         - integer
@@ -101,7 +114,7 @@ components:
       properties:
         type:
           type: string
-          description: An alias as defined by your config
+          description: An alias as defined by your config.
           examples:
             - equals
             - "\\Membrane\\MockServer\\Mocking\\Matcher\\Equals"

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Membrane\MockServer\Tests\Unit\ConfigLocator;
+namespace Membrane\MockServer\Tests\Unit\Mocking\ConfigLocator;
 
 use Membrane\MockServer\Mocking\ConfigLocator;
 use Membrane\MockServer\Mocking\ConfigLocator\FromMultipleSources;

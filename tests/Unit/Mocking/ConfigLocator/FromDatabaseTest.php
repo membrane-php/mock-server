@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Membrane\MockServer\Tests\Unit\Database\ConfigLocator;
+namespace Membrane\MockServer\Tests\Unit\Mocking\ConfigLocator;
 
 use Membrane\MockServer\Database\Model;
 use Membrane\MockServer\Mocking\ConfigLocator\FromDatabase;

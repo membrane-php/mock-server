@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Membrane\MockServer\Database\ConfigLocator;
+namespace Membrane\MockServer\Mocking\ConfigLocator;
 
 use Membrane\MockServer\Database\Repository;
 
-final readonly class FromDatabase implements \Membrane\MockServer\ConfigLocator
+final readonly class FromDatabase implements \Membrane\MockServer\Mocking\ConfigLocator
 {
     public function __construct(
         private Repository\Operation $operationRepository,

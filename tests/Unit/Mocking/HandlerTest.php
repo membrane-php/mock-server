@@ -6,7 +6,7 @@ namespace Membrane\MockServer\Tests\Unit\Mocking;
 
 use GuzzleHttp\Psr7\Response;
 use League\Container\Container;
-use Membrane\MockServer\ConfigLocator\FromApplicationConfig;
+use Membrane\MockServer\Mocking\ConfigLocator\FromApplicationConfig;
 use Membrane\MockServer\Mocking\DTO;
 use Membrane\MockServer\Mocking\FactoryLocator;
 use Membrane\MockServer\Mocking\Field;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Membrane\MockServer\ConfigLocator;
+namespace Membrane\MockServer\Mocking\ConfigLocator;
 
-use Membrane\MockServer\ConfigLocator;
+use Membrane\MockServer\Mocking\ConfigLocator;
 
 final readonly class FromMultipleSources implements ConfigLocator
 {

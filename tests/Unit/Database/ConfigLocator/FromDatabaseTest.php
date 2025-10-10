@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Tests\Unit\Database\ConfigLocator;
 
-use Membrane\MockServer\Database\ConfigLocator\FromDatabase;
 use Membrane\MockServer\Database\Model;
+use Membrane\MockServer\Mocking\ConfigLocator\FromDatabase;
 use Membrane\MockServer\Tests\Fixture;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;

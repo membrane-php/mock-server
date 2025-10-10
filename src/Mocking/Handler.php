@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Mocking;
 
-use Membrane\MockServer\ConfigLocator\FromApplicationConfig;
+use Membrane\MockServer\Mocking\ConfigLocator\FromApplicationConfig;
 use Psr\Http\Message\ResponseInterface;
 
 final readonly class Handler

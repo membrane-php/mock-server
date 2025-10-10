@@ -1,0 +1,110 @@
+openapi: 3.1.0
+info:
+  title: Membrane MockServer API
+  version: 1.0.0
+paths:
+  /reset:
+    post:
+      operationId: reset-server
+      description: Reset all configuration
+      responses:
+        204:
+          description: Mock Server Reset
+  /operation/{operationId}:
+    parameters:
+      - name: operationId
+        in: path
+        required: true
+        schema:
+          type: string
+          description:
+            This is the operationId in your OpenAPI spec, bla bla bla
+    post:
+      operationId: add-operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - operationId
+                - default
+              properties:
+                operationId:
+                  type: string
+                default:
+                  type: object
+                  required:
+                    - response
+                  properties:
+                    response:
+                      $ref: "#/components/schemas/Response"
+      responses:
+        201:
+          description: Operation Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+
+    delete:
+      operationId: delete-operation
+
+  /operation/{operationId}/matcher:
+    parameters:
+      - name: operationId
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      operationId: add-matcher
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                matcher:
+                  $ref:  "#/components/schemas/Matcher"
+                response:
+                  $ref: "#/components/schemas/Response"
+    delete:
+      operationId: delete-matcher
+components:
+  schemas:
+    Response:
+      type:
+        - integer
+        - object
+      properties:
+        code:
+          type: integer
+        headers:
+          type: object
+          additionalProperties:
+            type:
+              - array
+              - string
+            items:
+              type: string
+        body:
+          type:
+            - array
+            - string
+    Matcher:
+      type: object
+      requiredProperties:
+        - type
+        - args
+      properties:
+        type:
+          type: string
+          description: An alias as defined by your config
+          examples:
+            - equals
+            - "\\Membrane\\MockServer\\Mocking\\Matcher\\Equals"
+        args:
+          type: object
+          description: named arguments as required by the matcher specified by type.

@@ -11,7 +11,9 @@ final class Module implements \Atto\Framework\Module\ModuleInterface
      */
     public function getServices(): array
     {
-        return [];
+        return [
+            // each handler needs to have config to wire up with
+        ];
     }
 
     /**
@@ -19,6 +21,33 @@ final class Module implements \Atto\Framework\Module\ModuleInterface
      */
     public function getConfig(): array
     {
-        return [];
+        return [
+            'membrane' => [
+                'operationMap' => [
+                    'reset' => [
+                        // delete db sqlite
+                        // run migrations again
+                        'dto',
+                        'handler',
+                    ],
+                    'add-operation' => [
+                        // take operationid
+                        // require operationrepository
+                        // save
+                    ],
+                    'delete-operation' => [
+                        // take operationid
+                        // require operationrepository
+                        // delete
+                    ],
+                    'add-matcher' => [
+
+                    ],
+                    'delete-matcher' => [
+
+                    ],
+                ]
+            ]
+        ];
     }
 }

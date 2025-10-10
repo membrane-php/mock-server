@@ -5,16 +5,13 @@ declare(strict_types=1);
 namespace Membrane\MockServer\Tests\Unit\ConfigLocator;
 
 use Membrane\MockServer\Mocking\ConfigLocator\FromApplicationConfig;
-use Membrane\MockServer\Mocking\DTO;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\Attributes\UsesClass;
 
 /**
  * @phpstan-import-type OperationMap from FromApplicationConfig
  * @phpstan-import-type OperationConfig from FromApplicationConfig
  */
-#[UsesClass(DTO::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(FromApplicationConfig::class)]
 final class FromApplicationConfigTest extends \PHPUnit\Framework\TestCase
 {

@@ -12,6 +12,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 
+#[UsesClass(DTO::class)]
 #[UsesClass(Fixture\Matcher::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(AnyOf::class)]
 final class AnyOfTest extends \PHPUnit\Framework\TestCase

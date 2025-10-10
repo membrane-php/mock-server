@@ -9,7 +9,10 @@ use Membrane\MockServer\Mocking\Field;
 use Membrane\MockServer\Mocking\Matcher\String\Regex;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\UsesClass;
 
+#[UsesClass(DTO::class)]
+#[UsesClass(Field::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(Regex::class)]
 final class RegexTest extends \PHPUnit\Framework\TestCase
 {

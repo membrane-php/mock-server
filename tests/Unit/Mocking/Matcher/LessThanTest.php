@@ -9,7 +9,9 @@ use Membrane\MockServer\Mocking\Field;
 use Membrane\MockServer\Mocking\Matcher\LessThan;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\UsesClass;
 
+#[UsesClass(Field::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(LessThan::class)]
 final class LessThanTest extends \PHPUnit\Framework\TestCase
 {

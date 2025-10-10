@@ -9,7 +9,9 @@ use Membrane\MockServer\Mocking\Field;
 use Membrane\MockServer\Mocking\Matcher\Array\Contains;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\UsesClass;
 
+#[UsesClass(Field::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(Contains::class)]
 final class ContainsTest extends \PHPUnit\Framework\TestCase
 {

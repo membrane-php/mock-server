@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Api\Handler;
 
+use Atto\Db\Migrator;
+use Membrane\MockServer\Api\Command;
+
 final readonly class Reset
 {
     public function __construct(
         private string $storagePath,
+        private Migrator $migrator,
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(Command\Reset $command): void
     {
         unlink($this->storagePath);
-        eval(file_get_contents(__DIR__ . '../../../bin/migrate.php'));
+        $this->migrator->migrate();
     }
 }

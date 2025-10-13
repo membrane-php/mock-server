@@ -14,17 +14,32 @@ final class Module implements \Atto\Framework\Module\ModuleInterface
     public function getServices(): array
     {
         return [
+            Handler\Reset::class =>
+                [
+                    'args' => [
+                        __DIR__ . '../../storage/db_sqlite',
+                        \Atto\Db\Migrator::class,
+                    ]
+                ],
             Handler\AddOperation::class =>
-                [Database\Repository\Operation::class],
+                [
+                    'args' => [Database\Repository\Operation::class]
+                ],
             Handler\AddMatcher::class =>
                 [
-                    Database\Repository\Matcher::class,
-                    Database\IdGenerator::class,
+                    'args' => [
+                        Database\Repository\Matcher::class,
+                        Database\IdGenerator::class,
+                    ],
                 ],
             Handler\DeleteOperation::class =>
-                [Database\Repository\Operation::class],
+                [
+                    'args' => [Database\Repository\Operation::class],
+                ],
             Handler\DeleteMatcher::class =>
-                [Database\Repository\Matcher::class],
+                [
+                    'args' => [Database\Repository\Matcher::class],
+                ],
         ];
     }
 

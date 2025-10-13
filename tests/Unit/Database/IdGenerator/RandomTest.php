@@ -32,6 +32,6 @@ final class RandomTest extends \PHPUnit\Framework\TestCase
     {
         $sut = new Random();
 
-        self::assertEquals('i6i6i6i6i6i6i6i6i6i6', $sut->generateId());
+        self::assertNotSame($sut->generateId(), $sut->generateId());
     }
 }

@@ -15,8 +15,9 @@ final class Module implements \Atto\Framework\Module\ModuleInterface
     public function getServices(): array
     {
         return [
-            IdGenerator::class =>
-                new IdGenerator\Random(),
+            IdGenerator::class => [
+                'class' => IdGenerator\Random::class,
+            ],
 
             Repository\Operation::class => [
                 'class' => Repository\Operation\Sql::class,

@@ -8,6 +8,8 @@ use Membrane\MockServer\Database\Model;
 
 interface Matcher
 {
+    public function fetchById(string $id): Model\Matcher;
+
     /** @return Model\Matcher[] */
     public function fetchByOperationId(string $operationId): array;
 

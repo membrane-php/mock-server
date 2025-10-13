@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Membrane\MockServer\Api\Handler;
 
 use Membrane\MockServer\Api\Command;
+use Membrane\MockServer\Api\Response;
 use Membrane\MockServer\Database;
 
 final readonly class DeleteOperation
@@ -13,7 +14,7 @@ final readonly class DeleteOperation
         private Database\Repository\Operation $operationRepository,
     ) {}
 
-    public function __invoke(Command\DeleteOperation $command): void
+    public function __invoke(Command\DeleteOperation $command): Response
     {
         $operation = $this->operationRepository
             ->fetchById($command->operationId);
@@ -22,5 +23,7 @@ final readonly class DeleteOperation
             $this->operationRepository
                 ->remove($operation);
         }
+
+        return new Response(204);
     }
 }

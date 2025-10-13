@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Membrane\MockServer\Api\Handler;
 
 use Membrane\MockServer\Api\Command;
+use Membrane\MockServer\Api\Response;
 use Membrane\MockServer\Database;
 
 final readonly class AddOperation
@@ -13,7 +14,7 @@ final readonly class AddOperation
         private Database\Repository\Operation $operationRepository,
     ) {}
 
-    public function __invoke(Command\AddOperation $command): void
+    public function __invoke(Command\AddOperation $command): Response
     {
         $operation = new Database\Model\Operation(
             $command->operationId,
@@ -23,5 +24,7 @@ final readonly class AddOperation
         );
 
         $this->operationRepository->save($operation);
+
+        return new Response(202, $operation);
     }
 }

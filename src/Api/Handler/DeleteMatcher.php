@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Membrane\MockServer\Api\Handler;
 
 use Membrane\MockServer\Api\Command;
+use Membrane\MockServer\Api\Response;
 use Membrane\MockServer\Database;
 
 final readonly class DeleteMatcher
@@ -13,16 +14,17 @@ final readonly class DeleteMatcher
         private Database\Repository\Matcher $matcherRepository,
     ) {}
 
-    public function __invoke(Command\DeleteMatcher $command): void
+    public function __invoke(Command\DeleteMatcher $command): Response
     {
-        $matchers = $this->matcherRepository
-            ->fetchByOperationId($command->operationId);
+        $matcher = $this->matcherRepository
+            ->fetchById($command->matcherId);
 
-        foreach ($matchers as $matcher) {
-            if ($matcher->id === $command->matcherId) {
-                $this->matcherRepository->remove($matcher);
-                return;
-            }
+        if ($matcher->operationId !== $command->operationId) {
+            return new Response(400);
         }
+
+        $this->matcherRepository->remove($matcher);
+
+        return new Response(202, $matcher);
     }
 }

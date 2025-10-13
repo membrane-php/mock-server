@@ -29,7 +29,7 @@ final class MatcherTest extends \PHPUnit\Framework\TestCase
         array $args,
         int $responseCode,
         array $headers,
-        array|string $body
+        array|string $body,
     ): void {
         self::assertEqualsCanonicalizing($expected, (new Matcher(
             'abc123',

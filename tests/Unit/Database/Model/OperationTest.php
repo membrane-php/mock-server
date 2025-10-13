@@ -26,7 +26,7 @@ final class OperationTest extends \PHPUnit\Framework\TestCase
         string $operationId,
         int $defaultResponseCode,
         array $headers,
-        array|string $body
+        array|string $body,
     ): void {
         self::assertEqualsCanonicalizing($expected, (new Operation(
             $operationId,
@@ -55,8 +55,8 @@ final class OperationTest extends \PHPUnit\Framework\TestCase
                         'code' => 200,
                         'headers' => [],
                         'body' => '',
-                    ]
-                ]
+                    ],
+                ],
             ],
             'find-pet-by-id',
             200,
@@ -72,8 +72,8 @@ final class OperationTest extends \PHPUnit\Framework\TestCase
                         'code' => 404,
                         'headers' => ['Cache-control' => ['age=60']],
                         'body' => 'Hello, World!',
-                    ]
-                ]
+                    ],
+                ],
             ],
             'find-pet-by-id',
             404,
@@ -89,8 +89,8 @@ final class OperationTest extends \PHPUnit\Framework\TestCase
                         'code' => 418,
                         'headers' => ['Cache-control' => ['age=60', 'must-revalidate']],
                         'body' => '{"id":52,"species":"cat","name":"Blink"}',
-                    ]
-                ]
+                    ],
+                ],
             ],
             'find-pet-by-id',
             418,

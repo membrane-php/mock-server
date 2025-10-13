@@ -15,12 +15,15 @@ final class Module implements \Atto\Framework\Module\ModuleInterface
     public function getServices(): array
     {
         return [
-            Repository\Matcher::class => [
-                'class' => Repository\Matcher\Sql::class,
-                'args' => [\Doctrine\DBAL\Connection::class],
-            ],
+            IdGenerator::class =>
+                new IdGenerator\Random(),
+
             Repository\Operation::class => [
                 'class' => Repository\Operation\Sql::class,
+                'args' => [\Doctrine\DBAL\Connection::class],
+            ],
+            Repository\Matcher::class => [
+                'class' => Repository\Matcher\Sql::class,
                 'args' => [\Doctrine\DBAL\Connection::class],
             ],
         ];

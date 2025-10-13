@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Api;
 
+use Membrane\MockServer\Database;
+
 final class Module implements \Atto\Framework\Module\ModuleInterface
 {
     /**
@@ -12,7 +14,17 @@ final class Module implements \Atto\Framework\Module\ModuleInterface
     public function getServices(): array
     {
         return [
-            // each handler needs to have config to wire up with
+            Handler\AddOperation::class =>
+                [Database\Repository\Operation::class],
+            Handler\AddMatcher::class =>
+                [
+                    Database\Repository\Matcher::class,
+                    Database\IdGenerator::class,
+                ],
+            Handler\DeleteOperation::class =>
+                [Database\Repository\Operation::class],
+            Handler\DeleteMatcher::class =>
+                [Database\Repository\Matcher::class],
         ];
     }
 
@@ -25,29 +37,26 @@ final class Module implements \Atto\Framework\Module\ModuleInterface
             'membrane' => [
                 'operationMap' => [
                     'reset' => [
-                        // delete db sqlite
-                        // run migrations again
-                        'dto',
-                        'handler',
+                        'handler' => Handler\Reset::class,
                     ],
                     'add-operation' => [
-                        // take operationid
-                        // require operationrepository
-                        // save
+                        'dto' => Command\AddOperation::class,
+                        'handler' => Handler\AddOperation::class,
                     ],
                     'delete-operation' => [
-                        // take operationid
-                        // require operationrepository
-                        // delete
+                        'dto' => Command\DeleteOperation::class,
+                        'handler' => Handler\DeleteOperation::class,
                     ],
                     'add-matcher' => [
-
+                        'dto' => Command\AddMatcher::class,
+                        'handler' => Handler\AddMatcher::class,
                     ],
                     'delete-matcher' => [
-
+                        'dto' => Command\DeleteMatcher::class,
+                        'handler' => Handler\DeleteMatcher::class,
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 }

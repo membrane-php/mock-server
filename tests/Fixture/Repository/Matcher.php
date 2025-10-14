@@ -11,6 +11,19 @@ final class Matcher implements \Membrane\MockServer\Database\Repository\Matcher
     /** @var array<string, array<string, Model\Matcher>> */
     private array $matchers;
 
+    public function fetchById(string $id): ?Model\Matcher
+    {
+        foreach ($this->matchers as $operationMatchers) {
+            foreach ($operationMatchers as $matcher) {
+                if ($matcher->id === $id) {
+                    return $matcher;
+                }
+            }
+        }
+
+        return null;
+    }
+
     public function fetchByOperationId(string $operationId): array
     {
         return $this->matchers[$operationId] ?? [];

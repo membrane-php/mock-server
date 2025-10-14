@@ -16,15 +16,13 @@ final readonly class DeleteMatcher
 
     public function __invoke(Command\DeleteMatcher $command): Response
     {
-        $matcher = $this->matcherRepository
-            ->fetchById($command->matcherId);
-
-        if ($matcher->operationId !== $command->operationId) {
+        $matcher = $this->matcherRepository->fetchById($command->id);
+        if ($matcher === null) {
             return new Response(400);
         }
 
         $this->matcherRepository->remove($matcher);
 
-        return new Response(202, $matcher);
+        return new Response(204);
     }
 }

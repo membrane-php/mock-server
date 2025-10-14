@@ -7,7 +7,6 @@ namespace Membrane\MockServer\Api\Command;
 final readonly class DeleteMatcher
 {
     public function __construct(
-        public string $operationId,
-        public string $matcherId,
+        public string $id,
     ) {}
 }

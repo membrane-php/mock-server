@@ -6,6 +6,7 @@ namespace Membrane\MockServer\Api\Handler;
 
 use Atto\Db\Migrator;
 use Membrane\MockServer\Api\Command;
+use Membrane\MockServer\Api\Response;
 
 final readonly class Reset
 {
@@ -14,9 +15,11 @@ final readonly class Reset
         private Migrator $migrator,
     ) {}
 
-    public function __invoke(Command\Reset $command): void
+    public function __invoke(Command\Reset $command): Response
     {
         unlink($this->storagePath);
         $this->migrator->migrate();
+
+        return new Response(204);
     }
 }

@@ -12,7 +12,6 @@ final readonly class AddMatcher
      */
     public function __construct(
         public string $operationId,
-        public string $matcherId,
         public string $alias,
         public array $args,
         public int $responseCode,

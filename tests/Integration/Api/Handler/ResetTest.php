@@ -8,12 +8,16 @@ use Membrane\MockServer\Api\Command;
 use Membrane\MockServer\Api\Handler\Reset;
 use Membrane\MockServer\Api\Response;
 use Membrane\MockServer\Database;
+use Membrane\MockServer\Database\Schema\MatcherTable;
+use Membrane\MockServer\Database\Schema\OperationTable;
 use Membrane\MockServer\Tests\Fixture\ProvidesMatchers;
 use Membrane\MockServer\Tests\Integration\UsesDatabase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 
+#[UsesClass(MatcherTable::class)]
+#[UsesClass(OperationTable::class)]
 #[UsesClass(Response::class)]
 #[UsesClass(Command\Reset::class)]
 #[UsesClass(Database\Model\Matcher::class)]

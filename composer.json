@@ -11,7 +11,10 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Membrane\\MockServer\\Tests\\": "tests/"
+      "Membrane\\MockServer\\Tests\\": "tests/",
+      "Membrane\\MockServer\\Tests\\Unit\\": "tests/unit/",
+      "Membrane\\MockServer\\Tests\\Fixture\\": "tests/fixture/",
+      "Membrane\\MockServer\\Tests\\Integration\\": "tests/integration/"
     }
   },
   "repositories": [

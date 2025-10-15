@@ -19,6 +19,19 @@ use Psr\Container\ContainerInterface;
 #[\PHPUnit\Framework\Attributes\CoversClass(FactoryLocator::class)]
 final class FactoryLocatorTest extends \PHPUnit\Framework\TestCase
 {
+    #[Test]
+    public function itFailsIfItFindsNonMatcherFactory(): void
+    {
+        $container = new Container();
+        $container->add('\Acme\Foo', $container);
+
+        $sut = new FactoryLocator($container, ['foo' => '\Acme\Foo']);
+
+        self::expectException(\RuntimeException::class);
+
+        $sut->locate('foo');
+    }
+
     /**
      * @param AliasesConfig $aliases
      * @param FactoryConfig $config

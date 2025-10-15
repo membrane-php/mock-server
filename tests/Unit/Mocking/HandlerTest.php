@@ -35,6 +35,22 @@ use Psr\Http\Message\ResponseInterface;
 #[\PHPUnit\Framework\Attributes\CoversClass(Handler::class)]
 final class HandlerTest extends \PHPUnit\Framework\TestCase
 {
+    #[Test]
+    public function itFailsWithoutOperationId(): void
+    {
+        $dtoWithoutOperationId = new DTO(['request' => []]);
+
+        $sut = new Handler(
+            new FromApplicationConfig([]),
+            new FactoryLocator(new Container(), []),
+            new ResponseFactory(),
+        );
+
+        self::expectException(\RuntimeException::class);
+
+        $sut($dtoWithoutOperationId);
+    }
+
     /**
      * @param array<string, OperationConfig> $operationMap
      * @param AliasesConfig $aliases
@@ -70,6 +86,14 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
      */
     public static function provideDTOsToHandle(): \Generator
     {
+        yield 'empty config, returns null' => [
+            null,
+            ['example' => []],
+            new Container(),
+            [],
+            new DTO(['request' => ['operationId' => 'example']]),
+        ];
+
         yield 'no matchers, default applies' => [
             new Response(200),
             ['example' => ['default' => ['response' => 200]]],

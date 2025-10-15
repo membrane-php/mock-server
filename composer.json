@@ -40,7 +40,8 @@
     "guzzlehttp/psr7": "^2.4",
     "mikey179/vfsstream": "^1.6.7",
     "phpstan/phpstan": "^1.12.5",
-    "phpunit/phpunit": "^11.5.39"
+    "phpunit/phpunit": "^11.5.39",
+    "roave/better-reflection": "^6.65.0"
   },
   "bin": [
     "bin/membrane-mock-server"

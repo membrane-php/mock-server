@@ -4,94 +4,70 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Tests\Unit\Mocking;
 
-use Membrane\MockServer\Mocking\DTO;
-use Membrane\MockServer\Mocking\Field;
-use PHPUnit\Framework\Attributes\DataProvider;
+use Membrane\MockServer\Mocking\MatcherFactory;
+use Membrane\MockServer\Mocking\Module;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
+use Roave\BetterReflection\BetterReflection;
+use Roave\BetterReflection\Reflector\DefaultReflector;
+use Roave\BetterReflection\SourceLocator\Type\DirectoriesSourceLocator;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(Field::class)]
+#[\PHPUnit\Framework\Attributes\CoversClass(Module::class)]
 final class ModuleTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @param list<string> $path
-     */
     #[Test]
-    #[DataProvider('provideFieldsToFind')]
-    public function itFindsFields(
-        mixed $expected,
-        string $name,
-        array $path,
-        DTO $dto,
-    ): void {
-        self::assertEquals($expected, (new Field($name, ...$path))->find($dto));
+    #[TestDox('The Mocking\\Module provides factories for built-in matchers')]
+    public function itProvidesMatchers(): void
+    {
+        $builtIn = $this->getBuiltInMatcherFactories();
+        $provided = array_keys((new Module())->getServices());
+        $missing = array_diff($builtIn, $provided);
+
+        self::assertEmpty($missing, sprintf(
+            <<<ONFAILURE
+            %s does not provide built-in matchers:
+            \t- %s
+            ONFAILURE,
+            Module::class,
+            implode("\n\t- ", $missing),
+        ));
     }
 
-    /**
-     * @param non-empty-list<string> $config
-     */
     #[Test]
-    #[DataProvider('provideConfigs')]
-    public function itConstructsFromConfig(
-        Field $expected,
-        array $config,
-    ): void {
-        self::assertEquals($expected, Field::fromConfig($config));
+    #[TestDox('The Mocking\\Module configures aliases for built-in matchers')]
+    public function itConfiguresMatcherAliases(): void
+    {
+        $builtIn = $this
+            ->getBuiltInMatcherFactories();
+
+        $provided = array_values((new Module())
+            ->getConfig()['mockServer']['aliases']);
+
+        $missing = array_diff($builtIn, $provided);
+
+        self::assertEmpty($missing, sprintf(
+            <<<ONFAILURE
+            %s has no aliases for built-in matchers:
+            \t- %s
+            ONFAILURE,
+            Module::class,
+            implode("\n\t- ", $missing),
+        ));
     }
 
-    /**
-     * @return \Generator<array{
-     *     0: mixed,
-     *     1: string,
-     *     2: list<string>,
-     *     3: array<string, mixed>
-     * }>
-     */
-    public static function provideFieldsToFind(): \Generator
+    /** @return array<class-string<MatcherFactory>> */
+    private function getBuiltInMatcherFactories(): array
     {
-        yield 'no data' => [null, 'example', [], new DTO([])];
+        $reflector = new DefaultReflector(new DirectoriesSourceLocator(
+            [__DIR__ . '/../../../src/Mocking/MatcherFactory/'],
+            (new BetterReflection())->astLocator(),
+        ));
 
-        yield 'field exists' => [
-            'Hello, World!',
-            'example',
-            ['path'],
-            new DTO([
-                'path' => [
-                    'example' => 'Hello, World!',
-                    'not-example' => 'Howdy, planet!',
-                ],
-                'not-path' => [
-                    'example' => 'Good day, globe.',
-                ],
-                'example' => 'Greetings, Gaia!',
-            ]),
-        ];
+        $factories = array_filter(array_map(
+            fn ($r) => new \ReflectionClass($r->getName()),
+            $reflector->reflectAllClasses(),
+        ), fn ($r) => $r->implementsInterface(MatcherFactory::class));
 
-        yield 'field does not exist' => [
-            null,
-            'example',
-            ['path'],
-            new DTO([
-                'path' => [
-                    'not-example' => 'Howdy, planet!',
-                ],
-                'not-path' => [
-                    'example' => 'Good day, globe.',
-                ],
-                'example' => 'Greetings, Gaia!',
-            ]),
-        ];
-    }
-
-    /**
-     * @return \Generator<array{
-     *     0: Field,
-     *     1: non-empty-list<string>
-     *  }>
-     */
-    public static function provideConfigs(): \Generator
-    {
-        yield 'id' => [new Field('id'), ['id']];
-        yield 'path->id' => [new Field('id', 'path'), ['path', 'id']];
-        yield 'path->pet->id' => [new Field('id', 'path', 'pet'), ['path', 'pet', 'id']];
+        return array_map(fn($f) => $f->getName(), $factories);
     }
 }

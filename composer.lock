@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "713626c1c9bfd1c20b48e263d36bdee6",
+    "content-hash": "bde2ca6dd36ef110495727dda588f909",
     "packages": [
         {
             "name": "atto/codegen-tools",
@@ -900,12 +900,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-stdlib.git",
-                "reference": "b1c81514cfe158aadf724c42b34d3d0a8164c096"
+                "reference": "51e4191e5a717524862a83bac78f06c6c58eed65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-stdlib/zipball/b1c81514cfe158aadf724c42b34d3d0a8164c096",
-                "reference": "b1c81514cfe158aadf724c42b34d3d0a8164c096",
+                "url": "https://api.github.com/repos/laminas/laminas-stdlib/zipball/51e4191e5a717524862a83bac78f06c6c58eed65",
+                "reference": "51e4191e5a717524862a83bac78f06c6c58eed65",
                 "shasum": ""
             },
             "require": {
@@ -952,7 +952,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2025-10-11T18:13:12+00:00"
+            "time": "2025-10-15T13:00:28+00:00"
         },
         {
             "name": "league/container",

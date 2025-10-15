@@ -23,10 +23,10 @@ final class ResetTest extends \PHPUnit\Framework\TestCase
     use UsesDatabase;
 
     #[Test]
-    public function itResetsNonExistentDb(): void
+    public function itResetsEmptyDb(): void
     {
         if (file_exists(self::DB_PATH)) {
-            unlink(self::DB_PATH);
+            file_put_contents(self::DB_PATH, '');
         }
 
         $sut = new Reset(self::DB_PATH, $this->getMigrator());
@@ -54,6 +54,5 @@ final class ResetTest extends \PHPUnit\Framework\TestCase
             self::assertNull($this->getMatcherRepository()
                 ->fetchById($matcher->id));
         }
-
     }
 }

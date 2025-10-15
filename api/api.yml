@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.0.4
 
 info:
   title: Membrane MockServer API
@@ -96,36 +96,34 @@ components:
       type: string
       description: This MUST be an operationId from your OpenAPI Specification
     Response:
-      type:
-        - integer
-        - object
-      properties:
-        code:
-          type: integer
-        headers:
-          type: object
-          additionalProperties:
-            type:
-              - array
-              - string
-            items:
-              type: string
-        body:
-          type:
-            - array
-            - string
+      anyOf:
+        - type: integer
+        - type: object
+          properties:
+            code:
+              type: integer
+            headers:
+              type: object
+              additionalProperties:
+                anyOf:
+                  - type: string
+                  - type: array
+                    items:
+                      type: string
+            body:
+              anyOf:
+                - type: string
+                - type: array
     Matcher:
       type: object
-      requiredProperties:
+      required:
         - type
         - args
       properties:
         type:
           type: string
           description: An alias as defined by your config.
-          examples:
-            - equals
-            - "\\Membrane\\MockServer\\Mocking\\Matcher\\Equals"
+          example: equals
         args:
           type: object
           description: named arguments as required by the matcher specified by type.

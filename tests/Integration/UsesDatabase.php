@@ -10,7 +10,7 @@ use Membrane\MockServer\Database;
 
 trait UsesDatabase
 {
-    private const DB_PATH = __DIR__ . '/../../storage/test.db';
+    private const string DB_PATH = ':memory:';
     private ?Connection $connection = null;
     private ?Db\Migrator $migrator = null;
 
@@ -46,14 +46,5 @@ trait UsesDatabase
     private function getMatcherRepository(): Database\Repository\Matcher
     {
         return new Database\Repository\Matcher\Sql($this->getConnection());
-    }
-
-    private function resetDb(): void
-    {
-        if (file_exists(self::DB_PATH)) {
-            file_put_contents(self::DB_PATH, '');
-        }
-
-        $this->getMigrator()->migrate();
     }
 }

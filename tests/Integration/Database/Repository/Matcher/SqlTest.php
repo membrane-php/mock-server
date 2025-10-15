@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Membrane\MockServer\Tests\Integration\Database\Repository;
+namespace Membrane\MockServer\Tests\Integration\Database\Repository\Matcher;
 
 use Membrane\MockServer\Database\Model;
 use Membrane\MockServer\Database\Repository\Matcher;
@@ -18,14 +18,16 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(OperationTable::class)]
 #[UsesClass(Model\Matcher::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(Matcher\Sql::class)]
-final class MatcherTest extends \PHPUnit\Framework\TestCase
+final class SqlTest extends \PHPUnit\Framework\TestCase
 {
     use UsesDatabase;
 
     #[Test]
     public function itRemovesMatchers(): void
     {
-        $this->resetDb();
+        $this->getMigrator()->drop();
+        $this->getMigrator()->migrate();
+
         $matcher = Fixture\ProvidesMatchers::generate()->current();
         $sut = $this->getMatcherRepository();
 
@@ -40,13 +42,14 @@ final class MatcherTest extends \PHPUnit\Framework\TestCase
      * @param Model\Matcher[] $matchers
      */
     #[Test]
-    #[DataProvider('provideMatchersToFetch')]
+    #[DataProvider('provideMatchersToFetchById')]
     public function itFetchesById(
         ?Model\Matcher $expected,
         array $matchers,
         string $id,
     ): void {
-        $this->resetDb();
+        $this->getMigrator()->drop();
+        $this->getMigrator()->migrate();
 
         $sut = $this->getMatcherRepository();
 
@@ -58,15 +61,38 @@ final class MatcherTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @param Model\Matcher[] $expected
+     * @param Model\Matcher[] $matchers
+     */
+    #[Test]
+    #[DataProvider('provideMatchersToFetchByOperationId')]
+    public function itFetchesByOperationId(
+        array $expected,
+        array $matchers,
+        string $operationId,
+    ): void {
+        $this->getMigrator()->drop();
+        $this->getMigrator()->migrate();
+
+        $sut = $this->getMatcherRepository();
+
+        foreach ($matchers as $matcher) {
+            $sut->save($matcher);
+        }
+
+        self::assertEquals($expected, $sut->fetchByOperationId($operationId));
+    }
+
+    /**
      * @return \Generator<array{
      *     0: ?Model\Matcher,
      *     1: Model\Matcher[],
      *     2: string,
      *  }>
      */
-    public static function provideMatchersToFetch(): \Generator
+    public static function provideMatchersToFetchById(): \Generator
     {
-        yield 'no matchers' => [null, [], 'list-pets'];
+        yield 'no matchers' => [null, [], 'abc123'];
         yield 'non-matching matchers' => [
             null,
             iterator_to_array(Fixture\ProvidesMatchers::generate()),
@@ -81,6 +107,34 @@ final class MatcherTest extends \PHPUnit\Framework\TestCase
                 $expected,
                 iterator_to_array($matchers),
                 $expected->id,
+            ];
+        })();
+    }
+
+    /**
+     * @return \Generator<array{
+     *     0: Model\Matcher[],
+     *     1: Model\Matcher[],
+     *     2: string,
+     *  }>
+     */
+    public static function provideMatchersToFetchByOperationId(): \Generator
+    {
+        yield 'no matchers' => [[], [], 'list-pets'];
+        yield 'non-matching matchers' => [
+            [],
+            iterator_to_array(Fixture\ProvidesMatchers::generate()),
+            'howdy-planet'
+        ];
+        yield 'matching matchers' => (function () {
+            $matchers = Fixture\ProvidesMatchers::generate();
+
+            $expected = $matchers->current();
+
+            return [
+                [$expected],
+                iterator_to_array($matchers),
+                $expected->operationId,
             ];
         })();
     }

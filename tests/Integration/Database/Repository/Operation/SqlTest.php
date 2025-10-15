@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Membrane\MockServer\Tests\Integration\Database\Repository;
+namespace Membrane\MockServer\Tests\Integration\Database\Repository\Operation;
 
 use Membrane\MockServer\Database\Model;
 use Membrane\MockServer\Database\Repository\Operation;
@@ -18,14 +18,16 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(OperationTable::class)]
 #[UsesClass(Model\Operation::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(Operation\Sql::class)]
-final class OperationTest extends \PHPUnit\Framework\TestCase
+final class SqlTest extends \PHPUnit\Framework\TestCase
 {
     use UsesDatabase;
 
     #[Test]
     public function itRemovesOperations(): void
     {
-        $this->resetDb();
+        $this->getMigrator()->drop();
+        $this->getMigrator()->migrate();
+
         $operation = Fixture\ProvidesOperations::generate()->current();
         $sut = $this->getOperationRepository();
 
@@ -46,7 +48,8 @@ final class OperationTest extends \PHPUnit\Framework\TestCase
         array $operations,
         string $id,
     ): void {
-        $this->resetDb();
+        $this->getMigrator()->drop();
+        $this->getMigrator()->migrate();
 
         $sut = $this->getOperationRepository();
 

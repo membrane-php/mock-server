@@ -29,20 +29,18 @@ final class ResetTest extends \PHPUnit\Framework\TestCase
     #[Test]
     public function itResetsEmptyDb(): void
     {
-        if (file_exists(self::DB_PATH)) {
-            file_put_contents(self::DB_PATH, '');
-        }
+        $this->getMigrator()->drop();
 
         $sut = new Reset(self::DB_PATH, $this->getMigrator());
 
         self::assertEquals(new Response(204), $sut(new Command\Reset()));
-        self::assertFileExists(self::DB_PATH);
     }
 
     #[Test]
     public function itResetsNonEmptyDb(): void
     {
-        $this->resetDb();
+        $this->getMigrator()->drop();
+        $this->getMigrator()->migrate();
 
         $matchers = iterator_to_array(ProvidesMatchers::generate());
         foreach ($matchers as $matcher) {

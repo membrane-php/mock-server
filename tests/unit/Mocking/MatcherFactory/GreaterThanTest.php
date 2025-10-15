@@ -46,6 +46,28 @@ final class GreaterThanTest extends \PHPUnit\Framework\TestCase
                 'limit' => 1,
             ],
         ];
+        yield 'implicitly >= "1"' => [
+            new Matcher\GreaterThan(
+                new Field('age', 'path', 'pet'),
+                1,
+                true,
+            ),
+            [
+                'field' => ['path', 'pet', 'age'],
+                'limit' => '1',
+            ],
+        ];
+        yield 'implicitly >= 3.14' => [
+            new Matcher\GreaterThan(
+                new Field('age', 'path', 'pet'),
+                3.14,
+                true,
+            ),
+            [
+                'field' => ['path', 'pet', 'age'],
+                'limit' => 3.14,
+            ],
+        ];
 
         yield 'explicitly >= 2' => [
             new Matcher\GreaterThan(
@@ -59,6 +81,30 @@ final class GreaterThanTest extends \PHPUnit\Framework\TestCase
                 'inclusive' => true,
             ],
         ];
+        yield 'explicitly >= "2"' => [
+            new Matcher\GreaterThan(
+                new Field('age', 'path', 'pet'),
+                2,
+                true,
+            ),
+            [
+                'field' => ['path', 'pet', 'age'],
+                'limit' => '2',
+                'inclusive' => true,
+            ],
+        ];
+        yield 'explicitly >= 9.81' => [
+            new Matcher\GreaterThan(
+                new Field('age', 'path', 'pet'),
+                9.81,
+                true,
+            ),
+            [
+                'field' => ['path', 'pet', 'age'],
+                'limit' => 9.81,
+                'inclusive' => true,
+            ],
+        ];
 
         yield '> 3' => [
             new Matcher\GreaterThan(
@@ -69,6 +115,18 @@ final class GreaterThanTest extends \PHPUnit\Framework\TestCase
             [
                 'field' => ['path', 'pet', 'age'],
                 'limit' => 3,
+                'inclusive' => false,
+            ],
+        ];
+        yield '> "3"' => [
+            new Matcher\GreaterThan(
+                new Field('age', 'path', 'pet'),
+                3,
+                false,
+            ),
+            [
+                'field' => ['path', 'pet', 'age'],
+                'limit' => '3',
                 'inclusive' => false,
             ],
         ];

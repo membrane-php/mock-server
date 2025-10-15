@@ -49,6 +49,13 @@ final class LessThanTest extends \PHPUnit\Framework\TestCase
             true,
             new DTO(['path' => ['outside' => 2]]),
         ];
+        yield 'false if string outside limit' => [
+            false,
+            new Field('outside', 'path'),
+            1,
+            true,
+            new DTO(['path' => ['outside' => '2']]),
+        ];
         yield 'false if float outside limit' => [
             false,
             new Field('outside', 'path'),
@@ -64,6 +71,13 @@ final class LessThanTest extends \PHPUnit\Framework\TestCase
             false,
             new DTO(['path' => ['equal' => 2]]),
         ];
+        yield 'false if string equals exclusive limit' => [
+            false,
+            new Field('equal', 'path'),
+            2,
+            false,
+            new DTO(['path' => ['equal' => '2']]),
+        ];
         yield 'false if float equals exclusive limit' => [
             false,
             new Field('equal', 'path'),
@@ -78,6 +92,13 @@ final class LessThanTest extends \PHPUnit\Framework\TestCase
             2,
             true,
             new DTO(['path' => ['equal' => 2]]),
+        ];
+        yield 'true if string equals inclusive limit' => [
+            true,
+            new Field('equal', 'path'),
+            2,
+            true,
+            new DTO(['path' => ['equal' => '2']]),
         ];
         yield 'true if float equals inclusive limit' => [
             true,

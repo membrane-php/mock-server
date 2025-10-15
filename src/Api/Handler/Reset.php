@@ -17,7 +17,10 @@ final readonly class Reset
 
     public function __invoke(Command\Reset $command): Response
     {
-        unlink($this->storagePath);
+        if (file_exists($this->storagePath)) {
+            file_put_contents($this->storagePath, '');
+        }
+
         $this->migrator->migrate();
 
         return new Response(204);

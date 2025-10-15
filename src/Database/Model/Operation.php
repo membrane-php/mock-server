@@ -16,24 +16,24 @@ use Atto\Orm\Attribute\Id;
 #[\Atto\Hydrator\Attribute\Hydratable]
 final readonly class Operation implements \JsonSerializable
 {
-    private string $body;
+    private string $defaultResponseBody;
 
     /**
-     * @param array<string, string|string[]> $headers
-     * @param mixed[] $body
+     * @param array<string, string|string[]> $defaultResponseHeaders
+     * @param mixed[] $defaultResponseBody
      */
     public function __construct(
         #[Id]
         public string $operationId,
-        private int $responseCode,
+        private int $defaultResponseCode,
         #[Subtype('array')]
         #[SerializationStrategy(SerializationStrategyType::Json)]
-        private array $headers = [],
-        array|string $body = '',
+        private array $defaultResponseHeaders = [],
+        array|string $defaultResponseBody = '',
     ) {
-        $this->body = is_string($body)
-            ? $body
-            : (json_encode($body)
+        $this->defaultResponseBody = is_string($defaultResponseBody)
+            ? $defaultResponseBody
+            : (json_encode($defaultResponseBody)
                 ?: throw new \RuntimeException(json_last_error_msg()));
     }
 
@@ -46,9 +46,9 @@ final readonly class Operation implements \JsonSerializable
             'operationId' => $this->operationId,
             'default' => [
                 'response' => [
-                    'code' => $this->responseCode,
-                    'headers' => $this->headers,
-                    'body' => $this->body,
+                    'code' => $this->defaultResponseCode,
+                    'headers' => $this->defaultResponseHeaders,
+                    'body' => $this->defaultResponseBody,
                 ],
             ],
         ];

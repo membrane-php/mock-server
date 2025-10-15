@@ -17,30 +17,31 @@ use Atto\Orm\Attribute\Id;
 #[\Atto\Hydrator\Attribute\Hydratable]
 final readonly class Matcher implements \JsonSerializable
 {
-    private string $body;
+    private string $responseBody;
 
     /**
-     * @param array<mixed> $matcherArgs
-     * @param array<string, string|list<string>> $headers
-     * @param array<mixed> $body
+     * @param array<mixed> $args
+     * @param array<string, string|list<string>> $responseHeaders
+     * @param array<mixed> $responseBody
      */
     public function __construct(
         #[Id]
         public string $id,
         public string $operationId,
-        private string $matcherAlias,
+        private string $alias,
         #[Subtype('string')]
         #[SerializationStrategy(SerializationStrategyType::Json)]
-        private array $matcherArgs,
+        private array $args,
         private int $responseCode,
         #[Subtype('string')]
         #[SerializationStrategy(SerializationStrategyType::Json)]
-        private array $headers = [],
-        array|string $body = '',
+        private array $responseHeaders = [],
+        array|string $responseBody = '', //TODO these are probably named wrong compared to the table and require the #name
+        // attribute, or rename the model
     ) {
-        $this->body = is_string($body)
-            ? $body
-            : (json_encode($body)
+        $this->responseBody = is_string($responseBody)
+            ? $responseBody
+            : (json_encode($responseBody)
                 ?: throw new \RuntimeException(json_last_error_msg()));
     }
 
@@ -49,13 +50,13 @@ final readonly class Matcher implements \JsonSerializable
     {
         return [
             'matcher' => [
-                'type' => $this->matcherAlias,
-                'args' => $this->matcherArgs,
+                'type' => $this->alias,
+                'args' => $this->args,
             ],
             'response' => [
                 'code' => $this->responseCode,
-                'headers' => $this->headers,
-                'body' => $this->body,
+                'headers' => $this->responseHeaders,
+                'body' => $this->responseBody,
             ],
         ];
     }

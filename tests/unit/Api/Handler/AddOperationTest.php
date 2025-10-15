@@ -14,8 +14,8 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 
 #[UsesClass(Response::class)]
-#[UsesClass(Command\AddOperation::class)]
 #[UsesClass(Database\Model\Operation::class)]
+#[\PHPUnit\Framework\Attributes\CoversClass(Command\AddOperation::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(AddOperation::class)]
 final class AddOperationTest extends \PHPUnit\Framework\TestCase
 {

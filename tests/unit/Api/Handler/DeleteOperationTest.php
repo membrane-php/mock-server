@@ -14,8 +14,8 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 
 #[UsesClass(Response::class)]
-#[UsesClass(Command\DeleteOperation::class)]
 #[UsesClass(Database\Model\Operation::class)]
+#[\PHPUnit\Framework\Attributes\CoversClass(Command\DeleteOperation::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(DeleteOperation::class)]
 final class DeleteOperationTest extends \PHPUnit\Framework\TestCase
 {

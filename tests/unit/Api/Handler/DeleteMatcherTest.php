@@ -14,8 +14,8 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 
 #[UsesClass(Response::class)]
-#[UsesClass(Command\DeleteMatcher::class)]
 #[UsesClass(Database\Model\Matcher::class)]
+#[\PHPUnit\Framework\Attributes\CoversClass(Command\DeleteMatcher::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(DeleteMatcher::class)]
 final class DeleteMatcherTest extends \PHPUnit\Framework\TestCase
 {

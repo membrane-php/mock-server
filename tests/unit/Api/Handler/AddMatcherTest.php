@@ -9,13 +9,14 @@ use Membrane\MockServer\Api\Handler\AddMatcher;
 use Membrane\MockServer\Api\Response;
 use Membrane\MockServer\Database;
 use Membrane\MockServer\Tests\Fixture;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 
 #[UsesClass(Response::class)]
-#[UsesClass(Command\AddMatcher::class)]
 #[UsesClass(Database\Model\Matcher::class)]
+#[\PHPUnit\Framework\Attributes\CoversClass(Command\AddMatcher::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(AddMatcher::class)]
 final class AddMatcherTest extends \PHPUnit\Framework\TestCase
 {

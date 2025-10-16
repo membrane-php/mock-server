@@ -30,6 +30,11 @@ final class RandomTest extends \PHPUnit\Framework\TestCase
     {
         $sut = new Random();
 
-        self::assertNotSame($sut->generateId(), $sut->generateId());
+        $ids = [];
+        while (count($ids) < 100) {
+            $ids[] = $sut->generateId();
+        }
+
+        self::assertEquals(array_unique($ids), $ids);
     }
 }

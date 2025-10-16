@@ -8,15 +8,24 @@
          requireCoverageMetadata="true"
          beStrictAboutCoverageMetadata="true"
          beStrictAboutOutputDuringTests="true"
-         displayDetailsOnPhpunitDeprecations="true"
+         displayDetailsOnAllIssues="true"
          failOnPhpunitDeprecation="true"
          failOnRisky="true"
          failOnWarning="true">
     <testsuites>
         <testsuite name="default">
-            <directory>tests</directory>
+          <directory groups="unit">tests/unit</directory>
+          <directory groups="integration">tests/integration</directory>
+          <directory groups="fixture">tests/fixture</directory>
         </testsuite>
     </testsuites>
+  <coverage>
+    <report>
+      <!-- Uncomment the below line whenever you need an HTML report -->
+      <!-- <html outputDirectory=".cache/coverage-report"/>-->
+      <text outputFile="php://stdout" showOnlySummary="true"/>
+    </report>
+  </coverage>
 
     <source ignoreIndirectDeprecations="true"
             restrictNotices="true"

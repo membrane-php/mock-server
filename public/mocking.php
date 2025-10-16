@@ -24,9 +24,9 @@ if (php_sapi_name() === 'cli-server') {
 include __DIR__ . '/../vendor/autoload.php';
 
 // Retrieve configuration
-$appConfig = require __DIR__ . '/../config/api.application.config.php';
-if (file_exists(__DIR__ . '/../config/api.development.config.php')) {
-    $appConfig = ArrayUtils::merge($appConfig, require __DIR__ . '/../config/api.development.config.php');
+$appConfig = require __DIR__ . '/../config/mocking.application.config.php';
+if (file_exists(__DIR__ . '/../config/mocking.development.config.php')) {
+    $appConfig = ArrayUtils::merge($appConfig, require __DIR__ . '/../config/mocking.development.config.php');
 }
 
 // Run the application!

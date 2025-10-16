@@ -14,9 +14,13 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 
-#[UsesClass(MatcherTable::class)]
 #[UsesClass(OperationTable::class)]
 #[UsesClass(Model\Matcher::class)]
+/**
+ * 1. MatcherTable MUST migrate successfully for the Sql repository to work.
+ * 2. MatcherTable has no behaviour worth testing in isolation
+ */
+#[\PHPUnit\Framework\Attributes\CoversClass(MatcherTable::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(Matcher\Sql::class)]
 final class SqlTest extends \PHPUnit\Framework\TestCase
 {

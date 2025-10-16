@@ -39,7 +39,7 @@ final class AddOperationTest extends \PHPUnit\Framework\TestCase
                     $operationId,
                     $responseCode,
                     $headers,
-                    $body
+                    $body,
                 ),
             ),
             (new AddOperation($repository))(
@@ -48,7 +48,8 @@ final class AddOperationTest extends \PHPUnit\Framework\TestCase
                     $responseCode,
                     $headers,
                     $body,
-                )),
+                )
+            ),
         );
 
         self::assertNotNull($repository->fetchById($operationId));

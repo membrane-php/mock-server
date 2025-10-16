@@ -32,7 +32,8 @@ final class DeleteMatcherTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(
             new Response(204),
             (new DeleteMatcher($repository))(
-                new Command\DeleteMatcher($id))
+                new Command\DeleteMatcher($id)
+            ),
         );
 
         self::assertNull($repository->fetchById($id));

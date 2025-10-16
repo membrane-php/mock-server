@@ -32,7 +32,8 @@ final class DeleteOperationTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(
             new Response(204),
             (new DeleteOperation($repository))(
-                new Command\DeleteOperation($operationId))
+                new Command\DeleteOperation($operationId)
+            ),
         );
 
         self::assertNull($repository->fetchById($operationId));

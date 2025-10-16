@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Tests\Unit\Database\IdGenerator;
 
-
 use Membrane\MockServer\Database\IdGenerator\Random;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -14,8 +13,7 @@ final class RandomTest extends \PHPUnit\Framework\TestCase
     #[Test]
     public function itGeneratesId(): void
     {
-        $notSoRandomEngine = new class implements \Random\Engine
-        {
+        $notSoRandomEngine = new class implements \Random\Engine {
             public function generate(): string
             {
                 return 'Hello, world!';

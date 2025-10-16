@@ -64,9 +64,9 @@ final class ModuleTest extends \PHPUnit\Framework\TestCase
         ));
 
         $factories = array_filter(array_map(
-            fn ($r) => new \ReflectionClass($r->getName()),
+            fn($r) => new \ReflectionClass($r->getName()),
             $reflector->reflectAllClasses(),
-        ), fn ($r) => $r->implementsInterface(MatcherFactory::class));
+        ), fn($r) => $r->implementsInterface(MatcherFactory::class));
 
         return array_map(fn($f) => $f->getName(), $factories);
     }

@@ -13,7 +13,6 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\CoversClass(ConfigLocator::class)]
 final class ConfigLocatorTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * @param ?OperationConfig $expected
      * @param array<string, OperationConfig> $config

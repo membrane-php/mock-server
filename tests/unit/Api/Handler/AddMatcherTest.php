@@ -48,7 +48,7 @@ final class AddMatcherTest extends \PHPUnit\Framework\TestCase
                     $args,
                     $responseCode,
                     $headers,
-                    $body
+                    $body,
                 ),
             ),
             (new AddMatcher($repository, $idGenerator))(
@@ -59,7 +59,8 @@ final class AddMatcherTest extends \PHPUnit\Framework\TestCase
                     $responseCode,
                     $headers,
                     $body,
-                )),
+                )
+            ),
         );
 
         self::assertNotNull($repository->fetchById($id));

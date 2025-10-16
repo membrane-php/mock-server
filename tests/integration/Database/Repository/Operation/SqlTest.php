@@ -73,7 +73,7 @@ final class SqlTest extends \PHPUnit\Framework\TestCase
         yield 'non-matching operations' => [
             null,
             iterator_to_array(Fixture\ProvidesOperations::generate()),
-            'howdy-planet'
+            'howdy-planet',
         ];
         yield 'matching operation' => (function () {
             $operations = Fixture\ProvidesOperations::generate();

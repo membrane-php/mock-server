@@ -15,7 +15,8 @@ final class IdGenerator implements \Membrane\MockServer\Database\IdGenerator
         return $result;
     }
 
-    public function nextId(): string {
+    public function nextId(): string
+    {
         return sprintf('id%s', $this->increment);
     }
 }

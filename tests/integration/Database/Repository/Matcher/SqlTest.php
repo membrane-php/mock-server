@@ -96,7 +96,7 @@ final class SqlTest extends \PHPUnit\Framework\TestCase
         yield 'non-matching matchers' => [
             null,
             iterator_to_array(Fixture\ProvidesMatchers::generate()),
-            'zxy098'
+            'zxy098',
         ];
         yield 'matching matcher' => (function () {
             $matchers = Fixture\ProvidesMatchers::generate();
@@ -124,7 +124,7 @@ final class SqlTest extends \PHPUnit\Framework\TestCase
         yield 'non-matching matchers' => [
             [],
             iterator_to_array(Fixture\ProvidesMatchers::generate()),
-            'howdy-planet'
+            'howdy-planet',
         ];
         yield 'matching matchers' => (function () {
             $matchers = Fixture\ProvidesMatchers::generate();

@@ -20,7 +20,7 @@ final class OperationTest extends \PHPUnit\Framework\TestCase
      * @param array<mixed>|string $body
      */
     #[Test]
-    #[DataProvider('provideConfigsToLocate')]
+    #[DataProvider('provideConfigs')]
     public function itIsJsonSerializable(
         array $expected,
         string $operationId,
@@ -45,7 +45,7 @@ final class OperationTest extends \PHPUnit\Framework\TestCase
      *     4: array<mixed>|string,
      * }>
      */
-    public static function provideConfigsToLocate(): \Generator
+    public static function provideConfigs(): \Generator
     {
         yield 'MVP; empty headers, empty string body' => [
             [

@@ -31,7 +31,7 @@ final class ResetTest extends \PHPUnit\Framework\TestCase
     {
         $this->getMigrator()->drop();
 
-        $sut = new Reset(self::DB_PATH, $this->getMigrator());
+        $sut = new Reset($this->getMigrator());
 
         self::assertEquals(new Response(204), $sut(new Command\Reset()));
     }
@@ -48,7 +48,7 @@ final class ResetTest extends \PHPUnit\Framework\TestCase
                 ->save($matcher);
         }
 
-        $sut = new Reset(self::DB_PATH, $this->getMigrator());
+        $sut = new Reset($this->getMigrator());
 
         self::assertEquals(new Response(204), $sut(new Command\Reset()));
 

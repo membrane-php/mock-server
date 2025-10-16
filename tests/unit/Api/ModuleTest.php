@@ -33,7 +33,7 @@ final class ModuleTest extends \PHPUnit\Framework\TestCase
     }
 
     #[Test]
-    #[TestDox('The Mocking\\Module configures operationMap for all handlers')]
+    #[TestDox('The Api\\Module configures operationMap for all handlers')]
     public function itConfiguresOperationMap(): void
     {
         $builtIn = $this->getBuiltInHandlers();

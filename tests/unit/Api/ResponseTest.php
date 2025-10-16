@@ -45,7 +45,7 @@ final class ResponseTest extends \PHPUnit\Framework\TestCase
                     return 'Hello, world!';
                 }
 
-            }
+            },
         ];
     }
 }

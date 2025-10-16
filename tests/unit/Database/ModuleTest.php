@@ -22,7 +22,7 @@ final class ModuleTest extends \PHPUnit\Framework\TestCase
         $provided = array_keys((new Module())->getServices());
         $missing = array_diff($builtIn, $provided);
 
-        self::assertEmpty($missing, sprintf( //@TODO fix test
+        self::assertEmpty($missing, sprintf(
             <<<ONFAILURE
             %s does not provide repositories:
             \t- %s

@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace Membrane\MockServer\Api\Handler;
 
 use Atto\Db\Migrator;
-use Doctrine\DBAL\Exception\TableNotFoundException;
 use Membrane\MockServer\Api\Command;
 use Membrane\MockServer\Api\Response;
 
 final readonly class Reset
 {
     public function __construct(
-        private string $storagePath,
         private Migrator $migrator,
     ) {}
 

@@ -16,10 +16,7 @@ final class Module implements \Atto\Framework\Module\ModuleInterface
         return [
             Handler\Reset::class
                 => [
-                    'args' => [
-                        __DIR__ . '../../storage/db_sqlite',
-                        \Atto\Db\Migrator::class,
-                    ],
+                    'args' => [\Atto\Db\Migrator::class],
                 ],
             Handler\AddOperation::class
                 => [

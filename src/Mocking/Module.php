@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Mocking;
 
+use Membrane\MockServer\Database;
 use Membrane\MockServer\Mocking\ConfigLocator\FromApplicationConfig;
+use Membrane\MockServer\Mocking\ConfigLocator\FromDatabase;
+use Membrane\MockServer\Mocking\ConfigLocator\FromMultipleSources;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -40,12 +43,22 @@ final class Module implements \Atto\Framework\Module\ModuleInterface
     public function getServices(): array
     {
         return [
+            FromMultipleSources::class
+                => ['args' => [
+                    FromDatabase::class,
+                    FromApplicationConfig::class,
+                ]],
+            FromDatabase::class
+                => ['args' => [
+                    Database\Repository\Operation::class,
+                    Database\Repository\Matcher::class,
+                ]],
             FromApplicationConfig::class
                 => ['args' => ['config.mockServer.operationMap']],
             FactoryLocator::class
                 => ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
             Handler::class
-                => ['args' => [FromApplicationConfig::class, FactoryLocator::class, ResponseFactory::class]],
+                => ['args' => [FromMultipleSources::class, FactoryLocator::class, ResponseFactory::class]],
             MatcherFactory\AllOf::class
                 => ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
             MatcherFactory\AnyOf::class

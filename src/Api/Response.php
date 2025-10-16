@@ -18,7 +18,7 @@ final readonly class Response implements \JsonSerializable, HasResponseInfo
         return $this->statusCode;
     }
 
-    public function jsonSerialize(): mixed
+    public function jsonSerialize(): ?\JsonSerializable
     {
         return $this->model;
     }

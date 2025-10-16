@@ -22,7 +22,6 @@ final readonly class DeleteMatcher
         }
 
         $this->matcherRepository->remove($matcher);
-
         return new Response(204);
     }
 }

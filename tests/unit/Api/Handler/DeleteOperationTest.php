@@ -9,7 +9,6 @@ use Membrane\MockServer\Api\Handler\DeleteOperation;
 use Membrane\MockServer\Api\Response;
 use Membrane\MockServer\Database;
 use Membrane\MockServer\Tests\Fixture;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 
@@ -20,11 +19,20 @@ use PHPUnit\Framework\Attributes\UsesClass;
 final class DeleteOperationTest extends \PHPUnit\Framework\TestCase
 {
     #[Test]
-    #[DataProvider('provideCommands')]
-    public function itDeletesOperation(
-        string $operationId,
-    ): void {
-        $operation = new Database\Model\Operation($operationId, 400, [], '');
+    public function itFailsIfOperationDoesNotExist(): void
+    {
+        self::assertEquals(
+            new Response(400),
+            (new DeleteOperation(new Fixture\Repository\Operation()))(
+                new Command\DeleteOperation('abc123')
+            ),
+        );
+    }
+
+    #[Test]
+    public function itDeletesOperation(): void
+    {
+        $operation = Fixture\ProvidesOperations::generate()->current();
 
         $repository = new Fixture\Repository\Operation();
         $repository->save($operation);
@@ -32,23 +40,10 @@ final class DeleteOperationTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(
             new Response(204),
             (new DeleteOperation($repository))(
-                new Command\DeleteOperation($operationId)
+                new Command\DeleteOperation($operation->operationId)
             ),
         );
 
-        self::assertNull($repository->fetchById($operationId));
-
-    }
-
-    /**
-     * @return \Generator<array{
-     *     0: string,
-     * }>
-     */
-    public static function provideCommands(): \Generator
-    {
-        yield ['findPetById'];
-
-        yield ['list-pets'];
+        self::assertNull($repository->fetchById($operation->operationId));
     }
 }

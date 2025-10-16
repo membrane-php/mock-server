@@ -9,7 +9,7 @@ use Membrane\MockServer\Database\Model;
 final class Matcher implements \Membrane\MockServer\Database\Repository\Matcher
 {
     /** @var array<string, array<string, Model\Matcher>> */
-    private array $matchers;
+    private array $matchers = [];
 
     public function fetchById(string $id): ?Model\Matcher
     {

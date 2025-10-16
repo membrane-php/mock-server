@@ -9,7 +9,6 @@ use Membrane\MockServer\Api\Handler\DeleteMatcher;
 use Membrane\MockServer\Api\Response;
 use Membrane\MockServer\Database;
 use Membrane\MockServer\Tests\Fixture;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 
@@ -20,11 +19,20 @@ use PHPUnit\Framework\Attributes\UsesClass;
 final class DeleteMatcherTest extends \PHPUnit\Framework\TestCase
 {
     #[Test]
-    #[DataProvider('provideCommands')]
-    public function itDeletesMatcher(
-        string $id,
-    ): void {
-        $matcher = new Database\Model\Matcher($id, 'list-pets', 'equals', [], 400, [], '');
+    public function itFailsIfMatcherDoesNotExist(): void
+    {
+        self::assertEquals(
+            new Response(400),
+            (new DeleteMatcher(new Fixture\Repository\Matcher()))(
+                new Command\DeleteMatcher('abc123'),
+            ),
+        );
+    }
+
+    #[Test]
+    public function itDeletesMatcher(): void
+    {
+        $matcher = Fixture\ProvidesMatchers::generate()->current();
 
         $repository = new Fixture\Repository\Matcher();
         $repository->save($matcher);
@@ -32,24 +40,10 @@ final class DeleteMatcherTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(
             new Response(204),
             (new DeleteMatcher($repository))(
-                new Command\DeleteMatcher($id)
+                new Command\DeleteMatcher($matcher->id),
             ),
         );
 
-        self::assertNull($repository->fetchById($id));
-
-    }
-
-    /**
-     * @return \Generator<array{
-     *     0: string,
-     *     1: string,
-     * }>
-     */
-    public static function provideCommands(): \Generator
-    {
-        yield ['abc123'];
-
-        yield ['def456'];
+        self::assertNull($repository->fetchById($matcher->id));
     }
 }

@@ -16,14 +16,12 @@ final readonly class DeleteOperation
 
     public function __invoke(Command\DeleteOperation $command): Response
     {
-        $operation = $this->operationRepository
-            ->fetchById($command->operationId);
-
-        if ($operation !== null) {
-            $this->operationRepository
-                ->remove($operation);
+        $operation = $this->operationRepository->fetchById($command->operationId);
+        if ($operation === null) {
+            return new Response(400);
         }
 
+        $this->operationRepository->remove($operation);
         return new Response(204);
     }
 }

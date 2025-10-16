@@ -9,7 +9,7 @@ use Membrane\MockServer\Database\Model;
 final class Operation implements \Membrane\MockServer\Database\Repository\Operation
 {
     /** @var array<string, Model\Operation> */
-    private array $operations;
+    private array $operations = [];
 
     public function fetchById(string $id): ?Model\Operation
     {

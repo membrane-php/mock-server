@@ -6,7 +6,8 @@
   "autoload": {
     "psr-4": {
       "Membrane\\MockServer\\": "src/",
-      "Membrane\\MockServer\\Generated\\": "generated/"
+      "Membrane\\MockServer\\Generated\\": "generated/api/",
+      "Membrane\\MockServer\\Generated\\Mocking\\": "generated/mocking"
     }
   },
   "autoload-dev": {

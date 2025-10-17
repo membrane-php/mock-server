@@ -33,9 +33,9 @@ return [
         ],
         'membrane' => [
             'openAPISpec' => __DIR__ . '/../api/openapi.json',
-            'routes_file' => __DIR__ . '/../generated/routes.php',
+            'routes_file' => __DIR__ . '/../generated/api/routes.php',
             'cached_builders' => [
-                \Membrane\MockServer\Generated\CachedRequestBuilder::class,
+                \Membrane\MockServer\Generated\Api\CachedRequestBuilder::class,
             ],
         ],
         'database' => [

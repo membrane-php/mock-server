@@ -1,0 +1,13 @@
+#!/bin/sh
+
+vendor/bin/generate-hydrators src/ generated/api/ \
+    --hydrator_namespace_prefix="Membrane\\MockServer\\Generated\\Api\\Hydrator" \
+    --psr4_namespace_prefix="Membrane\\MockServer\\Generated\\Api"
+
+vendor/bin/generate-repositories src/ generated/api/ \
+    --repositories_namespace_prefix="Membrane\\MockServer\\Generated\\Api\\Repository" \
+    --psr4_namespace_prefix="Membrane\\MockServer\\Generated\\Api"
+
+vendor/bin/membrane-router m:r:g `pwd`/api/api.yml generated/api/routes.php
+
+bin/migrate

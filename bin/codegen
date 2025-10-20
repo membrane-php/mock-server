@@ -1,14 +1,6 @@
 #!/bin/sh
 
-vendor/bin/generate-hydrators src/ generated/mocking/ \
-    --hydrator_namespace_prefix="Membrane\\MockServer\\Generated\\Mocking\\Hydrator" \
-    --psr4_namespace_prefix="Membrane\\MockServer\\Generated\\Mocking"
-
-vendor/bin/generate-repositories src/ generated/mocking/ \
-    --repositories_namespace_prefix="Membrane\\MockServer\\Generated\\Mocking\\Repository" \
-    --psr4_namespace_prefix="Membrane\\MockServer\\Generated\\Mocking"
-
-vendor/bin/membrane membrane:membrane:generate-processors -vvv `pwd`/api/api.yml ./generated/mocking/ \
+vendor/bin/membrane membrane:membrane:generate-processors -vvv `pwd`/api/mocking.yml ./generated/mocking/ \
     --namespace="Membrane\\MockServer\\Generated\\Mocking"
 
-vendor/bin/membrane-router m:r:g `pwd`/api/api.yml generated/mocking/routes.php
+vendor/bin/membrane-router m:r:g `pwd`/api/mocking.yml generated/mocking/routes.php

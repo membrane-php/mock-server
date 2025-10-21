@@ -40,7 +40,7 @@ return [
         ],
         'database' => [
             'driver' => 'pdo_sqlite',
-            'path' => __DIR__ . '/../storage/db_sqlite',
+            'path' => __DIR__ . '/../storage/app.db',
         ],
     ],
     'debug' => true,

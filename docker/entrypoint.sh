@@ -15,16 +15,46 @@
 #   - then run codegen for router and processors
 # - run migrations
 
-/app/bin/codegen
-if ! [ -f /api.json || -f /api.yml  || -f /api.yaml]; then
-    echo 'Your OpenAPI must be mounted to /api.json or /api.yaml';
+
+
+DIRECTORY="/api"
+FILE=$(find "$DIRECTORY" -maxdepth 1 -name "*.yaml" -o -name "*.yml" -o -name "*.json" | head -n 1)
+
+echo $(ls -a "$DIRECTORY");
+
+if ! [ -f "$FILE" ]; then
+    echo 'Your OpenAPI must be mounted to /app/api/mocking.json or /app/api/mocking.yaml';
     exit 1;
 fi
 
-/app/bin/migrate
+if ! /app/bin/validate-user-api $FILE; then
+  exit 1;
+fi
 
-echo 'starting php-fpm in background'
+if ! /app/bin/codegen $FILE; then
+  exit 1;
+fi
+
+if ! /app/bin/migrate; then
+  exit 1;
+fi
+
+chmod 777 /app/storage/app.db
+
+# Start php-fpm in the background
 php-fpm &
 
-echo 'starting nginx'
-nginx -g 'daemon off;'
+# Get the PID of the php-fpm process
+PHP_FPM_PID=$!
+
+# Start nginx in the foreground with daemon off
+nginx -g 'daemon off;' &
+
+# Get the PID of the nginx process
+NGINX_PID=$!
+
+# Function to handle SIGINT signal
+trap 'echo "Caught SIGINT signal"; kill -TERM $PHP_FPM_PID; wait $PHP_FPM_PID 2>/dev/null; kill -TERM $NGINX_PID; wait $NGINX_PID 2>/dev/null; exit 0' SIGINT
+
+# Wait for all background processes to complete
+wait $NGINX_PID

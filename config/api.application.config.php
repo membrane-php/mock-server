@@ -32,7 +32,7 @@ return [
             ],
         ],
         'membrane' => [
-            'openAPISpec' => __DIR__ . '/../api/openapi.json',
+            'openAPISpec' => __DIR__ . '/../api/api.yml',
             'routes_file' => __DIR__ . '/../generated/api/routes.php',
             'cached_builders' => [
                 \Membrane\MockServer\Generated\Api\CachedRequestBuilder::class,

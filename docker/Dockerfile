@@ -5,7 +5,7 @@ RUN docker-php-ext-install pdo pdo_mysql
 
 WORKDIR /app
 
-COPY docker/nginx.conf /etc/nginx/sites-available/default
+COPY docker/nginx.conf /etc/nginx/http.d/default.conf
 
 # Installing dependencies before copying source code
 # increases the likelihood of utilizing the cache.

@@ -7,7 +7,7 @@ info:
 paths:
   /reset:
     post:
-      operationId: reset-server
+      operationId: reset
       description: Reset all configuration
       responses:
         204:

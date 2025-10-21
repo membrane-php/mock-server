@@ -20,10 +20,8 @@
 DIRECTORY="/api"
 FILE=$(find "$DIRECTORY" -maxdepth 1 -name "*.yaml" -o -name "*.yml" -o -name "*.json" | head -n 1)
 
-echo $(ls -a "$DIRECTORY");
-
 if ! [ -f "$FILE" ]; then
-    echo 'Your OpenAPI must be mounted to /app/api/mocking.json or /app/api/mocking.yaml';
+    echo "Your OpenAPI must be mounted in $DIRECTORY";
     exit 1;
 fi
 

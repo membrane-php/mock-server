@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+
+$autoloadFiles = [
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../autoload.php'
+];
+
+foreach ($autoloadFiles as $autoloadFile) {
+    if (file_exists($autoloadFile)) {
+        require_once $autoloadFile;
+        break;
+    }
+}
+
+use Membrane\OpenAPIReader\OpenAPIVersion;
+use Membrane\OpenAPIReader\Reader;
+
+$reader = new Reader(OpenAPIVersion::cases());
+
+try {
+    $reader->readFromAbsoluteFilePath($argv[1]);
+} catch (\Throwable $e) {
+    echo $e;
+    return 1;
+}
+
+return 0;

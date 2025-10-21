@@ -1,5 +1,8 @@
 #!/bin/sh
 
+vendor/bin/membrane membrane:membrane:generate-processors -vvv `pwd`/api/api.yml ./generated/api/ \
+    --namespace="Membrane\\MockServer\\Generated\\Api"
+
 vendor/bin/generate-hydrators src/ generated/api/ \
     --hydrator_namespace_prefix="Membrane\\MockServer\\Generated\\Api\\Hydrator" \
     --psr4_namespace_prefix="Membrane\\MockServer\\Generated\\Api"

@@ -49,6 +49,7 @@ final class Module implements \Atto\Framework\Module\ModuleInterface
             'membrane' => [
                 'operationMap' => [
                     'reset' => [
+                        'dto' => Command\Reset::class,
                         'handler' => Handler\Reset::class,
                     ],
                     'add-operation' => [

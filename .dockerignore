@@ -1,15 +1,17 @@
-.cache # Local cache should not affect image
-.php-cs-fixer.dist.php
+**.md
+.cache/
+.dockerignore
+.git/
+.php-cs-fixer.*
 .gitignore
+.phpactor.json
+.idea/
 docker/Dockerfile
-generated/ # Local codegen should not affect image
-phpstan.neon
-phpstan.dist.neon
-phpunit.xml
-phpunit.xml.dist
-public/index.php # Image uses api.php and mocking.php
+generated/
+phpstan.*
+phpunit.*
+public/index.php
 LICENSE
-README.md
-storage/*.db # Local databases should not affect image
+storage/*.db
 tests/
-vendor/ # Local dependencies should not affect image
+vendor/

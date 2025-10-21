@@ -37,7 +37,7 @@ if ! /app/bin/migrate; then
   exit 1;
 fi
 
-chmod 777 /app/storage/app.db
+chmod -R 777 /app/storage/
 
 # Start php-fpm in the background
 php-fpm &

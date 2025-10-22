@@ -96,24 +96,16 @@ components:
       type: string
       description: This MUST be an operationId from your OpenAPI Specification
     Response:
-      anyOf:
-        - type: integer
-        - type: object
-          properties:
-            code:
-              type: integer
-            headers:
-              type: object
-              additionalProperties:
-                anyOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-            body:
-              anyOf:
-                - type: string
-                - type: array
+      type: object
+      properties:
+        code:
+          type: integer
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+        body:
+          type: string
     Matcher:
       type: object
       required:

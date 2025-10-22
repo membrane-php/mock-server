@@ -20,6 +20,8 @@
 DIRECTORY="/api"
 FILE=$(find "$DIRECTORY" -maxdepth 1 -name "*.yaml" -o -name "*.yml" -o -name "*.json" | head -n 1)
 
+echo -n $FILE > /app/config/openapi-file
+
 if ! [ -f "$FILE" ]; then
     echo "Your OpenAPI must be mounted in $DIRECTORY";
     exit 1;

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+$api = glob('/api/api.*');
+
 return [
     'modules' => [
         \Atto\Framework\Module::class,
@@ -32,7 +34,7 @@ return [
             ],
         ],
         'membrane' => [
-            'openAPISpec' => __DIR__ . '/../api/openapi.json', //TODO this needs to be flexible for yml or json
+            'openAPISpec' => file_get_contents(__DIR__ . '/openapi-file'),
             'routes_file' => __DIR__ . '/../generated/mocking/routes.php',
             'cached_builders' => [
                 \Membrane\MockServer\Generated\Mocking\CachedRequestBuilder::class,

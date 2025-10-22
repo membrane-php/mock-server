@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Mocking;
 
-use Membrane\MockServer\Mocking\ConfigLocator\FromApplicationConfig;
 use Psr\Http\Message\ResponseInterface;
 
 final readonly class Handler
 {
     public function __construct(
-        private FromApplicationConfig $configLocator,
+        private ConfigLocator $configLocator,
         private FactoryLocator $factoryLocator,
         private ResponseFactory $responseFactory,
     ) {}

@@ -16,21 +16,7 @@ return [
     'globalConfig' => [
         'mockServer' => [
             'operationMap' => [
-                'get-weave-action-actionId' => [
-                    'matchers' => [
-                        [
-                            'matcher' => [
-                                'type' => 'equals',
-                                'args' => [
-                                    'field' => ['path', 'actionId'],
-                                    'value' => 2,
-                                ],
-                            ],
-                            'response' => 200,
-                        ],
-                    ],
-                    'default' => ['response' => 203],
-                ],
+                // operationId keys mapping to operation config arrays
             ],
         ],
         'membrane' => [

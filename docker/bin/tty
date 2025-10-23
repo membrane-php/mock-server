@@ -1,6 +1,0 @@
-#!/bin/sh
-
-docker exec \
-    -ti \
-    $1 \
-    /bin/sh

@@ -12,25 +12,6 @@ return [
         \Membrane\MockServer\Database\Module::class,
     ],
     'globalConfig' => [
-        'mockServer' => [
-            'operationMap' => [
-                'get-weave-action-actionId' => [
-                    'matchers' => [
-                        [
-                            'matcher' => [
-                                'type' => 'equals',
-                                'args' => [
-                                    'field' => ['path', 'actionId'],
-                                    'value' => 2,
-                                ],
-                            ],
-                            'response' => 200,
-                        ],
-                    ],
-                    'default' => ['response' => 203],
-                ],
-            ],
-        ],
         'membrane' => [
             'openAPISpec' => __DIR__ . '/../api/api.yml',
             'routes_file' => __DIR__ . '/../generated/api/routes.php',

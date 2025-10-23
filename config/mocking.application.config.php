@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-$api = glob('/api/api.*');
+$api = current(glob('/api/api.*') ?: [])
+    ?: throw new \RuntimeException('api not found');
 
 return [
     'modules' => [
@@ -20,7 +21,7 @@ return [
             ],
         ],
         'membrane' => [
-            'openAPISpec' => file_get_contents(__DIR__ . '/openapi-file'),
+            'openAPISpec' => $api,
             'routes_file' => __DIR__ . '/../generated/mocking/routes.php',
             'cached_builders' => [
                 \Membrane\MockServer\Generated\Mocking\CachedRequestBuilder::class,

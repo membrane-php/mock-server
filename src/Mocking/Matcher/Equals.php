@@ -16,7 +16,7 @@ final readonly class Equals implements \Membrane\MockServer\Mocking\Matcher
 {
     public function __construct(
         private Field $field,
-        private mixed $value,
+        private bool|float|int|string|null $value,
     ) {}
 
     public function matches(DTO $dto): bool

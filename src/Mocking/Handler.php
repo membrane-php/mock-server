@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Mocking;
 
+use Membrane\MockServer\Matcher\FactoryLocator;
 use Psr\Http\Message\ResponseInterface;
 
 final readonly class Handler

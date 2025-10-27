@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Tests\Fixture;
 
-use Membrane\MockServer\Mocking\Matcher;
+use Membrane\MockServer\Matcher\Matcher;
 
-final readonly class MatcherFactory implements \Membrane\MockServer\Mocking\MatcherFactory
+final readonly class MatcherFactory implements \Membrane\MockServer\Matcher\MatcherFactory
 {
     /** @param array<mixed> $expects */
     public function __construct(

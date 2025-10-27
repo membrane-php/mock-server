@@ -6,7 +6,7 @@ namespace Membrane\MockServer\Tests\Fixture;
 
 use Membrane\MockServer\Mocking\DTO;
 
-final readonly class Matcher implements \Membrane\MockServer\Mocking\Matcher
+final readonly class Matcher implements \Membrane\MockServer\Matcher\Matcher
 {
     public function __construct(
         private ?DTO $expects = null,

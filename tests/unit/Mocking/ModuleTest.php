@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Tests\Unit\Mocking;
 
-use Membrane\MockServer\Mocking\MatcherFactory;
+use Membrane\MockServer\Matcher\MatcherFactory;
 use Membrane\MockServer\Mocking\Module;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\TestDox;

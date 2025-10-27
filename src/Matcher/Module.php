@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Membrane\MockServer\Mocking;
+namespace Membrane\MockServer\Matcher;
 
-use Membrane\MockServer\Database;
-use Membrane\MockServer\Matcher\FactoryLocator;
-use Membrane\MockServer\Matcher\MatcherFactory;
 use Membrane\MockServer\Mocking\ConfigLocator\FromApplicationConfig;
-use Membrane\MockServer\Mocking\ConfigLocator\FromDatabase;
 use Membrane\MockServer\Mocking\ConfigLocator\FromMultipleSources;
+use Membrane\MockServer\Mocking\Handler;
+use Membrane\MockServer\Mocking\ResponseFactory;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -21,11 +19,11 @@ use Psr\Container\ContainerInterface;
  * @phpstan-type AliasesConfig array<string, class-string<MatcherFactory>>
  *
  * @phpstan-type OperationConfig array{
- *      matchers?: list<array{matcher: MatcherFactoryConfig, response: ResponseConfig|int}>,
+ *      matchers?: list<array{matcher: MatcherMakerConfig, response: ResponseConfig|int}>,
  *      default?: array{response: ResponseConfig|int}
  *  }
  *
- * @phpstan-type MatcherFactoryConfig array{
+ * @phpstan-type MatcherMakerConfig array{
  *      args?: MatcherConfig,
  *      type: string,
  *  }
@@ -45,16 +43,6 @@ final class Module implements \Atto\Framework\Module\ModuleInterface
     public function getServices(): array
     {
         return [
-            FromMultipleSources::class
-                => ['args' => [
-                    FromDatabase::class,
-                    FromApplicationConfig::class,
-                ]],
-            FromDatabase::class
-                => ['args' => [
-                    Database\Repository\Operation::class,
-                    Database\Repository\Matcher::class,
-                ]],
             FromApplicationConfig::class
                 => ['args' => ['config.mockServer.operationMap']],
             FactoryLocator::class
@@ -87,11 +75,6 @@ final class Module implements \Atto\Framework\Module\ModuleInterface
     /**
      * @return array{
      *     mockServer: Config,
-     *     membrane: array{
-     *         default: array{
-     *             dto: array{class: class-string, useFlattener: bool},
-     *             handler: class-string,
-     *         },
      *     },
      * }
      */
@@ -126,12 +109,6 @@ final class Module implements \Atto\Framework\Module\ModuleInterface
 
                     'string.regex' => \Membrane\MockServer\Matcher\MatcherFactory\String\Regex::class,
                     \Membrane\MockServer\Matcher\Matcher\String\Regex::class => \Membrane\MockServer\Matcher\MatcherFactory\String\Regex::class,
-                ],
-            ],
-            'membrane' => [
-                'default' => [
-                    'dto' => ['class' => DTO::class, 'useFlattener' => false],
-                    'handler' => Handler::class,
                 ],
             ],
         ];

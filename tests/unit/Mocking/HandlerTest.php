@@ -6,12 +6,12 @@ namespace Membrane\MockServer\Tests\Unit\Mocking;
 
 use GuzzleHttp\Psr7\Response;
 use League\Container\Container;
+use Membrane\MockServer\Matcher\FactoryLocator;
+use Membrane\MockServer\Matcher\Matcher\Equals;
 use Membrane\MockServer\Mocking\ConfigLocator\FromApplicationConfig;
 use Membrane\MockServer\Mocking\DTO;
-use Membrane\MockServer\Mocking\FactoryLocator;
 use Membrane\MockServer\Mocking\Field;
 use Membrane\MockServer\Mocking\Handler;
-use Membrane\MockServer\Mocking\Matcher\Equals;
 use Membrane\MockServer\Mocking\ResponseFactory;
 use Membrane\MockServer\Tests\Fixture;
 use PHPUnit\Framework\Attributes\DataProvider;

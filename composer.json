@@ -35,6 +35,8 @@
     "membrane/membrane": "^0.8",
     "membrane/openapi-reader": "^2.0",
     "membrane/openapi-router": "0.5.1",
+    "membrane/openapi-reader": "^3.0",
+    "membrane/openapi-router": "^0.5.2",
     "symfony/console": "^6.2 || ^7.0"
   },
   "require-dev": {

@@ -28,7 +28,7 @@
     "php": "^8.3.0",
     "atto/db-module": "dev-main",
     "atto/framework": "^0.1",
-    "atto/hydrator": "dev-nest-serialisation",
+    "atto/hydrator": "dev-main",
     "atto/membrane-module": "dev-add-default-config",
     "atto/orm": "dev-main",
     "guzzlehttp/psr7": "^2.4",

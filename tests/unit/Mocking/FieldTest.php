@@ -35,7 +35,7 @@ final class FieldTest extends \PHPUnit\Framework\TestCase
         Field $expected,
         array $config,
     ): void {
-        self::assertEquals($expected, Field::fromConfig($config));
+        self::assertEquals($expected, Field::fromArray($config));
     }
 
     /**

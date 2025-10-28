@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Mocking;
 
+use Membrane\Attribute\Placement;
+use Membrane\Attribute\SetFilterOrValidator;
+use Membrane\Filter\CreateObject\FromArray;
+
+#[SetFilterOrValidator(new FromArray(Field::class), Placement::AFTER)]
 final readonly class Field
 {
     /** @var list<string> */
@@ -32,7 +37,7 @@ final readonly class Field
     }
 
     /** @param non-empty-list<string> $path */
-    public static function fromConfig(array $path): self
+    public static function fromArray(array $path): self
     {
         $name = array_pop($path);
         return new self($name, ...$path);

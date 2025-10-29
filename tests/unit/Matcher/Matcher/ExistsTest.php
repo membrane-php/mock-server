@@ -11,6 +11,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 
+/**
+ * @phpstan-import-type Config from Exists
+ */
 #[UsesClass(Field::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(Exists::class)]
 final class ExistsTest extends \PHPUnit\Framework\TestCase
@@ -30,6 +33,18 @@ final class ExistsTest extends \PHPUnit\Framework\TestCase
             (new Exists(...$fields))
                 ->matches($dto),
         );
+    }
+
+    /**
+     * @param Config[] $args
+     */
+    #[Test]
+    #[DataProvider('provideArraysToConstructFrom')]
+    public function itConstructsFromArray(
+        Exists $expected,
+        array $args,
+    ): void {
+        self::assertEquals($expected, Exists::fromArray($args));
     }
 
     /* @return \Generator<array{0: bool, 1: Field[], 2: DTO}> */
@@ -63,6 +78,15 @@ final class ExistsTest extends \PHPUnit\Framework\TestCase
             false,
             [new Field('some', 'path'), new Field('not-all-fields', 'query')],
             new DTO(['path' => ['some' => 123]]),
+        ];
+    }
+
+    /* @return \Generator<array{0: Exists, 1: Config}> */
+    public static function provideArraysToConstructFrom(): \Generator
+    {
+        yield 'false if no fields' => [
+            new Exists(new Field('id', 'path')),
+            [['path', 'id']]
         ];
     }
 }

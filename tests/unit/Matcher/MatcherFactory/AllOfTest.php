@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Tests\Unit\Matcher\MatcherFactory;
 
-use;
 use League\Container\Container;
 use Membrane\MockServer\Matcher\MatcherFactory;
 use Membrane\MockServer\Matcher\MatcherFactory\AllOf;

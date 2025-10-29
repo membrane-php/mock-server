@@ -10,32 +10,26 @@ use Membrane\MockServer\Matcher\MatcherFactory;
 use Membrane\MockServer\Mocking\ConfigLocator\FromApplicationConfig;
 use Membrane\MockServer\Mocking\ConfigLocator\FromDatabase;
 use Membrane\MockServer\Mocking\ConfigLocator\FromMultipleSources;
-use Psr\Container\ContainerInterface;
 
 /**
  * @phpstan-type Config array{
- *     aliases?: AliasesConfig,
  *     operationMap?: array<string, OperationConfig>,
  * }
  *
  * @phpstan-type AliasesConfig array<string, class-string<MatcherFactory>>
  *
  * @phpstan-type OperationConfig array{
- *      matchers?: list<array{matcher: MatcherFactoryConfig, response: ResponseConfig|int}>,
- *      default?: array{response: ResponseConfig|int}
- *  }
+ *     matchers?: list<array{matcher: MatcherFactoryConfig, response: ResponseConfig|int}>,
+ *     default?: array{response: ResponseConfig|int}
+ * }
  *
- * @phpstan-type MatcherFactoryConfig array{
- *      args?: MatcherConfig,
- *      type: string,
- *  }
- * @phpstan-type MatcherConfig array<string,mixed>
+ * @phpstan-import-type  MatcherFactoryConfig from \Membrane\MockServer\Matcher\Module
  *
  * @phpstan-type ResponseConfig array{
- *      headers?: array<string, string|list<string>>,
- *      body?: mixed[]|string,
- *      code: int,
- *  }
+ *     headers?: array<string, string|list<string>>,
+ *     body?: mixed[]|string,
+ *     code: int,
+ * }
  */
 final class Module implements \Atto\Framework\Module\ModuleInterface
 {
@@ -57,28 +51,8 @@ final class Module implements \Atto\Framework\Module\ModuleInterface
                 ]],
             FromApplicationConfig::class
                 => ['args' => ['config.mockServer.operationMap']],
-            FactoryLocator::class
-                => ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
             Handler::class
                 => ['args' => [FromMultipleSources::class, FactoryLocator::class, ResponseFactory::class]],
-            \Membrane\MockServer\Matcher\MatcherFactory\AllOf::class
-                => ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
-            \Membrane\MockServer\Matcher\MatcherFactory\AnyOf::class
-                => ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
-            \Membrane\MockServer\Matcher\MatcherFactory\Array\Contains::class
-                => [],
-            \Membrane\MockServer\Matcher\MatcherFactory\Equals::class
-                => [],
-            \Membrane\MockServer\Matcher\MatcherFactory\Exists::class
-                => [],
-            \Membrane\MockServer\Matcher\MatcherFactory\GreaterThan::class
-                => [],
-            \Membrane\MockServer\Matcher\MatcherFactory\LessThan::class
-                => [],
-            \Membrane\MockServer\Matcher\MatcherFactory\Not::class
-                => ['args' => [ContainerInterface::class, 'config.mockServer.aliases']],
-            \Membrane\MockServer\Matcher\MatcherFactory\String\Regex::class
-                => [],
             ResponseFactory::class
                 => [],
         ];
@@ -86,7 +60,6 @@ final class Module implements \Atto\Framework\Module\ModuleInterface
 
     /**
      * @return array{
-     *     mockServer: Config,
      *     membrane: array{
      *         default: array{
      *             dto: array{class: class-string, useFlattener: bool},
@@ -98,36 +71,6 @@ final class Module implements \Atto\Framework\Module\ModuleInterface
     public function getConfig(): array
     {
         return [
-            'mockServer' => [
-                'aliases' => [
-                    'allOf' => \Membrane\MockServer\Matcher\MatcherFactory\AllOf::class,
-                    \Membrane\MockServer\Matcher\Matcher\AllOf::class => \Membrane\MockServer\Matcher\MatcherFactory\AllOf::class,
-
-                    'anyOf' => \Membrane\MockServer\Matcher\MatcherFactory\AnyOf::class,
-                    \Membrane\MockServer\Matcher\Matcher\AnyOf::class => \Membrane\MockServer\Matcher\MatcherFactory\AnyOf::class,
-
-                    'array.contains' => \Membrane\MockServer\Matcher\MatcherFactory\Array\Contains::class,
-                    \Membrane\MockServer\Matcher\Matcher\Array\Contains::class => \Membrane\MockServer\Matcher\MatcherFactory\Array\Contains::class,
-
-                    'equals' => \Membrane\MockServer\Matcher\MatcherFactory\Equals::class,
-                    \Membrane\MockServer\Matcher\Matcher\Equals::class => \Membrane\MockServer\Matcher\MatcherFactory\Equals::class,
-
-                    'exists' => \Membrane\MockServer\Matcher\MatcherFactory\Exists::class,
-                    \Membrane\MockServer\Matcher\Matcher\Exists::class => \Membrane\MockServer\Matcher\MatcherFactory\Exists::class,
-
-                    'greater-than' => \Membrane\MockServer\Matcher\MatcherFactory\GreaterThan::class,
-                    \Membrane\MockServer\Matcher\Matcher\GreaterThan::class => \Membrane\MockServer\Matcher\MatcherFactory\GreaterThan::class,
-
-                    'less-than' => \Membrane\MockServer\Matcher\MatcherFactory\LessThan::class,
-                    \Membrane\MockServer\Matcher\Matcher\LessThan::class => \Membrane\MockServer\Matcher\MatcherFactory\LessThan::class,
-
-                    'not' => \Membrane\MockServer\Matcher\MatcherFactory\Not::class,
-                    \Membrane\MockServer\Matcher\Matcher\Not::class => \Membrane\MockServer\Matcher\MatcherFactory\Not::class,
-
-                    'string.regex' => \Membrane\MockServer\Matcher\MatcherFactory\String\Regex::class,
-                    \Membrane\MockServer\Matcher\Matcher\String\Regex::class => \Membrane\MockServer\Matcher\MatcherFactory\String\Regex::class,
-                ],
-            ],
             'membrane' => [
                 'default' => [
                     'dto' => ['class' => DTO::class, 'useFlattener' => false],

@@ -10,6 +10,7 @@ return [
         \Atto\Psr7\Module::class,
         \Membrane\MockServer\Api\Module::class,
         \Membrane\MockServer\Database\Module::class,
+        \Membrane\MockServer\Matcher\Module::class,
     ],
     'globalConfig' => [
         'membrane' => [

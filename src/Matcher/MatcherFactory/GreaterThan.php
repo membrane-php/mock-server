@@ -25,7 +25,7 @@ final class GreaterThan implements \Membrane\MockServer\Matcher\MatcherFactory
         }
 
         return new \Membrane\MockServer\Matcher\Matcher\GreaterThan(
-            Field::fromConfig($config['field']),
+            Field::fromArray($config['field']),
             $limit,
             $config['inclusive'] ?? true,
         );

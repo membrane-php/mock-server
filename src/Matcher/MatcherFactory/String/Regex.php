@@ -19,7 +19,7 @@ final class Regex implements \Membrane\MockServer\Matcher\MatcherFactory
     public function create(array $config): Matcher
     {
         return new \Membrane\MockServer\Matcher\Matcher\String\Regex(
-            Field::fromConfig($config['field']),
+            Field::fromArray($config['field']),
             $config['pattern'],
         );
     }

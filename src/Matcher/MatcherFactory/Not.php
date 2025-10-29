@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Matcher\MatcherFactory;
 
-use;
 use Membrane\MockServer\Matcher\Matcher;
 use Membrane\MockServer\Matcher\MatcherFactory;
 use Psr\Container\ContainerInterface;
 
 /**
- * @phpstan-import-type AliasesConfig from \Membrane\MockServer\Mocking\Module
- * @phpstan-import-type MatcherFactoryConfig from \Membrane\MockServer\Mocking\Module
+ * @phpstan-import-type AliasesConfig from \Membrane\MockServer\Matcher\Module
+ * @phpstan-import-type MatcherFactoryConfig from \Membrane\MockServer\Matcher\Module
  *
  * @phpstan-type Config array{matcher: MatcherFactoryConfig}
  */

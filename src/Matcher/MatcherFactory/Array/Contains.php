@@ -19,7 +19,7 @@ final class Contains implements \Membrane\MockServer\Matcher\MatcherFactory
     public function create(array $config): Matcher
     {
         return new \Membrane\MockServer\Matcher\Matcher\Array\Contains(
-            Field::fromConfig($config['field']),
+            Field::fromArray($config['field']),
             ...$config['values'],
         );
     }

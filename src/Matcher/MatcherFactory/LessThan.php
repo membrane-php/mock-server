@@ -25,7 +25,7 @@ final class LessThan implements \Membrane\MockServer\Matcher\MatcherFactory
         }
 
         return new \Membrane\MockServer\Matcher\Matcher\LessThan(
-            Field::fromConfig($config['field']),
+            Field::fromArray($config['field']),
             $limit,
             $config['inclusive'] ?? true,
         );

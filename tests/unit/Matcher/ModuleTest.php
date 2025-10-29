@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Membrane\MockServer\Tests\Unit\Mocking;
+namespace Membrane\MockServer\Tests\Unit\Matcher;
 
 use Membrane\MockServer\Matcher\MatcherFactory;
-use Membrane\MockServer\Mocking\Module;
+use Membrane\MockServer\Matcher\Module;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\TestDox;
 use Roave\BetterReflection\BetterReflection;
@@ -41,7 +41,7 @@ final class ModuleTest extends \PHPUnit\Framework\TestCase
             ->getBuiltInMatcherFactories();
 
         $provided = array_values((new Module())
-            ->getConfig()['mockServer']['aliases']);
+            ->getConfig()['mockServer']['matcher']['aliases']);
 
         $missing = array_diff($builtIn, $provided);
 
@@ -59,7 +59,7 @@ final class ModuleTest extends \PHPUnit\Framework\TestCase
     private function getBuiltInMatcherFactories(): array
     {
         $reflector = new DefaultReflector(new DirectoriesSourceLocator(
-            [__DIR__ . '/../../../src/Mocking/MatcherFactory/'],
+            [__DIR__ . '/../../../src/Matcher/MatcherFactory/'],
             (new BetterReflection())->astLocator(),
         ));
 

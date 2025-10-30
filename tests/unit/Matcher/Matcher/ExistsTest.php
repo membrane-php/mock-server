@@ -84,9 +84,22 @@ final class ExistsTest extends \PHPUnit\Framework\TestCase
     /* @return \Generator<array{0: Exists, 1: Config}> */
     public static function provideArraysToConstructFrom(): \Generator
     {
-        yield 'false if no fields' => [
+        yield 'one field' => [
             new Exists(new Field('id', 'path')),
             [['path', 'id']]
+        ];
+
+        yield 'three fields' => [
+            new Exists(
+                new Field('id', 'path'),
+                new Field('pageLimit', 'query'),
+                new Field('species', 'requestBody', 'pet')
+            ),
+            [
+                ['path', 'id'],
+                ['query', 'pageLimit'],
+                ['requestBody', 'pet', 'species'],
+            ]
         ];
     }
 }

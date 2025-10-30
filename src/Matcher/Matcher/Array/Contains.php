@@ -4,9 +4,19 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Matcher\Matcher\Array;
 
+use Membrane\Attribute\Placement;
+use Membrane\Attribute\SetFilterOrValidator;
+use Membrane\Filter\CreateObject\FromArray;
 use Membrane\MockServer\Mocking\DTO;
 use Membrane\MockServer\Mocking\Field;
 
+/**
+ * @phpstan-type Config array{
+ *     field: non-empty-list<string>,
+ *     values: list<mixed>,
+ * }
+ */
+#[SetFilterOrValidator(new FromArray(Contains::class), Placement::AFTER)]
 final readonly class Contains implements \Membrane\MockServer\Matcher\Matcher
 {
     /** @var mixed[]  */
@@ -38,5 +48,14 @@ final readonly class Contains implements \Membrane\MockServer\Matcher\Matcher
         }
 
         return true;
+    }
+
+    /** @param Config $config */
+    public static function fromArray(array $config): self
+    {
+        return new self(
+            Field::fromArray($config['field']),
+            ...$config['values'],
+        );
     }
 }

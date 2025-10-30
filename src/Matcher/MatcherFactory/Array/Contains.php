@@ -8,17 +8,14 @@ use Membrane\MockServer\Matcher\Matcher;
 use Membrane\MockServer\Mocking\Field;
 
 /**
- * @phpstan-type Config array{
- *     field: non-empty-list<string>,
- *     values: list<mixed>,
- * }
+ * @phpstan-import-type Config from Matcher\Array\Contains
  */
 final class Contains implements \Membrane\MockServer\Matcher\MatcherFactory
 {
     /** @param Config $config */
     public function create(array $config): Matcher
     {
-        return new \Membrane\MockServer\Matcher\Matcher\Array\Contains(
+        return new Matcher\Array\Contains(
             Field::fromArray($config['field']),
             ...$config['values'],
         );

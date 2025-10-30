@@ -11,6 +11,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 
+/**
+ * @phpstan-import-type Config from Contains
+ */
 #[UsesClass(Field::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(Contains::class)]
 final class ContainsTest extends \PHPUnit\Framework\TestCase
@@ -31,6 +34,18 @@ final class ContainsTest extends \PHPUnit\Framework\TestCase
             (new Contains($field, ...$values))
                 ->matches($dto),
         );
+    }
+
+    /**
+     * @param Config $config
+     */
+    #[Test]
+    #[DataProvider('provideArraysToConstructFrom')]
+    public function itConstructsFromArray(
+        Contains $expected,
+        array $config,
+    ): void {
+        self::assertEquals($expected, Contains::fromArray($config));
     }
 
     /* @return \Generator<array{0: bool, 1: Field, 2: mixed[], 3: DTO}> */
@@ -67,6 +82,34 @@ final class ContainsTest extends \PHPUnit\Framework\TestCase
             new Field('field', 'path'),
             ['some', 'all'],
             new DTO(['path' => ['field' => ['some']]]),
+        ];
+    }
+
+    /* @return \Generator<array{0: Contains, 1: Config}> */
+    public static function provideArraysToConstructFrom(): \Generator
+    {
+        yield 'one value' => [
+            new Contains(
+                new Field('tags', 'query'),
+                'cat',
+            ),
+            [
+                'field' => ['query', 'tags'],
+                'values' => ['cat'],
+            ]
+        ];
+
+        yield 'three values' => [
+            new Contains(
+                new Field('tags', 'query'),
+                'cat',
+                'dog',
+                'degu',
+            ),
+            [
+                'field' => ['query', 'tags'],
+                'values' => ['cat', 'dog', 'degu'],
+            ]
         ];
     }
 }

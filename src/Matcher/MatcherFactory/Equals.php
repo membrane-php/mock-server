@@ -24,21 +24,4 @@ final class Equals implements \Membrane\MockServer\Matcher\MatcherFactory
             $config['value'],
         );
     }
-
-    public function validate(array $config): void
-    {
-        if (!(
-            isset($config['field'])
-            && is_array($config['field'])
-            && !array_is_list($config['field'])
-            && array_reduce(
-                $config['field'],
-                fn($previousAreString, $current) => $previousAreString && is_string($current),
-                true
-            )
-        )) {
-            throw InvalidConfig::field([self::class, 'field']);
-        }
-    }
-
 }

@@ -4,17 +4,22 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Mocking;
 
+use Membrane\Attribute\Ignored;
 use Membrane\Attribute\Placement;
 use Membrane\Attribute\SetFilterOrValidator;
 use Membrane\Filter\CreateObject\FromArray;
 
-#[SetFilterOrValidator(new FromArray(Field::class), Placement::AFTER)]
+// try catch around method call, any throwable == invalid result with throwable message
+//#[SetFilterOrValidator(new CallMethod(Field::class, 'filterConfig'), Placement::BEFORE)]
+#[SetFilterOrValidator(new FromArray(Field::class), Placement::BEFORE)]
 final readonly class Field
 {
     /** @var list<string> */
+    #[Ignored]
     private array $path;
 
     public function __construct(
+        #[Ignored]
         private string $name,
         string ...$path,
     ) {
@@ -36,10 +41,10 @@ final readonly class Field
         return $data;
     }
 
-    /** @param non-empty-list<string> $path */
-    public static function fromArray(array $path): self
+    /** @param array{field: non-empty-list<string>} $config */
+    public static function fromArray(array $config): self
     {
-        $name = array_pop($path);
-        return new self($name, ...$path);
+        $name = array_pop($config);
+        return new self($name, ...$config);
     }
 }

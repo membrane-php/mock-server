@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Matcher\MatcherFactory;
 
-use Membrane\MockServer\Matcher\Matcher;
-use Membrane\MockServer\Mocking\Field;
+use Membrane\Attribute\Builder;use Membrane\Attribute\ClassWithAttributes;use Membrane\Membrane;use Membrane\MockServer\Exception\InvalidConfig;use Membrane\MockServer\Matcher\Matcher;
 
 /**
  * @phpstan-type Config array{
@@ -19,15 +18,14 @@ final class GreaterThan implements \Membrane\MockServer\Matcher\MatcherFactory
     /** @param Config $config */
     public function create(array $config): Matcher
     {
-        $limit = $config['limit'];
-        if (is_string($limit)) {
-            $limit = (float) $limit;
+        $result = (new Membrane(new Builder()))
+            ->process($config, new ClassWithAttributes(Matcher\GreaterThan::class));
+
+        if (! $result->isValid()) {
+            throw InvalidConfig::fromResult($result);
         }
 
-        return new \Membrane\MockServer\Matcher\Matcher\GreaterThan(
-            Field::fromArray($config['field']),
-            $limit,
-            $config['inclusive'] ?? true,
-        );
+        assert ($result->value instanceof Matcher\GreaterThan);
+        return $result->value;
     }
 }

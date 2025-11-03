@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Matcher\Matcher;
 
+use Membrane\Attribute\Ignored;
 use Membrane\Attribute\Placement;
 use Membrane\Attribute\SetFilterOrValidator;
 use Membrane\Filter\CreateObject\FromArray;
@@ -19,6 +20,7 @@ use Membrane\MockServer\Mocking\Field;
 final class Exists implements \Membrane\MockServer\Matcher\Matcher
 {
     /** @var Field[] */
+    #[Ignored]
     private array $fields;
 
     public function __construct(
@@ -40,12 +42,12 @@ final class Exists implements \Membrane\MockServer\Matcher\Matcher
     }
 
     /**
-     * @param Config $args
+     * @param Config $config
      */
-    public static function fromArray(array $args): self
+    public static function fromArray(array $config): self
     {
         $fields = [];
-        foreach ($args as $fieldConfig) {
+        foreach ($config['fields'] as $fieldConfig) {
             $fields [] = Field::fromArray($fieldConfig);
         }
 

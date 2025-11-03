@@ -41,7 +41,7 @@ final readonly class Field
         return $data;
     }
 
-    /** @param array{field: non-empty-list<string>} $config */
+    /** @param non-empty-list<string> $config */
     public static function fromArray(array $config): self
     {
         $name = array_pop($config);

@@ -7,11 +7,10 @@ namespace Membrane\MockServer\Matcher\Matcher\String;
 use Membrane\Attribute\Placement;
 use Membrane\Attribute\SetFilterOrValidator;
 use Membrane\Filter\CreateObject\WithNamedArguments;
-use Membrane\MockServer\Matcher\Matcher\GreaterThan;
 use Membrane\MockServer\Mocking\DTO;
 use Membrane\MockServer\Mocking\Field;
 
-#[SetFilterOrValidator(new WithNamedArguments(GreaterThan::class), Placement::AFTER)]
+#[SetFilterOrValidator(new WithNamedArguments(Regex::class), Placement::AFTER)]
 final readonly class Regex implements \Membrane\MockServer\Matcher\Matcher
 {
     public function __construct(

@@ -86,7 +86,7 @@ final class ExistsTest extends \PHPUnit\Framework\TestCase
     {
         yield 'one field' => [
             new Exists(new Field('id', 'path')),
-            [['path', 'id']]
+            ['fields' => [['path', 'id']]],
         ];
 
         yield 'three fields' => [
@@ -95,11 +95,11 @@ final class ExistsTest extends \PHPUnit\Framework\TestCase
                 new Field('pageLimit', 'query'),
                 new Field('species', 'requestBody', 'pet')
             ),
-            [
+            ['fields' => [
                 ['path', 'id'],
                 ['query', 'pageLimit'],
                 ['requestBody', 'pet', 'species'],
-            ]
+            ]],
         ];
     }
 }

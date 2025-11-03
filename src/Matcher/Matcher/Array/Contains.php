@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Matcher\Matcher\Array;
 
+use Membrane\Attribute\Ignored;
 use Membrane\Attribute\Placement;
 use Membrane\Attribute\SetFilterOrValidator;
 use Membrane\Filter\CreateObject\FromArray;
@@ -20,9 +21,11 @@ use Membrane\MockServer\Mocking\Field;
 final readonly class Contains implements \Membrane\MockServer\Matcher\Matcher
 {
     /** @var mixed[]  */
+    #[Ignored]
     private array $values;
 
     public function __construct(
+        #[Ignored]
         private Field $field,
         mixed $value,
         mixed ...$values,

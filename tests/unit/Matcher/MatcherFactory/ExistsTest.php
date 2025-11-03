@@ -38,7 +38,9 @@ final class ExistsTest extends \PHPUnit\Framework\TestCase
             new \Membrane\MockServer\Matcher\Matcher\Exists(
                 new Field('id', 'path'),
             ),
-            ['fields' => [['path', 'id']]],
+            ['fields' => [
+                ['path', 'id'],
+            ]],
         ];
         yield '3 fields' => [
             new \Membrane\MockServer\Matcher\Matcher\Exists(

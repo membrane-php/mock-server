@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Exception;
 
+use Membrane\Renderer\JsonFlat;
+use Membrane\Result\Result;
+
 final class InvalidConfig extends \RuntimeException implements \Membrane\MockServer\Exception
 {
     /** @param list<string> $field */
@@ -12,6 +15,11 @@ final class InvalidConfig extends \RuntimeException implements \Membrane\MockSer
         string $message = "",
     ) {
         parent::__construct($message);
+    }
+
+    public static function fromResult(Result $result): self
+    {
+        return new self(message: (new JsonFlat($result))->toString());
     }
 
     /** @param list<string> $field */

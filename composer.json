@@ -13,35 +13,28 @@
   "autoload-dev": {
     "psr-4": {
       "Membrane\\MockServer\\Tests\\": "tests/",
+      "Membrane\\MockServer\\Tests\\EndToEnd\\": "tests/e2e/",
       "Membrane\\MockServer\\Tests\\Unit\\": "tests/unit/",
       "Membrane\\MockServer\\Tests\\Fixture\\": "tests/fixture/",
       "Membrane\\MockServer\\Tests\\Integration\\": "tests/integration/"
     }
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/charjr/atto-php-membrane.git"
-    }
-  ],
   "require": {
     "php": "^8.3.0",
     "atto/db-module": "dev-main",
     "atto/framework": "^0.1",
     "atto/hydrator": "dev-main",
-    "atto/membrane-module": "dev-add-default-config",
+    "atto/membrane-module": "^0.1.8",
     "atto/orm": "dev-main",
     "guzzlehttp/psr7": "^2.4",
-    "membrane/membrane": "^0.8",
-    "membrane/openapi-reader": "^2.0",
-    "membrane/openapi-router": "0.5.1",
+    "membrane/membrane": "^0.10.0",
     "membrane/openapi-reader": "^3.0",
     "membrane/openapi-router": "^0.5.2",
     "symfony/console": "^6.2 || ^7.0"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.88.2",
-    "mikey179/vfsstream": "^1.6.7",
+    "guzzlehttp/guzzle": "^7.10.0",
     "phpstan/phpstan": "^1.12.5",
     "phpunit/phpunit": "^11.5.39",
     "roave/better-reflection": "^6.65.0"

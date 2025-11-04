@@ -18,6 +18,9 @@
           <directory groups="integration">tests/integration</directory>
           <directory groups="fixture">tests/fixture</directory>
         </testsuite>
+      <testsuite name="e2e">
+        <directory groups="e2e">tests/e2e</directory>
+      </testsuite>
     </testsuites>
   <coverage>
     <report>

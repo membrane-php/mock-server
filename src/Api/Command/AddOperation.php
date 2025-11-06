@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Api\Command;
 
+use Membrane\Attribute\OverrideProcessorType;
 use Membrane\Attribute\Placement;
 use Membrane\Attribute\SetFilterOrValidator;
 use Membrane\Attribute\Subtype;
@@ -11,6 +12,7 @@ use Membrane\Filter\CreateObject\WithNamedArguments;
 use Membrane\Filter\Shape\Delete;
 use Membrane\Filter\Shape\Pluck;
 use Membrane\Filter\Shape\Rename;
+use Membrane\Processor\ProcessorType;
 
 #[SetFilterOrValidator(new Pluck('default', 'response'), Placement::BEFORE)]
 #[SetFilterOrValidator(new Delete('default'), Placement::BEFORE)]
@@ -28,7 +30,7 @@ final readonly class AddOperation
     public function __construct(
         public string $operationId,
         public int $defaultResponseCode,
-        #[Subtype('string')]
+        #[OverrideProcessorType(ProcessorType::Field)]
         public array $defaultResponseHeaders = [],
         public string $defaultResponseBody = '',
     ) {}

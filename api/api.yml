@@ -97,6 +97,8 @@ components:
       description: This MUST be an operationId from your OpenAPI Specification
     Response:
       type: object
+      required:
+        - code
       properties:
         code:
           type: integer

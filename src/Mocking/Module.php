@@ -10,6 +10,7 @@ use Membrane\MockServer\Matcher\MatcherFactory;
 use Membrane\MockServer\Mocking\ConfigLocator\FromApplicationConfig;
 use Membrane\MockServer\Mocking\ConfigLocator\FromDatabase;
 use Membrane\MockServer\Mocking\ConfigLocator\FromMultipleSources;
+use Psr\Container\ContainerInterface;
 
 /**
  * @phpstan-type Config array{
@@ -39,6 +40,8 @@ final class Module implements \Atto\Framework\Module\ModuleInterface
     public function getServices(): array
     {
         return [
+            FactoryLocator::class
+            => ['args' => [ContainerInterface::class, 'config.mockServer.matcher.aliases']],
             FromMultipleSources::class
                 => ['args' => [
                     FromDatabase::class,

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         beStrictAboutCoverageMetadata="true"
+         beStrictAboutOutputDuringTests="true"
          bootstrap="vendor/autoload.php"
          cacheDirectory=".cache/phpunit"
          colors="true"
-         executionOrder="depends,defects"
-         requireCoverageMetadata="true"
-         beStrictAboutCoverageMetadata="true"
-         beStrictAboutOutputDuringTests="true"
+         defaultTestSuite="default"
          displayDetailsOnAllIssues="true"
+         executionOrder="depends,defects"
          failOnPhpunitDeprecation="true"
          failOnRisky="true"
-         failOnWarning="true">
+         failOnWarning="true"
+         requireCoverageMetadata="true">
     <testsuites>
         <testsuite name="default">
           <directory groups="unit">tests/unit</directory>

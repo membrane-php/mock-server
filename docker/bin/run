@@ -3,7 +3,7 @@
 extension="${1##*.}"
 
 docker run \
-    -v `pwd`/"$1:/api/mocking.$extension" \
+    -v `pwd`/"$1:/api/api.$extension" \
     -p 8080:8080 \
     -p 8081:8081 \
     membrane-mockserver

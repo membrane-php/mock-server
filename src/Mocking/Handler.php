@@ -35,10 +35,20 @@ final readonly class Handler
             }
         }
 
-        $defaultResponseConfig = $operationConfig['default']['response'] ?? null;
-        if ($defaultResponseConfig === null) {
-            return null;
-        }
+        $defaultResponseConfig = $operationConfig['default']['response']
+            ?? [
+                'code' => 522,
+                'headers' => [
+                    'Content-type' => 'application/problem+json',
+                ],
+                'body' => [
+                    'title' => 'Response Not Defined',
+                    'detail' => <<<DETAIL
+                         Request is valid against your OpenAPI spec,
+                         but no response has been defined for this operation.
+                         DETAIL,
+                ],
+            ];
 
         return $this->responseFactory->create($defaultResponseConfig);
     }

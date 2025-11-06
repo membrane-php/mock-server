@@ -22,8 +22,9 @@ final readonly class Handler
 
         $operationConfig = $this->configLocator->getOperationConfig($operationId);
 
-
-        foreach ($operationConfig['matchers'] ?? [] as ['matcher' => $matcherConfig, 'response' => $responseConfig]) {
+        foreach ($operationConfig['matchers'] ?? []
+            as ['matcher' => $matcherConfig, 'response' => $responseConfig]
+        ) {
             $matcher = $this->factoryLocator
                 ->locate($matcherConfig['type'])
                 ->create($matcherConfig['args'] ?? []);

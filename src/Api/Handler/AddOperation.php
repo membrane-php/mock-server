@@ -25,6 +25,6 @@ final readonly class AddOperation
 
         $this->operationRepository->save($operation);
 
-        return new Response(202, $operation);
+        return new Response(201, $operation);
     }
 }

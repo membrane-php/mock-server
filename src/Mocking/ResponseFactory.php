@@ -33,7 +33,7 @@ final readonly class ResponseFactory
             return $body;
         }
 
-        return json_encode($body['content'])
+        return json_encode($body)
             ?: throw new \RuntimeException(json_last_error_msg());
     }
 }

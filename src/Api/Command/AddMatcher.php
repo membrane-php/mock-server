@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Membrane\MockServer\Api\Command;
 
 use Membrane\Attribute\Ignored;
+use Membrane\Attribute\OverrideProcessorType;
 use Membrane\Attribute\Placement;
 use Membrane\Attribute\SetFilterOrValidator;
 use Membrane\Attribute\Subtype;
@@ -12,6 +13,7 @@ use Membrane\Filter\CreateObject\WithNamedArguments;
 use Membrane\Filter\Shape\Delete;
 use Membrane\Filter\Shape\Pluck;
 use Membrane\Filter\Shape\Rename;
+use Membrane\Processor\ProcessorType;
 
 #[SetFilterOrValidator(new Pluck('matcher', 'type', 'args'), Placement::BEFORE)]
 #[SetFilterOrValidator(new Delete('matcher'), Placement::BEFORE)]
@@ -35,6 +37,7 @@ final readonly class AddMatcher
         public array $args,
         public int $responseCode,
         #[Subtype('string')]
+        #[OverrideProcessorType(ProcessorType::Field)]
         public array $responseHeaders = [],
         public string $responseBody = '',
     ) {}

@@ -12,6 +12,7 @@ final readonly class DeleteOperation
 {
     public function __construct(
         private Database\Repository\Operation $operationRepository,
+        private Database\Repository\Matcher $matcherRepository,
     ) {}
 
     public function __invoke(Command\DeleteOperation $command): Response
@@ -19,6 +20,12 @@ final readonly class DeleteOperation
         $operation = $this->operationRepository->fetchById($command->operationId);
         if ($operation === null) {
             return new Response(400);
+        }
+
+        $matchers = $this->matcherRepository->fetchByOperationId($command->operationId);
+
+        foreach ($matchers as $matcher) {
+            $this->matcherRepository->remove($matcher);
         }
 
         $this->operationRepository->remove($operation);

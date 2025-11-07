@@ -31,7 +31,10 @@ final class Module implements \Atto\Framework\Module\ModuleInterface
                 ],
             Handler\DeleteOperation::class
                 => [
-                    'args' => [Database\Repository\Operation::class],
+                    'args' => [
+                        Database\Repository\Operation::class,
+                        Database\Repository\Matcher::class,
+                    ],
                 ],
             Handler\DeleteMatcher::class
                 => [

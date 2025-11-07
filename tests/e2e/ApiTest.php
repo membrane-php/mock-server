@@ -32,57 +32,167 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
     }
 
     #[Test]
-    #[TestDox('You can call an operation once you add it.')]
-    public function youCanCallOperation(): void
+    #[TestDox('Calling undefined operations returns 522.')]
+    public function youCannotCallUndefinedOperation(): void
     {
+        self::assertSame(522, $this->callMocking('get', '/pets')->getStatusCode());
+    }
+
+    #[Test]
+    #[TestDox('Calling defined operations returns default.')]
+    public function youCanCallDefinedOperation(): void
+    {
+        $body = '{"id":5,"name":"Blink"}';
+
         $response = $this->callApi(
             'post',
             '/operation/listPets',
-            ['default' => ['response' => ['code' => 200]]],
+            ['default' => ['response' => ['code' => 200, 'body' => $body]]],
         );
 
-        //@BUG: this should be 201, but is returning 202
-        self::assertSame(202, $response->getStatusCode());
+       self::assertSame(201, $response->getStatusCode());
 
-        $response = $this->callMocking(
-            'get',
-            '/pets',
-            [],
-        );
+       $response = $this->callMocking('get', '/pets', []);
 
-        self::assertSame(200, $response->getStatusCode());
+       self::assertSame(200, $response->getStatusCode());
+       self::assertSame($body, (string) $response->getBody());
     }
 
     #[Test]
     #[TestDox('You can call an operation once you add it.')]
-    public function youCanCallOperation(): void
+    public function youCanDeleteOperation(): void
     {
-        $response = $this->callApi(
+        $this->callApi(
             'post',
             '/operation/listPets',
             ['default' => ['response' => ['code' => 200]]],
         );
 
-        //@BUG: this should be 201, but is returning 202
-        self::assertSame(202, $response->getStatusCode());
+        $this->callApi('DELETE', '/operation/listPets');
 
-        $response = $this->callMocking(
-            'get',
-            '/pets',
-            [],
-        );
-
-        self::assertSame(200, $response->getStatusCode());
+        self::assertSame(522, $this->callMocking('get', '/pets')->getStatusCode());
     }
 
+    //TODO if you define several matchers, the appropriate match is made
 
+    //TODO if you define a matcher, but don't match it, you fall back to default
+    #[Test]
+     public function youCanMatchDefinedMatcher(): void
+     {
+         $this->callApi(
+             'post',
+             '/operation/showPetById',
+             ['default' => ['response' => ['code' => 404]]],
+         );
+
+         $body = '{"id":6,"name":"Harley"}';
+
+         $response = $this->callApi(
+             'post',
+             '/operation/showPetById/matcher',
+             [
+                 'matcher' => [
+                     'type' => 'equals',
+                     'args' => ['field' => ['path', 'petId'], 'value' => 6],
+                 ],
+                 'response' => [
+                     'code' => 200,
+                     'headers' => ['Content-type' => 'application/json'],
+                     'body' => $body,
+                 ],
+             ]
+         );
+
+         self::assertSame(201, $response->getStatusCode());
+
+        $response = $this->callMocking('get', '/pets/6');
+
+        self::assertSame(200, $response->getStatusCode());
+        self::assertSame($body, (string)$response->getBody());
+     }
+
+    #[Test]
+    public function youCanFallbackToDefault(): void
+    {
+        $this->callApi(
+            'post',
+            '/operation/showPetById',
+            ['default' => ['response' => ['code' => 404]]],
+        );
+
+        $body = '{"id":6,"name":"Harley"}';
+
+        $response = $this->callApi(
+            'post',
+            '/operation/showPetById/matcher',
+            [
+                'matcher' => [
+                    'type' => 'equals',
+                    'args' => ['field' => ['path', 'petId'], 'value' => 6],
+                ],
+                'response' => [
+                    'code' => 200,
+                    'headers' => ['Content-type' => 'application/json'],
+                    'body' => $body,
+                ],
+            ]
+        );
+
+        self::assertSame(201, $response->getStatusCode());
+
+        $response = $this->callMocking('get', '/pets/33');
+
+        self::assertSame(404, $response->getStatusCode());
+    }
+
+    //TODO if you delete a matcher, you should fallback to default
+    //TODO if you delete the operation, without deleting the matcher explicitly, it should still be deleted
+    #[Test]
+    public function youCannotMatchUndefinedMatcher(): void
+    {
+        $this->callApi(
+            'post',
+            '/operation/showPetById',
+            ['default' => ['response' => ['code' => 404]]],
+        );
+
+        $body = '{"id":6,"name":"Harley"}';
+
+        $response = $this->callApi(
+            'post',
+            '/operation/showPetById/matcher',
+            [
+                'matcher' => [
+                    'type' => 'equals',
+                    'args' => ['field' => ['path', 'petId'], 'value' => 6],
+                ],
+                'response' => [
+                    'code' => 200,
+                    'headers' => ['Content-type' => 'application/json'],
+                    'body' => $body,
+                ],
+            ]
+        );
+
+        self::assertSame(201, $response->getStatusCode());
+
+        $response = $this->callMocking('get', '/pets/6');
+
+        self::assertSame(200, $response->getStatusCode());
+        self::assertSame($body, (string)$response->getBody());
+    }
+
+     //TODO if you define a matcher on an operation, delete and recreate the operation, the matcher is gone
+
+    /** @param array<mixed> $body */
     private function callApi(
         string $method,
         string $relativeUri,
-        array $body,
+        array $body = [],
     ): ResponseInterface {
         $client = new GuzzleHttp\Client([
             'base_uri' => 'http://localhost:8080',
+            GuzzleHttp\RequestOptions::HTTP_ERRORS => false,
         ]);
 
         return $client->request(
@@ -92,13 +202,15 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    /** @param array<mixed> $body */
     private function callMocking(
         string $method,
         string $relativeUri,
-        array $body,
+        array $body = [],
     ): ResponseInterface {
         $client = new GuzzleHttp\Client([
             'base_uri' => 'http://localhost:8081',
+             GuzzleHttp\RequestOptions::HTTP_ERRORS => false,
         ]);
 
         return $client->request(

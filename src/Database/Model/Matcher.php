@@ -49,6 +49,8 @@ final readonly class Matcher implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
+            'id' => $this->id,
+            'operationId' => $this->operationId,
             'matcher' => [
                 'type' => $this->alias,
                 'args' => $this->args,

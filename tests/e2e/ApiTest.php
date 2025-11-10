@@ -125,6 +125,46 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
     }
 
     #[Test]
+    #[TestDox('Avoiding matching defined matchers, will fall back to default.')]
+    public function youCanAvoidMatchingDefinedMatchers(): void
+    {
+        $default = ['response' => ['code' => 404]];
+        $addShowPetById = $this->callApi(
+            'post',
+            '/operation/showPetById',
+            ['default' => $default],
+        );
+
+        $addMatcherForId6 = $this->callApi(
+            'post',
+            '/operation/showPetById/matcher',
+            [
+                'matcher' => [
+                    'type' => 'equals',
+                    'args' => ['field' => ['path', 'petId'], 'value' => 6],
+                ],
+                'response' => ['code' => 200],
+            ],
+        );
+        $addMatcherForNegativeIds = $this->callApi(
+            'post',
+            '/operation/showPetById/matcher',
+            [
+                'matcher' => [
+                    'type' => 'less-than',
+                    'args' => ['field' => ['path', 'petId'], 'limit' => 0],
+                ],
+                'response' => ['code' => 401],
+            ],
+        );
+
+        self::assertSame(
+            $default['response']['code'],
+            $this->callMocking('get', '/pets/33')->getStatusCode(),
+        );
+    }
+
+    #[Test]
     #[TestDox('You can match any of several defined matchers.')]
     public function youCanMatchMultipleDefinedMatchers(): void
     {
@@ -169,42 +209,6 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
 
         $showPetByIdMinus1 = $this->callMocking('get', '/pets/-1');
         self::assertSame($matchNegativeIds['response']['code'], $showPetByIdMinus1->getStatusCode());
-
-    }
-
-    #[Test]
-    #[TestDox('You can fail to match defined matchers, and fall back to default.')]
-    public function youCanFallbackToDefault(): void
-    {
-        $this->callApi(
-            'post',
-            '/operation/showPetById',
-            ['default' => ['response' => ['code' => 404]]],
-        );
-
-        $body = '{"id":6,"name":"Harley"}';
-
-        $response = $this->callApi(
-            'post',
-            '/operation/showPetById/matcher',
-            [
-                'matcher' => [
-                    'type' => 'equals',
-                    'args' => ['field' => ['path', 'petId'], 'value' => 6],
-                ],
-                'response' => [
-                    'code' => 200,
-                    'headers' => ['Content-type' => 'application/json'],
-                    'body' => $body,
-                ],
-            ]
-        );
-
-        self::assertSame(201, $response->getStatusCode());
-
-        $response = $this->callMocking('get', '/pets/33');
-
-        self::assertSame(404, $response->getStatusCode());
     }
 
     //TODO if you delete a matcher, you should fallback to default
@@ -212,15 +216,14 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
     #[Test]
     public function youCannotMatchDeletedMatcher(): void
     {
-        $this->callApi(
+        $default = ['response' => ['code' => 404]];
+        $addShowPetById = $this->callApi(
             'post',
             '/operation/showPetById',
-            ['default' => ['response' => ['code' => 404]]],
+            ['default' => $default],
         );
 
-        $body = '{"id":6,"name":"Harley"}';
-
-        $response = $this->callApi(
+        $addMatcherForId6 = $this->callApi(
             'post',
             '/operation/showPetById/matcher',
             [
@@ -228,20 +231,22 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
                     'type' => 'equals',
                     'args' => ['field' => ['path', 'petId'], 'value' => 6],
                 ],
-                'response' => [
-                    'code' => 200,
-                    'headers' => ['Content-type' => 'application/json'],
-                    'body' => $body,
-                ],
-            ]
+                'response' => ['code' => 200],
+            ],
         );
 
-        self::assertSame(201, $response->getStatusCode());
+        $matcherForId6 = json_decode((string)$addMatcherForId6->getBody());
 
-        $response = $this->callMocking('get', '/pets/6');
 
-        self::assertSame(200, $response->getStatusCode());
-        self::assertSame($body, (string)$response->getBody());
+        $deleteMatcherForId6 = $this->callApi(
+            'delete',
+            "/operation/showPetById/matcher/$matcherForId6->id"
+        );
+
+        self::assertSame(204, $deleteMatcherForId6->getStatusCode());
+
+        $showPetById6 = $this->callMocking('get', '/pets/6');
+        self::assertSame($default['response']['code'], $showPetById6->getStatusCode());
     }
 
     //TODO if you define a matcher on an operation, delete and recreate the operation, the matcher is gone

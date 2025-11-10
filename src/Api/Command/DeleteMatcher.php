@@ -12,6 +12,7 @@ use Membrane\Filter\CreateObject\WithNamedArguments;
 final readonly class DeleteMatcher
 {
     public function __construct(
-        public string $id,
+        public string $matcherId,
+        public string $operationId,
     ) {}
 }

@@ -12,7 +12,6 @@ paths:
       responses:
         204:
           description: Mock Server Reset
-
   /operation/{operationId}:
     parameters:
       - name: operationId
@@ -22,9 +21,6 @@ paths:
           $ref: "#/components/schemas/OperationId"
     post:
       operationId: add-operation
-      responses:
-        201:
-          description: Operation Created
       requestBody:
         content:
           application/json:
@@ -40,12 +36,14 @@ paths:
                   properties:
                     response:
                       $ref: "#/components/schemas/Response"
+      responses:
+        201:
+          description: Operation Created
     delete:
       operationId: delete-operation
       responses:
         204:
           description: Operation Deleted
-
   /operation/{operationId}/matcher:
     parameters:
       - name: operationId
@@ -53,8 +51,19 @@ paths:
         required: true
         schema:
           $ref: "#/components/schemas/OperationId"
+
     post:
       operationId: add-matcher
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                matcher:
+                  $ref:  "#/components/schemas/Matcher"
+                response:
+                  $ref: "#/components/schemas/Response"
       responses:
         201:
           description: Matcher Created
@@ -72,24 +81,24 @@ paths:
                     $ref:  "#/components/schemas/Matcher"
                   response:
                     $ref: "#/components/schemas/Response"
-
-
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                matcher:
-                  $ref:  "#/components/schemas/Matcher"
-                response:
-                  $ref: "#/components/schemas/Response"
+  /operation/{operationId}/matcher/{matcherId}:
+    parameters:
+      - name: operationId
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/OperationId"
+      - name: matcherId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
     delete:
       operationId: delete-matcher
       responses:
         204:
           description: Matcher Deleted
-
 components:
   schemas:
     OperationId:

@@ -33,7 +33,7 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
 
     #[Test]
     #[TestDox('Calling undefined operations returns 522.')]
-    public function youCannotCallUndefinedOperation(): void
+    public function youWontMatchUndefinedOperation(): void
     {
         $listPets = $this->callMocking('get', '/pets');
         self::assertSame(522, $listPets->getStatusCode());
@@ -41,7 +41,7 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
 
     #[Test]
     #[TestDox('Calling defined operations returns default.')]
-    public function youCanCallDefinedOperation(): void
+    public function youMayMatchDefinedOperation(): void
     {
         $expected = ['code' => 200, 'body' => '{"id":5,"name":"Blink"}'];
 
@@ -60,7 +60,7 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
 
     #[Test]
     #[TestDox('Calling undefined operations wont return defined operations.')]
-    public function youCannotGetMismatchedOperation(): void
+    public function youMayNotMatchOperation(): void
     {
         $addListPets = $this->callApi(
             'post',
@@ -92,7 +92,7 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
 
     #[Test]
     #[TestDox('You can match a defined matcher.')]
-    public function youCanMatchDefinedMatcher(): void
+    public function youMayMatchDefinedMatcher(): void
     {
         $expected = [
             'code' => 200,
@@ -126,7 +126,7 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
 
     #[Test]
     #[TestDox('Avoiding matching defined matchers, will fall back to default.')]
-    public function youCanAvoidMatchingDefinedMatchers(): void
+    public function youMayNotMatchDefinedMatcher(): void
     {
         $default = ['response' => ['code' => 404]];
         $addShowPetById = $this->callApi(
@@ -166,7 +166,7 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
 
     #[Test]
     #[TestDox('You can match any of several defined matchers.')]
-    public function youCanMatchMultipleDefinedMatchers(): void
+    public function youMayMatchMultipleDefinedMatchers(): void
     {
         $addShowPetById = $this->callApi(
             'post',
@@ -211,10 +211,8 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
         self::assertSame($matchNegativeIds['response']['code'], $showPetByIdMinus1->getStatusCode());
     }
 
-    //TODO if you delete a matcher, you should fallback to default
-    //TODO if you delete the operation, without deleting the matcher explicitly, it should still be deleted
     #[Test]
-    public function youCannotMatchDeletedMatcher(): void
+    public function youWontDeleteOperationWhenDeletingMatcher(): void
     {
         $default = ['response' => ['code' => 404]];
         $addShowPetById = $this->callApi(
@@ -249,7 +247,37 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
         self::assertSame($default['response']['code'], $showPetById6->getStatusCode());
     }
 
-    //TODO if you define a matcher on an operation, delete and recreate the operation, the matcher is gone
+    #[Test]
+    public function youWillDeleteMatchersWhenDeletingOperation(): void
+    {
+        $default = ['response' => ['code' => 404]];
+        $addShowPetById = fn () => $this->callApi(
+            'post',
+            '/operation/showPetById',
+            ['default' => $default],
+        );
+
+        $addShowPetById();
+
+        $addMatcherForId6 = $this->callApi(
+            'post',
+            '/operation/showPetById/matcher',
+            [
+                'matcher' => [
+                    'type' => 'equals',
+                    'args' => ['field' => ['path', 'petId'], 'value' => 6],
+                ],
+                'response' => ['code' => 200],
+            ],
+        );
+
+        $deleteShowPetById = $this->callApi('delete', '/operation/showPetById');
+
+        $addShowPetById();
+
+        $showPetById6 = $this->callMocking('get', '/pets/6');
+        self::assertSame($default['response']['code'], $showPetById6->getStatusCode());
+    }
 
     /** @param array<mixed> $body */
     private function callApi(

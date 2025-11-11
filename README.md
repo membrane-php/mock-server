@@ -64,11 +64,36 @@ To redefine our Operation, the existing definition needs to be [deleted](#delete
 
 Once that is done, we can add the operation with a new definition:
 
-
 ```
 POST http://localhost:8080/operation/showPetById
 
 {
+
+    "default": {
+        "response": {
+            "code": 404
+        }
+    }
+}
+```
+
+This would, by default, return a 404.
+Then you could [add a matcher](#add-matcher) for specific ID's, returning pets with the corresponding ID. 
+
+
+### Delete Operation
+
+To delete an operation make the following request:
+
+```
+DELETE http://localhost:8080/operation/<operationId>
+```
+
+Where `<operationId>` is the `operationId` of the operation you want to delete.
+
+### Add Matcher
+
+```
     "matchers": [
         {
             "matcher": {
@@ -87,30 +112,11 @@ POST http://localhost:8080/operation/showPetById
             }
         }
     ],
-    "default": {
-        "response": {
-            "code": 404
-        }
-    }
-}
 ```
 
-This would, by default, return a 404.
 It returns a 200 response only if your "petId" *equals* 5.
 
 *equals* is an [alias](src/Matcher/Module.php) for one of the [library's built-in matchers](src/Matcher/Matcher).
-
-### Delete Operation
-
-To delete an operation make the following request:
-
-```
-DELETE http://localhost:8080/operation/<operationId>
-```
-
-Where `<operationId>` is the `operationId` of the operation you want to delete.
-
-### Add Matcher
 
 ### Delete Matcher
 

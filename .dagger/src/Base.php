@@ -71,6 +71,20 @@ class Base
         return $this;
     }
 
+    public function withPcov(): Base
+    {
+        $this->container = $this->container
+            ->withFile('/usr/local/bin/php-ext-install', dag()
+                ->container()
+                ->from('ghcr.io/mlocati/php-extension-installer')
+                ->file('/usr/bin/install-php-extensions'));
+
+        $this->container = $this->container
+            ->withExec(['php-ext-install', 'pcov']);
+
+        return $this;
+    }
+
     public function withVendor(): Base
     {
         $this->container = $this->container

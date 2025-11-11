@@ -9,11 +9,6 @@ use Dagger\Attribute\DaggerObject;
 use Dagger\Attribute\Doc;
 use Dagger\Container;
 use Dagger\Directory;
-use Dagger\File;
-use Dagger\ReturnType;
-use Dagger\Service;
-
-use function Dagger\dag;
 
 #[DaggerObject]
 #[Doc('Functions useful for development')]
@@ -44,7 +39,7 @@ class Dev
     #[DaggerFunction]
     public function test(
         #[Doc('available testsuites from phpunit.dist.xml')]
-        string $suite = 'default'
+        string $suite = 'default',
     ): Container {
         return (new Base(
             $this->src,
@@ -52,6 +47,7 @@ class Dev
         ))
             ->withNginx()
             ->withPdo()
+            ->withPcov()
             ->withVendor()
             ->asContainer()
             ->withExec(['./vendor/bin/phpunit']);

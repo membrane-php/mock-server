@@ -21,7 +21,7 @@ final readonly class DeleteMatcher
             $matcher === null
             || $matcher->operationId !== $command->operationId
         ) {
-            return new Response(400);
+            return new Response(404);
         }
 
         $this->matcherRepository->remove($matcher);

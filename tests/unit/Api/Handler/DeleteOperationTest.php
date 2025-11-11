@@ -23,7 +23,10 @@ final class DeleteOperationTest extends \PHPUnit\Framework\TestCase
     {
         self::assertEquals(
             new Response(400),
-            (new DeleteOperation(new Fixture\Repository\Operation()))(
+            (new DeleteOperation(
+                new Fixture\Repository\Operation(),
+                new Fixture\Repository\Matcher(),
+            ))(
                 new Command\DeleteOperation('abc123')
             ),
         );
@@ -39,7 +42,10 @@ final class DeleteOperationTest extends \PHPUnit\Framework\TestCase
 
         self::assertEquals(
             new Response(204),
-            (new DeleteOperation($repository))(
+            (new DeleteOperation(
+                $repository,
+                new Fixture\Repository\Matcher(),
+            ))(
                 new Command\DeleteOperation($operation->operationId)
             ),
         );

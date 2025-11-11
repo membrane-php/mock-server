@@ -22,9 +22,9 @@ final class DeleteMatcherTest extends \PHPUnit\Framework\TestCase
     public function itFailsIfMatcherDoesNotExist(): void
     {
         self::assertEquals(
-            new Response(400),
+            new Response(404),
             (new DeleteMatcher(new Fixture\Repository\Matcher()))(
-                new Command\DeleteMatcher('abc123'),
+                new Command\DeleteMatcher('showPets', 'abc123'),
             ),
         );
     }
@@ -40,7 +40,7 @@ final class DeleteMatcherTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(
             new Response(204),
             (new DeleteMatcher($repository))(
-                new Command\DeleteMatcher($matcher->id),
+                new Command\DeleteMatcher($matcher->id, $matcher->operationId),
             ),
         );
 

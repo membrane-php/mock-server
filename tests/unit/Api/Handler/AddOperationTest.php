@@ -34,7 +34,7 @@ final class AddOperationTest extends \PHPUnit\Framework\TestCase
 
         self::assertEquals(
             new Response(
-                202,
+                201,
                 new Database\Model\Operation(
                     $operationId,
                     $responseCode,

@@ -53,14 +53,11 @@ final class ResponseFactoryTest extends \PHPUnit\Framework\TestCase
             ],
         ];
 
-        yield '202 with application/json body' => [
+        yield '202 with array body' => [
             new Response(202, [], '{"greeting":"Hello, World!"}'),
             [
                 'code' => 202,
-                'body' => [
-                    'type' => 'application/json',
-                    'content' => ['greeting' => 'Hello, World!'],
-                ],
+                'body' => ['greeting' => 'Hello, World!'],
             ],
         ];
 

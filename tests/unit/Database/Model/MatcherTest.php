@@ -25,6 +25,8 @@ final class MatcherTest extends \PHPUnit\Framework\TestCase
     #[DataProvider('provideConfigs')]
     public function itIsJsonSerializable(
         array $expected,
+        string $matcherId,
+        string $operationId,
         string $alias,
         array $args,
         int $responseCode,
@@ -32,8 +34,8 @@ final class MatcherTest extends \PHPUnit\Framework\TestCase
         array|string $body,
     ): void {
         self::assertEqualsCanonicalizing($expected, (new Matcher(
-            'abc123',
-            'listPets',
+            $matcherId,
+            $operationId,
             $alias,
             $args,
             $responseCode,
@@ -56,6 +58,8 @@ final class MatcherTest extends \PHPUnit\Framework\TestCase
     {
         yield 'MVP; no args, empty headers, empty string body' => [
             [
+                'id' => 'abc123',
+                'operationId' => 'showPetById',
                 'matchers' => [
                     'type' => 'equals',
                     'args' => ['value' => 5, 'field' => ['path', 'id']],
@@ -66,6 +70,8 @@ final class MatcherTest extends \PHPUnit\Framework\TestCase
                     'body' => '',
                 ],
             ],
+            'abc123',
+            'showPetById',
             'equals',
             ['value' => 5, 'field' => ['path', 'id']],
             200,
@@ -75,9 +81,11 @@ final class MatcherTest extends \PHPUnit\Framework\TestCase
 
         yield 'args, headers and string body' => [
             [
+                'id' => 'def456',
+                'operationId' => 'listPets',
                 'matcher' => [
                     'type' => 'less-than',
-                    'args' => ['value' => 5, 'inclusive' => false],
+                    'args' => ['field' => ['query', 'pageLimit'], 'limit' => 5, 'inclusive' => false],
                 ],
                 'response' => [
                     'code' => 404,
@@ -85,8 +93,10 @@ final class MatcherTest extends \PHPUnit\Framework\TestCase
                     'body' => 'Hello, World!',
                 ],
             ],
+            'def456',
+            'listPets',
             'less-than',
-            ['value' => 5, 'inclusive' => false],
+            ['field' => ['query', 'pageLimit'], 'limit' => 5, 'inclusive' => false],
             404,
             ['Cache-control' => ['age=60']],
             'Hello, World!',
@@ -94,9 +104,11 @@ final class MatcherTest extends \PHPUnit\Framework\TestCase
 
         yield 'headers and array body' => [
             [
+                'id' => 'ghi789',
+                'operationId' => 'listPets',
                 'matcher' => [
                     'type' => 'greater-than',
-                    'args' => ['value' => 5, 'inclusive' => false],
+                    'args' => ['field' => ['query', 'pageLimit'], 'limit' => 5],
                 ],
                 'response' => [
                     'code' => 418,
@@ -104,8 +116,10 @@ final class MatcherTest extends \PHPUnit\Framework\TestCase
                     'body' => '{"id":5,"species":"cat","name":"Blink"}',
                 ],
             ],
+            'ghi789',
+            'listPets',
             'greater-than',
-            ['value' => 5, 'inclusive' => false],
+            ['field' => ['query', 'pageLimit'], 'limit' => 5],
             418,
             ['Cache-control' => ['age=60', 'must-revalidate']],
             ['id' => 5, 'species' => 'cat', 'name' => 'Blink'],

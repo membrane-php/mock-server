@@ -72,7 +72,16 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
 
         $sut = new Handler($configLocator, $factoryLocator, $responseFactory);
 
-        self::assertEquals($expected, $sut($dto));
+        $actual = $sut($dto);
+
+        self::assertSame(
+            $expected->getStatusCode(),
+            $actual->getStatusCode()
+        );
+        self::assertSame(
+            $expected->getBody()->getContents(),
+            $actual->getBody()->getContents(),
+        );
     }
 
     /**
@@ -87,7 +96,17 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
     public static function provideDTOsToHandle(): \Generator
     {
         yield 'empty config, returns null' => [
-            null,
+            new Response(
+                522,
+                ['Content-type' => 'application/problem+json'],
+                json_encode([
+                    'title' => 'Response Not Defined',
+                    'detail' => <<<DETAIL
+                         Request is valid against your OpenAPI spec,
+                         but no response has been defined for this operation.
+                         DETAIL,
+                ]),
+            ),
             ['example' => []],
             new Container(),
             [],

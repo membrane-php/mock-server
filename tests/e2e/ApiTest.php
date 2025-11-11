@@ -60,7 +60,7 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
 
     #[Test]
     #[TestDox('Calling undefined operations wont return defined operations.')]
-    public function youMayNotMatchOperation(): void
+    public function youMayNotMatchDefinedOperation(): void
     {
         $addListPets = $this->callApi(
             'post',
@@ -75,7 +75,7 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
 
     #[Test]
     #[TestDox('You can delete an operation, so that it cannot be called.')]
-    public function youCanDeleteOperation(): void
+    public function youCanDeleteDefinedOperation(): void
     {
         $addListPets = $this->callApi(
             'post',
@@ -210,6 +210,53 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
         $showPetByIdMinus1 = $this->callMocking('get', '/pets/-1');
         self::assertSame($matchNegativeIds['response']['code'], $showPetByIdMinus1->getStatusCode());
     }
+
+    //#[Test]
+    //#[TestDox('If you match multiple matchers, the one first defined wins.')]
+    //public function youWillMatchFirstDefinedMatchingMatcher(): void
+    //{
+    //    $addShowPetById = $this->callApi(
+    //        'post',
+    //        '/operation/showPetById',
+    //        ['default' => ['response' => ['code' => 404]]],
+    //    );
+    //
+    //    $matchIdGreaterThan1 = [
+    //        'matcher' => [
+    //            'type' => 'greater-than',
+    //            'args' => ['field' => ['path', 'petId'], 'value' => 1],
+    //        ],
+    //        'response' => [
+    //            'code' => 200,
+    //            'headers' => ['Content-type' => 'application/json'],
+    //            'body' => '{"id":6,"name":"Harley"}',
+    //        ],
+    //    ];
+    //    $matchIdLessThan3 = [
+    //        'matcher' => [
+    //            'type' => 'less-than',
+    //            'args' => ['field' => ['path', 'petId'], 'limit' => 3],
+    //        ],
+    //        'response' => ['code' => 401],
+    //    ];
+    //    $addMatcherForId6 = $this->callApi(
+    //        'post',
+    //        '/operation/showPetById/matcher',
+    //        $matchIdGreaterThan1,
+    //    );
+    //    $addMatcherForNegativeIds = $this->callApi(
+    //        'post',
+    //        '/operation/showPetById/matcher',
+    //        $matchIdLessThan3,
+    //    );
+    //
+    //    $showPetById6 = $this->callMocking('get', '/pets/6');
+    //    self::assertSame($matchIdGreaterThan1['response']['code'], $showPetById6->getStatusCode());
+    //    self::assertSame($matchIdGreaterThan1['response']['body'], (string)$showPetById6->getBody());
+    //
+    //    $showPetByIdMinus1 = $this->callMocking('get', '/pets/-1');
+    //    self::assertSame($matchIdLessThan3['response']['code'], $showPetByIdMinus1->getStatusCode());
+    //}
 
     #[Test]
     public function youWontDeleteOperationWhenDeletingMatcher(): void

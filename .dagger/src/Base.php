@@ -91,8 +91,7 @@ class Base
         File $composerJson,
         File $composerLock,
         bool $noDev = false,
-    ): Base
-    {
+    ): Base {
         $this->container = $this->container
             ->withFile('/usr/bin/composer', dag()
                 ->container()
@@ -100,7 +99,12 @@ class Base
                 ->file('/composer'))
             ->withFile('/app/composer.json', $composerJson)
             ->withFile('/app/composer.lock', $composerLock)
-            ->withExec(['composer', 'install', '--no-interaction']);
+            ->withExec(array_filter([
+                'composer',
+                'install',
+                '--no-interaction',
+                $noDev ? '--no-dev' : '',
+            ]));
         return $this;
     }
 }

@@ -29,7 +29,6 @@ final readonly class Handler
                 ->locate($matcherConfig['type'])
                 ->create($matcherConfig['args'] ?? []);
 
-
             if ($matcher->matches($dto)) {
                 return $this->responseFactory->create($responseConfig);
             }

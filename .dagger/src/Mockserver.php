@@ -9,6 +9,7 @@ use Dagger\Attribute\DaggerObject;
 use Dagger\Attribute\DefaultPath;
 use Dagger\Attribute\Doc;
 use Dagger\Attribute\Ignore;
+use Dagger\Container;
 use Dagger\Directory;
 use Dagger\File;
 use Dagger\Service;
@@ -44,17 +45,18 @@ class Mockserver
     }
 
     #[DaggerFunction]
-    public function mockserver(File $api): Service
+    public function mockserver(File $api): Container
     {
         return (new Base())
             ->withPdo()
             ->withNginx($this->src->file('docker/nginx.conf'))
+            ->withMockingApi($this->src->file('tests/fixture/api/petstore.yml'))
             ->withVendor(
                 $this->src->file('composer.json'),
                 $this->src->file('composer.lock'),
+                noDev: true,
             )
-            ->withMockingApi($api)
             ->withSrc($this->src)
-            ->asService();
+            ->asContainer();
     }
 }

@@ -41,21 +41,18 @@ class Dev
         #[Doc('available testsuites from phpunit.dist.xml')]
         string $suite = 'default',
     ): Container {
+        // Take advantage of Dagger's caching by using the same base for service and container
         $base = (new Base())
             ->withPdo()
-            ->withNginx($this->src->file('docker/nginx.conf'))
             ->withPcov()
-            ->withVendor(
-                $this->src->file('composer.json'),
-                $this->src->file('composer.lock'),
-            )
+            ->withNginx($this->src->file('docker/nginx.conf'))
             ->withMockingApi($this->src->file('tests/fixture/api/petstore.yml'))
+            ->withVendor($this->src->file('composer.json'), $this->src->file('composer.lock'))
             ->withSrc($this->src);
 
         $service = $base->asService();
 
-        return $base
-            ->asContainer()
+        return $base->asContainer()
             ->withServiceBinding('www', $service)
             ->withExec(['./vendor/bin/phpunit', "--testsuite=$suite"]);
     }

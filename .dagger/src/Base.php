@@ -19,10 +19,8 @@ class Base
 {
     private Container $container;
 
-    public function __construct(
-        private Directory $src,
-
-    ) {
+    public function __construct()
+    {
         $this->container = dag()
             ->container()
             ->from('php:8.3-fpm-alpine')
@@ -31,31 +29,31 @@ class Base
             ->withWorkdir('/app');
     }
 
-    public function asContainer(File $mockingApi): Container
+    public function asContainer(): Container
     {
-        $extension = pathinfo($mockingApi->name(), PATHINFO_EXTENSION);
-
-        return $this
-            ->container
-            ->withDirectory('/app', $this->src)
-            ->withFile("/api/api.$extension", $mockingApi)
-            ->withExec(['/app/bin/setup']);
+        return $this->container;
     }
 
-    public function asService(File $mockingApi): Service
+    public function asService(): Service
     {
-        return $this->asContainer($mockingApi)
-            ->withEntrypoint(['/app/docker/entrypoint.sh'])
-            ->asService(useEntrypoint: true);
+        return $this->container->asService(useEntrypoint: true);
     }
 
-    public function withNginx(): Base
+    public function withNginx(File $nginxConf): Base
     {
         $this->container = $this->container
             ->withExec(['apk', 'update'])
             ->withExec(['apk', 'add', 'nginx'])
-            ->withFile('/etc/nginx/http.d/default.conf', $this
-                ->src->file('docker/nginx.conf'));
+            ->withFile('/etc/nginx/http.d/default.conf', $nginxConf);
+        return $this;
+    }
+
+    public function withMockingApi(File $mockingApi): Base
+    {
+        $extension = pathinfo($mockingApi->name(), PATHINFO_EXTENSION);
+
+        $this->container = $this->container
+            ->withFile("/api/api.$extension", $mockingApi);
         return $this;
     }
 
@@ -80,17 +78,28 @@ class Base
         return $this;
     }
 
-    public function withVendor(): Base
+    public function withSrc(Directory $src): Base
+    {
+        $this->container = $this->container
+            ->withDirectory('/app', $src)
+            ->withExec(['/app/bin/setup'])
+            ->withEntrypoint(['/app/docker/entrypoint.sh']);
+        return $this;
+    }
+
+    public function withVendor(
+        File $composerJson,
+        File $composerLock,
+        bool $noDev = false,
+    ): Base
     {
         $this->container = $this->container
             ->withFile('/usr/bin/composer', dag()
                 ->container()
                 ->from('composer/composer:2.8-bin')
                 ->file('/composer'))
-            ->withFile('/app/composer.json', $this
-                ->src->file('composer.json'))
-            ->withFile('/app/composer.lock', $this
-                ->src->file('composer.lock'))
+            ->withFile('/app/composer.json', $composerJson)
+            ->withFile('/app/composer.lock', $composerLock)
             ->withExec(['composer', 'install', '--no-interaction']);
         return $this;
     }

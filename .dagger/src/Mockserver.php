@@ -52,10 +52,15 @@ class Mockserver
     #[DaggerFunction]
     public function mockserver(File $api): Service
     {
-        return (new Base($this->src, $api))
-            ->withNginx()
+        return (new Base())
             ->withPdo()
-            ->withVendor()
-            ->asService($api);
+            ->withNginx($this->src->file('docker/nginx.conf'))
+            ->withVendor(
+                $this->src->file('composer.json'),
+                $this->src->file('composer.lock'),
+            )
+            ->withMockingApi($api)
+            ->withSrc($this->src)
+            ->asService();
     }
 }

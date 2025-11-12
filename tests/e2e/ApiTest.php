@@ -55,7 +55,7 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
         $listPets = $this->callMocking('get', '/pets');
 
         self::assertSame($expected['code'], $listPets->getStatusCode());
-        self::assertSame($expected['body'], (string)$listPets->getBody());
+        self::assertSame($expected['body'], (string) $listPets->getBody());
     }
 
     #[Test]
@@ -333,7 +333,7 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
         array $body = [],
     ): ResponseInterface {
         $client = new GuzzleHttp\Client([
-            'base_uri' => 'http://localhost:8080',
+            'base_uri' => 'http://www:8080',
             GuzzleHttp\RequestOptions::HTTP_ERRORS => false,
         ]);
 
@@ -351,7 +351,7 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
         array $body = [],
     ): ResponseInterface {
         $client = new GuzzleHttp\Client([
-            'base_uri' => 'http://localhost:8081',
+            'base_uri' => 'http://www:8081',
             GuzzleHttp\RequestOptions::HTTP_ERRORS => false,
         ]);
 

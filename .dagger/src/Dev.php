@@ -42,8 +42,8 @@ class Dev
         string $suite = 'default',
     ): Container {
         $base = (new Base())
-            ->withNginx($this->src->file('docker/nginx.conf'))
             ->withPdo()
+            ->withNginx($this->src->file('docker/nginx.conf'))
             ->withPcov()
             ->withVendor(
                 $this->src->file('composer.json'),
@@ -56,7 +56,7 @@ class Dev
 
         return $base
             ->asContainer()
-            ->withServiceBinding('localhost', $service)
+            ->withServiceBinding('www', $service)
             ->withExec(['./vendor/bin/phpunit', "--testsuite=$suite"]);
     }
 

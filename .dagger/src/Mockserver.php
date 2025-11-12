@@ -9,20 +9,14 @@ use Dagger\Attribute\DaggerObject;
 use Dagger\Attribute\DefaultPath;
 use Dagger\Attribute\Doc;
 use Dagger\Attribute\Ignore;
-use Dagger\Container;
 use Dagger\Directory;
-
 use Dagger\File;
 use Dagger\Service;
-
-use function Dagger\dag;
 
 #[DaggerObject]
 #[Doc('The Membrane MockServer Dagger module')]
 class Mockserver
 {
-    private Base $base;
-
     #[DaggerFunction]
     public function __construct(
         #[DefaultPath('.')]

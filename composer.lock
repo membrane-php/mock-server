@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f4c8282975b09aca858733501817857",
+    "content-hash": "fa9fe4578a83d7c3396edac90cc143c4",
     "packages": [
         {
             "name": "atto/codegen-tools",
@@ -89,16 +89,16 @@
         },
         {
             "name": "atto/framework",
-            "version": "0.1.2",
+            "version": "0.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/atto-php/framework.git",
-                "reference": "758b4cc92683b11f486f58e1c865b3561e1ac8da"
+                "reference": "5662ee26986abdf960dffec260e69ed631f966ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/atto-php/framework/zipball/758b4cc92683b11f486f58e1c865b3561e1ac8da",
-                "reference": "758b4cc92683b11f486f58e1c865b3561e1ac8da",
+                "url": "https://api.github.com/repos/atto-php/framework/zipball/5662ee26986abdf960dffec260e69ed631f966ca",
+                "reference": "5662ee26986abdf960dffec260e69ed631f966ca",
                 "shasum": ""
             },
             "require": {
@@ -131,9 +131,9 @@
             "description": "description",
             "support": {
                 "issues": "https://github.com/atto-php/framework/issues",
-                "source": "https://github.com/atto-php/framework/tree/0.1.2"
+                "source": "https://github.com/atto-php/framework/tree/0.1.3"
             },
-            "time": "2024-09-13T09:45:14+00:00"
+            "time": "2025-11-12T13:57:13+00:00"
         },
         {
             "name": "atto/hydrator",
@@ -1941,12 +1941,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/BetterReflection.git",
-                "reference": "b001dc6a0c849158e8520ed6ffabbf7e21d83fd2"
+                "reference": "82f1b5b765e1021aaef0330bc1df8718e769661e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/BetterReflection/zipball/b001dc6a0c849158e8520ed6ffabbf7e21d83fd2",
-                "reference": "b001dc6a0c849158e8520ed6ffabbf7e21d83fd2",
+                "url": "https://api.github.com/repos/Roave/BetterReflection/zipball/82f1b5b765e1021aaef0330bc1df8718e769661e",
+                "reference": "82f1b5b765e1021aaef0330bc1df8718e769661e",
                 "shasum": ""
             },
             "require": {
@@ -2003,7 +2003,7 @@
                 "issues": "https://github.com/Roave/BetterReflection/issues",
                 "source": "https://github.com/Roave/BetterReflection/tree/6.67.x"
             },
-            "time": "2025-11-11T00:41:08+00:00"
+            "time": "2025-11-12T01:34:19+00:00"
         },
         {
             "name": "symfony/console",
@@ -2919,12 +2919,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "b52829022cb18210bb84e44e457bd4e890f8d2a7"
+                "reference": "c9b06fa2f64d9aaf2785cd325742a41f27e290aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/b52829022cb18210bb84e44e457bd4e890f8d2a7",
-                "reference": "b52829022cb18210bb84e44e457bd4e890f8d2a7",
+                "url": "https://api.github.com/repos/composer/semver/zipball/c9b06fa2f64d9aaf2785cd325742a41f27e290aa",
+                "reference": "c9b06fa2f64d9aaf2785cd325742a41f27e290aa",
                 "shasum": ""
             },
             "require": {
@@ -2967,7 +2967,7 @@
                     "homepage": "http://robbast.nl"
                 }
             ],
-            "description": "Semver library that offers utilities, version constraint parsing and validation.",
+            "description": "Version comparison library that offers utilities, version constraint parsing and validation.",
             "keywords": [
                 "semantic",
                 "semver",
@@ -2989,7 +2989,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-09-03T06:59:12+00:00"
+            "time": "2025-11-12T10:20:59+00:00"
         },
         {
             "name": "composer/xdebug-handler",
@@ -4101,12 +4101,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "d860be864c36337fafe312e05ee54759876e7bd0"
+                "reference": "af583d4bb62d67ad891725f80bcffe986b2f22b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d860be864c36337fafe312e05ee54759876e7bd0",
-                "reference": "d860be864c36337fafe312e05ee54759876e7bd0",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/af583d4bb62d67ad891725f80bcffe986b2f22b1",
+                "reference": "af583d4bb62d67ad891725f80bcffe986b2f22b1",
                 "shasum": ""
             },
             "require": {
@@ -4202,7 +4202,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-11-11T05:54:57+00:00"
+            "time": "2025-11-11T15:57:35+00:00"
         },
         {
             "name": "psr/event-dispatcher",

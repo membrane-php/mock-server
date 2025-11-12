@@ -21,12 +21,9 @@ class Dev
     #[DaggerFunction]
     public function lintCheck(): Container
     {
-        return (new Base(
-            $this->src,
-            $this->src->file('tests/fixture/api/petstore.yml'),
-        ))
+        return (new Base($this->src))
             ->withVendor()
-            ->asContainer()
+            ->asContainer($this->src->file('tests/fixture/api/petstore.yml'))
             ->withExec([
                 './vendor/bin/php-cs-fixer',
                 'check',
@@ -41,16 +38,20 @@ class Dev
         #[Doc('available testsuites from phpunit.dist.xml')]
         string $suite = 'default',
     ): Container {
-        return (new Base(
-            $this->src,
-            $this->src->file('tests/fixture/api/petstore.yml'),
-        ))
+        $mockingApi = $this->src->file('tests/fixture/api/petstore.yml');
+
+        $base = (new Base($this->src))
             ->withNginx()
             ->withPdo()
             ->withPcov()
-            ->withVendor()
-            ->asContainer()
-            ->withExec(['./vendor/bin/phpunit']);
+            ->withVendor();
+
+        $service = $base->asService($mockingApi);
+
+        return $base
+            ->asContainer($mockingApi)
+            ->withServiceBinding('mockserver', $service)
+            ->withExec(['./vendor/bin/phpunit', "--testsuite=$suite"]);
     }
 
 }

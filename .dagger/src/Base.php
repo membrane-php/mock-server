@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace DaggerModule;
 
-use Dagger\Attribute\DaggerFunction;
-use Dagger\Attribute\DaggerObject;
-use Dagger\Attribute\DefaultPath;
-use Dagger\Attribute\Doc;
-use Dagger\Attribute\Ignore;
 use Dagger\Container;
 use Dagger\Directory;
 use Dagger\File;
@@ -26,30 +21,30 @@ class Base
 
     public function __construct(
         private Directory $src,
-        private File $mockingApi,
+
     ) {
         $this->container = dag()
             ->container()
             ->from('php:8.3-fpm-alpine')
+            ->withExposedPort(8080)
+            ->withExposedPort(8081)
             ->withWorkdir('/app');
     }
 
-    public function asContainer(): Container
+    public function asContainer(File $mockingApi): Container
     {
-        $extension = pathinfo($this->mockingApi->name(), PATHINFO_EXTENSION);
+        $extension = pathinfo($mockingApi->name(), PATHINFO_EXTENSION);
 
         return $this
             ->container
             ->withDirectory('/app', $this->src)
-            ->withFile("/api/api.$extension", $this->mockingApi)
-            ->withExec(['/app/bin/setup'])
-            ->withExposedPort(8080)
-            ->withExposedPort(8081);
+            ->withFile("/api/api.$extension", $mockingApi)
+            ->withExec(['/app/bin/setup']);
     }
 
-    public function asService(): Service
+    public function asService(File $mockingApi): Service
     {
-        return $this->container
+        return $this->asContainer($mockingApi)
             ->withEntrypoint(['/app/docker/entrypoint.sh'])
             ->asService(useEntrypoint: true);
     }

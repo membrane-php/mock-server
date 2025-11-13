@@ -22,15 +22,14 @@ final readonly class Handler
 
         $operationConfig = $this->configLocator->getOperationConfig($operationId);
 
-        foreach ($operationConfig['matchers'] ?? []
-            as ['matcher' => $matcherConfig, 'response' => $responseConfig]
-        ) {
+        foreach ($operationConfig['matchers'] ?? [] as $matcherFactoryConfig) {
             $matcher = $this->factoryLocator
-                ->locate($matcherConfig['type'])
-                ->create($matcherConfig['args'] ?? []);
+                ->locate($matcherFactoryConfig['matcher']['type'])
+                ->create($matcherFactoryConfig['matcher']['args'] ?? []);
 
             if ($matcher->matches($dto)) {
-                return $this->responseFactory->create($responseConfig);
+                return $this->responseFactory
+                    ->create($matcherFactoryConfig['response']);
             }
         }
 

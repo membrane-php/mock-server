@@ -53,8 +53,7 @@ class Dev
         $service = $base->asService();
 
         return $base->asContainer()
-            ->withServiceBinding('www', $service)
+            ->withServiceBinding('mockserver', $service)
             ->withExec(['./vendor/bin/phpunit', "--testsuite=$suite"]);
     }
-
 }

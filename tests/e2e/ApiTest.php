@@ -333,7 +333,7 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
         array $body = [],
     ): ResponseInterface {
         $client = new GuzzleHttp\Client([
-            'base_uri' => 'http://www:8080',
+            'base_uri' => 'http://mockserver:8080',
             GuzzleHttp\RequestOptions::HTTP_ERRORS => false,
         ]);
 
@@ -351,7 +351,7 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
         array $body = [],
     ): ResponseInterface {
         $client = new GuzzleHttp\Client([
-            'base_uri' => 'http://www:8081',
+            'base_uri' => 'http://mockserver:8081',
             GuzzleHttp\RequestOptions::HTTP_ERRORS => false,
         ]);
 

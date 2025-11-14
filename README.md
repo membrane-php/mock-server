@@ -2,11 +2,35 @@
 
 ## Prerequisites
 
+@TODO can I turn this into a yellow warning?
+
 ### OperationIds Are Required
 
 The MockServer identifies your OpenAPI's endpoints by their [operationId](https://spec.openapis.org/oas/v3.1.0.html#fixed-fields-7).
 
 Ensure your OpenAPI spec defines operationIds for all operations, or the mock server will fail immediately.
+
+## Quickstart
+
+```php
+docker run ghcr.io/blabla \
+-v /path/to/your/api:/api/api.yml \
+-p 8080:8080 \
+-p 8081:8081
+```
+
+### Configure through API
+
+Example: showPetById
+
+[more detail](docs/api.md).
+
+### Mount Static Config File
+
+Example:
+
+[more detail](docs/config.md)
+
 
 ## Usage
 
@@ -100,16 +124,10 @@ Where `<operationId>` is the `operationId` of the operation you want to delete.
                 "type": "equals",
                 "args": {
                     "field": ["path", "petId"],
-                    "value": 5
+                    "value": 3
                 }
             },
-            "response": {
-                "code": 200,
-                "body": {
-                    "id": 5,
-                    "name": "Spike"
-                }
-            }
+            "response": 200,
         }
     ],
 ```

@@ -31,6 +31,6 @@ jobs:
         with:
           version: "0.19.6"
           verb: call
-          args: publish --registry=$DOCKER_REGISTRY.
+          args: publish --registry=$DOCKER_REGISTRY
         env:
           DOCKER_REGISTRY: ghcr.io

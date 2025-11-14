@@ -1397,12 +1397,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/BetterReflection.git",
-                "reference": "e09d606f403c551ff6d43740273a48cee244e2ab"
+                "reference": "82f1b5b765e1021aaef0330bc1df8718e769661e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/BetterReflection/zipball/e09d606f403c551ff6d43740273a48cee244e2ab",
-                "reference": "e09d606f403c551ff6d43740273a48cee244e2ab",
+                "url": "https://api.github.com/repos/Roave/BetterReflection/zipball/82f1b5b765e1021aaef0330bc1df8718e769661e",
+                "reference": "82f1b5b765e1021aaef0330bc1df8718e769661e",
                 "shasum": ""
             },
             "require": {
@@ -1459,7 +1459,7 @@
                 "issues": "https://github.com/Roave/BetterReflection/issues",
                 "source": "https://github.com/Roave/BetterReflection/tree/6.67.x"
             },
-            "time": "2025-11-08T02:41:03+00:00"
+            "time": "2025-11-12T01:34:19+00:00"
         },
         {
             "name": "symfony/console",
@@ -1467,12 +1467,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "96f1107efb9f0f5ab24def8b66bbdf6588bbe0e2"
+                "reference": "87ad3ca38e7de6d322a5750a81656731028ba75f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/96f1107efb9f0f5ab24def8b66bbdf6588bbe0e2",
-                "reference": "96f1107efb9f0f5ab24def8b66bbdf6588bbe0e2",
+                "url": "https://api.github.com/repos/symfony/console/zipball/87ad3ca38e7de6d322a5750a81656731028ba75f",
+                "reference": "87ad3ca38e7de6d322a5750a81656731028ba75f",
                 "shasum": ""
             },
             "require": {
@@ -1557,7 +1557,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-11-05T14:29:59+00:00"
+            "time": "2025-11-14T06:57:14+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",

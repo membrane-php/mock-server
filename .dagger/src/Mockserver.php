@@ -93,6 +93,6 @@ class Mockserver
         $tag = $this->makeTag();
 
         return $mockserver
-            ->publish("$registry/membrane-mockserver/mockserver:$tag");
+            ->publish("$registry/membrane-php/mock-server:$tag");
     }
 }

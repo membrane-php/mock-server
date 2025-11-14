@@ -14,6 +14,8 @@ use Dagger\Directory;
 use Dagger\File;
 use Dagger\Service;
 
+use function Dagger\dag;
+
 #[DaggerObject]
 #[Doc('The Membrane MockServer Dagger module')]
 class Mockserver
@@ -25,7 +27,6 @@ class Mockserver
             '*.md',
             '.dagger/',
             '.dockerignore',
-            '.git/',
             '.gitignore',
             '.idea/',
             '.cache/',
@@ -50,7 +51,37 @@ class Mockserver
         return (new Base())
             ->withPdo()
             ->withNginx($this->src->file('docker/nginx.conf'))
-            ->withMockingApi($this->src->file('tests/fixture/api/petstore.yml'))
+            ->withVendor(
+                $this->src->file('composer.json'),
+                $this->src->file('composer.lock'),
+                noDev: true,
+            )
+            ->withMockingApi($api)
+            ->withSrc($this->src)
+            ->asContainer();
+    }
+
+    #[DaggerFunction]
+    public function makeTag(): string
+    {
+        return dag()
+            ->container()
+            ->from('alpine/git')
+            ->withMountedDirectory('/app', $this->src)
+            ->withWorkdir('/app')
+            ->withExec(['git', 'describe', '--tags'])
+            ->stdout();
+    }
+
+    #[DaggerFunction]
+    #[Doc('Publish a container image to a private registry')]
+    public function publish(
+        #[Doc('registry address')]
+        string $registry,
+    ): string {
+        $mockserver = (new Base())
+            ->withPdo()
+            ->withNginx($this->src->file('docker/nginx.conf'))
             ->withVendor(
                 $this->src->file('composer.json'),
                 $this->src->file('composer.lock'),
@@ -58,5 +89,10 @@ class Mockserver
             )
             ->withSrc($this->src)
             ->asContainer();
+
+        $tag = $this->makeTag();
+
+        return $mockserver
+            ->publish("$registry/membrane-mockserver/mockserver:$tag");
     }
 }

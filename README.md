@@ -1,23 +1,29 @@
 # Membrane Mock Server
 
-## Prerequisites
+A configurable mock server for your [OpenAPI Specification](https://spec.openapis.org/oas/v3.1.0.html),
 
-@TODO can I turn this into a yellow warning?
-
-### OperationIds Are Required
-
-The MockServer identifies your OpenAPI's endpoints by their [operationId](https://spec.openapis.org/oas/v3.1.0.html#fixed-fields-7).
-
-Ensure your OpenAPI spec defines operationIds for all operations, or the mock server will fail immediately.
+> [!IMPORTANT]
+> Every [operation](https://spec.openapis.org/oas/v3.1.0.html#operation-object) requires an [operationId](https://spec.openapis.org/oas/v3.1.0.html#fixed-fields-7).  
+> The mock server uses them to identify your endpoints.
 
 ## Quickstart
 
-```php
-docker run ghcr.io/blabla \
--v /path/to/your/api:/api/api.yml \
--p 8080:8080 \
--p 8081:8081
+To demonstrate we're going to use the classic: [petstore.yml](https://learn.openapis.org/examples/v3.0/petstore.html#yaml).
+
+### Run the Mock Server
+```sh
+docker run ghcr.io/membrane-php/mock-server:base-182-gff6566 \
+-v ~/myapp/api/petstore.yml:/api/api.yml \
+-p 8081:8081 \
+-p 8080:8080
 ```
+
+Your API's mock server is exposed on port `8081`.
+
+Membrane Mock Server's [API](docs/api.md) is exposed on port `8080`.
+
+
+
 
 ### Configure through API
 

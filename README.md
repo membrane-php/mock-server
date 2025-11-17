@@ -43,7 +43,13 @@ We minimal definition for an operation can be defined like so:
 curl \
 -X POST \
 -H 'Content-type: application/json' \
--d '{"default": {"response": {"code": 404}}}' \
+-d '{
+      "default": {
+        "response": {
+          "code": 404
+         }
+       }
+    }' \
 http://localhost:8080/operation/showPetById
 ```
 

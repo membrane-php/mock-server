@@ -84,7 +84,38 @@ Any other request will still return the default response.
 
 More detail on configuring through the API can be [found here](docs/api.md).
 
-### Configure through Static Config Files
+### Configure through PHP
+
+Alternatively, you can forgo the API entirely in favour of static configuration files written in PHP.
+
+```php
+<?php
+
+return [
+    'mockServer' => [
+        'operationMap' => [
+            'showPetById' => [
+                'default' => ['response' => ['code' => 404]],
+                'matchers' => [
+                    [
+                        'matcher' => [
+                            'type' => 'equals',
+                            'args' => [
+                                'field' => ['path', 'petId'], 
+                                'value' => '3',
+                            ]
+                        ],
+                        'response' => [
+                            'code' => 200,
+                            'body' => '{"id":"3", "name":"Spike"}',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+];
+```
 
 @TODO mount with -v <my-config>:/config/config.php Entrypoint needs to load that file.
 

@@ -100,6 +100,7 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
                 522,
                 ['Content-type' => 'application/problem+json'],
                 json_encode([
+                    'status' => 522,
                     'title' => 'Response Not Defined',
                     'detail' => <<<DETAIL
                          Request is valid against your OpenAPI spec,

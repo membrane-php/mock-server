@@ -40,6 +40,7 @@ final readonly class Handler
                     'Content-type' => 'application/problem+json',
                 ],
                 'body' => [
+                    'status' => 522,
                     'title' => 'Response Not Defined',
                     'detail' => <<<DETAIL
                          Request is valid against your OpenAPI spec,

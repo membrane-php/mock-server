@@ -15,23 +15,22 @@
 #   - then run codegen for router and processors
 # - run migrations
 
+CONFIG=$(find "/config" -maxdepth 1 -name "*config.php" | head -n 1);
+if [ -f "$CONFIG" ]; then
+    cat "$CONFIG" > "/app/config/mocking.development.config.php";
+fi
 
-
-DIRECTORY="/api"
-FILE=$(find "$DIRECTORY" -maxdepth 1 -name "*.yaml" -o -name "*.yml" -o -name "*.json" | head -n 1)
-
-echo -n $FILE > /app/config/openapi-file
-
-if ! [ -f "$FILE" ]; then
+API=$(find "/api" -maxdepth 1 -name "*.yaml" -o -name "*.yml" -o -name "*.json" | head -n 1);
+if ! [ -f "$API" ]; then
     echo "Your OpenAPI must be mounted in $DIRECTORY";
     exit 1;
 fi
 
-if ! /app/bin/validate-user-api $FILE; then
+if ! /app/bin/validate-user-api $API; then
   exit 1;
 fi
 
-if ! /app/bin/codegen $FILE; then
+if ! /app/bin/codegen $API; then
   exit 1;
 fi
 

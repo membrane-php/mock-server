@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+$debug = filter_var(getenv('MEMBRANE_MOCKSERVER_DEBUG'), FILTER_VALIDATE_BOOL);
+
 return [
     'modules' => [
         \Atto\Framework\Module::class,
@@ -25,6 +27,6 @@ return [
             'path' => __DIR__ . '/../storage/app.db',
         ],
     ],
-    'debug' => true,
+    'debug' => $debug,
     'application' => \Atto\Membrane\Application\MembraneOpenApi::class,
 ];

@@ -88,7 +88,8 @@ class Mockserver
                 noDev: true,
             )
             ->withSrc($this->src)
-            ->asContainer();
+            ->asContainer()
+            ->withEnvVariable('MEMBRANE_MOCKSERVER_DEBUG', 'false');
 
         $tag = $this->makeTag();
 

@@ -1,4 +1,5 @@
 .cache/
 .env
+config/*.development.config.php
 generated/
 vendor/

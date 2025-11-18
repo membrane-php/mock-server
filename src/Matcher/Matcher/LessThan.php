@@ -18,7 +18,7 @@ final readonly class LessThan implements \Membrane\MockServer\Matcher\Matcher
     public function __construct(
         private Field $field,
         #[FilterOrValidator(new ToNumber())]
-        private float|int $limit,
+        private float|int $value,
         private bool $inclusive = true,
     ) {}
 
@@ -28,7 +28,7 @@ final readonly class LessThan implements \Membrane\MockServer\Matcher\Matcher
 
         return is_numeric($value)
             && ($this->inclusive
-                ? $value <= $this->limit
-                : $value < $this->limit);
+                ? $value <= $this->value
+                : $value < $this->value);
     }
 }

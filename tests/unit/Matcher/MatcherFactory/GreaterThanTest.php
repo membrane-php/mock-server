@@ -42,7 +42,7 @@ final class GreaterThanTest extends \PHPUnit\Framework\TestCase
             ),
             [
                 'field' => ['path', 'pet', 'age'],
-                'limit' => 1,
+                'value' => 1,
             ],
         ];
         yield 'implicitly >= "1"' => [
@@ -53,7 +53,7 @@ final class GreaterThanTest extends \PHPUnit\Framework\TestCase
             ),
             [
                 'field' => ['path', 'pet', 'age'],
-                'limit' => '1',
+                'value' => '1',
             ],
         ];
         yield 'implicitly >= 3.14' => [
@@ -64,7 +64,7 @@ final class GreaterThanTest extends \PHPUnit\Framework\TestCase
             ),
             [
                 'field' => ['path', 'pet', 'age'],
-                'limit' => 3.14,
+                'value' => 3.14,
             ],
         ];
 
@@ -76,7 +76,7 @@ final class GreaterThanTest extends \PHPUnit\Framework\TestCase
             ),
             [
                 'field' => ['path', 'pet', 'age'],
-                'limit' => 2,
+                'value' => 2,
                 'inclusive' => true,
             ],
         ];
@@ -88,7 +88,7 @@ final class GreaterThanTest extends \PHPUnit\Framework\TestCase
             ),
             [
                 'field' => ['path', 'pet', 'age'],
-                'limit' => '2',
+                'value' => '2',
                 'inclusive' => true,
             ],
         ];
@@ -100,7 +100,7 @@ final class GreaterThanTest extends \PHPUnit\Framework\TestCase
             ),
             [
                 'field' => ['path', 'pet', 'age'],
-                'limit' => 9.81,
+                'value' => 9.81,
                 'inclusive' => true,
             ],
         ];
@@ -113,7 +113,7 @@ final class GreaterThanTest extends \PHPUnit\Framework\TestCase
             ),
             [
                 'field' => ['path', 'pet', 'age'],
-                'limit' => 3,
+                'value' => 3,
                 'inclusive' => false,
             ],
         ];
@@ -125,7 +125,7 @@ final class GreaterThanTest extends \PHPUnit\Framework\TestCase
             ),
             [
                 'field' => ['path', 'pet', 'age'],
-                'limit' => '3',
+                'value' => '3',
                 'inclusive' => false,
             ],
         ];

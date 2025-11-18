@@ -92,154 +92,37 @@ Alternatively, you can forgo the API entirely in favour of static configuration 
 <?php
 
 return [
-    'mockServer' => [
-        'operationMap' => [
-            'showPetById' => [
-                'default' => ['response' => ['code' => 404]],
-                'matchers' => [
-                    [
-                        'matcher' => [
-                            'type' => 'equals',
-                            'args' => [
-                                'field' => ['path', 'petId'], 
-                                'value' => '3',
-                            ]
-                        ],
-                        'response' => [
-                            'code' => 200,
-                            'body' => '{"id":"3", "name":"Spike"}',
-                        ],
-                    ],
-                ],
-            ],
-        ],
+    'showPetById' => [
+       'default' => ['response' => ['code' => 404]],
+       'matchers' => [
+           [
+               'matcher' => [
+                   'type' => 'equals',
+                   'args' => [
+                       'field' => ['path', 'petId'], 
+                       'value' => '3',
+                   ]
+               ],
+               'response' => [
+                   'code' => 200,
+                   'body' => '{"id":"3", "name":"Spike"}',
+               ],
+           ],
+       ],
     ],
 ];
 ```
 
-@TODO mount with -v <my-config>:/config/config.php Entrypoint needs to load that file.
+Your config should be mounted to /config/config.php
 
-Example:
-
-[more detail](docs/config.md)
-
-
-## Usage
-
-The mockserver exposes two ports.
-
-`8080` is [the mock server's API](#the-api); used for defining [operations](#operation) and [matchers](#matcher).
-
-`8081` exposes [the mock](#the-mock) of your OpenAPI.
-
-## The API
-
-Naturally, the API is also defined by an OpenAPI spec.
-It can be read [here](api/api.yml)
-
-### Add Operation
-
-Send a POST request to the api's [add-operation](api/api.yml) endpoint.
-
-The body must contain a valid config for the Operation, as defined by the api.
-
-#### Adding a Default Response
-
-If the server is hosted on your localhost, and you're mocking the [Swagger Petstore](https://learn.openapis.org/examples/v3.0/petstore.html);
-to mock the `showPetById` operation, you could send the following request.
-
-```
-POST http://localhost:8080/operation/showPetById
-
-{
-    "default": {
-        "response": {
-            "code": 200,
-            "body": {
-                "id": 5,
-                "name": "Spike"
-            }
-        }
-    }
-}
+```sh
+docker run \
+-v <path-to-your-api>:/api/api.yml \
+-v <path-to-your-config>:/config/config.php \
+-p 8081:8081 \
+ghcr.io/membrane-php/mock-server:0.1.0
 ```
 
-Now, by default, any valid request to `showPetById` will receive a 200 response with the pet who has the id: 5.
+This will achieve the same result as earlier, but without having to touch the API at all (Note how we can even omit exposure of the API's port when running the container).
 
-However, a default alone is not always ideal. If you request the pet with id: 7.
-
-```
-GET http://localhost:8081/pets/7
-```
-
-You still receive a 200 response with the pet who has id: 5.
-
-Ideally, only `GET http://localhost:8081/pets/5` should match id: 5.
-
-To redefine our Operation, the existing definition needs to be [deleted](#delete-operation) first (or the entire server can be [reset](#reset)).
-
-Once that is done, we can add the operation with a new definition:
-
-```
-POST http://localhost:8080/operation/showPetById
-
-{
-
-    "default": {
-        "response": {
-            "code": 404
-        }
-    }
-}
-```
-
-This would, by default, return a 404.
-Then you could [add a matcher](#add-matcher) for specific ID's, returning pets with the corresponding ID. 
-
-
-### Delete Operation
-
-To delete an operation make the following request:
-
-```
-DELETE http://localhost:8080/operation/<operationId>
-```
-
-Where `<operationId>` is the `operationId` of the operation you want to delete.
-
-### Add Matcher
-
-```
-    "matchers": [
-        {
-            "matcher": {
-                "type": "equals",
-                "args": {
-                    "field": ["path", "petId"],
-                    "value": 3
-                }
-            },
-            "response": 200,
-        }
-    ],
-```
-
-It returns a 200 response only if your "petId" *equals* 5.
-
-*equals* is an [alias](src/Matcher/Module.php) for one of the [library's built-in matchers](src/Matcher/Matcher).
-
-### Delete Matcher
-
-### Reset
-
-## The Mock
-
-If you call an endpoint, before [adding the operation](#add-operation), then you will receive a 522 response. 522 is a non-standard HTTP code, chosen to reduce the risk of conflicting with your OpenAPI spec. It is intended to imply similar meaning to a [422](https://www.rfc-editor.org/rfc/rfc4918.html#section-11.2): Your request was valid against your OpenAPI spec, but you had not [defined a response for the operation](#add-operation) it routed to.
-
-
-
-When calling the MockServer:
-1. Your request will be validated against your OpenAPI spec.
-   a. A valid request will route to an `operationId`.
-2. Your request will be checked against the defined config for that operation.
-   a. If no config exists
+For more detail on config options, [check here](docs/config.md).

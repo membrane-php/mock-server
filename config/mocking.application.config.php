@@ -7,6 +7,8 @@ $api = current(glob('/api/api.*') ?: [])
 
 $debug = filter_var(getenv('MEMBRANE_MOCKSERVER_DEBUG'), FILTER_VALIDATE_BOOL);
 
+$userConfig = file_exists('/config/config.php') ? require_once('/config/config.php') : [];
+
 return [
     'modules' => [
         \Atto\Framework\Module::class,
@@ -19,9 +21,7 @@ return [
     ],
     'globalConfig' => [
         'mockServer' => [
-            'operationMap' => [
-                // operationId keys mapping to operation config arrays
-            ],
+            'operationMap' => $userConfig,
         ],
         'membrane' => [
             'openAPISpec' => $api,

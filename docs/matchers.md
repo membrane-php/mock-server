@@ -91,7 +91,7 @@ Match if the specified field is numeric and greater than the given value.
 | args  | type           | description                          |
 |:------|:---------------|--------------------------------------|
 | field | `list<string>` | breadcrumbs leading to the field     |
-| value | `float|int`    | value the field must be greater than |
+| value | `float\|int`    | value the field must be greater than |
 
 ## Less Than
     
@@ -104,7 +104,7 @@ Match if the specified field is numeric and less than the given value.
 | args  | type           | description                       |
 |:------|:---------------|-----------------------------------|
 | field | `list<string>` | breadcrumbs leading to the field  |
-| value | `float|int`    | value the field must be less than |
+| value | `float\|int`    | value the field must be less than |
 
 ## Not
 

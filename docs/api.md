@@ -15,24 +15,6 @@ Where `{operationId}` is the id of the operation you wish to mock.
 
 To add an operation you MUST define a default response for the operation.
 
-#### Example: Add the listPets Operation
-
-```sh
-curl \
--X POST \
--H 'Content-type: application/json' \
--d '{
-      "default": {
-        "response": {
-          "code": 200,
-          "headers":["Content-type":"application/json"],
-          "body": "[{\"id\":\"rgrtsdg\",\"name\":\"Spike\"},{\"id\":\"rgrtsct\",\"name\":\"Fluffy\"}]"
-         }
-       }
-    }' \
-http://localhost:8080/operation/listPets
-```
-
 #### Example: Add the showPetById Operation
 
 ```sh
@@ -47,6 +29,24 @@ curl \
        }
     }' \
 http://localhost:8080/operation/showPetById
+```
+
+#### Example: Add the listPets Operation
+
+```sh
+curl \
+-X POST \
+-H 'Content-type: application/json' \
+-d '{
+      "default": {
+        "response": {
+          "code": 200,
+          "headers":{"Content-type":"application/json"},
+          "body": "[{\"id\":\"rgrtsdg\",\"name\":\"Spike\"},{\"id\":\"rgrtsct\",\"name\":\"Fluffy\"}]"
+         }
+       }
+    }' \
+http://localhost:8080/operation/listPets
 ```
 
 ### Delete Operation

@@ -24,7 +24,7 @@
     "atto/db-module": "dev-main",
     "atto/framework": "^0.1.3",
     "atto/hydrator": "dev-main",
-    "atto/membrane-module": "^0.1.8",
+    "atto/membrane-module": "^0.1.9",
     "atto/orm": "dev-main",
     "guzzlehttp/psr7": "^2.4",
     "membrane/membrane": "^0.10.0",

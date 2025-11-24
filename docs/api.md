@@ -1,5 +1,11 @@
 # API
 
+Anything configurable through [a config file](config.md) is configurable through the API (and vice versa).
+
+Use of the API is optional, and may be ignored entirely if you wish to rely solely on a config file.
+
+To use the API you must expose the container's port: `8080`.
+
 This document serves as a detailed description of our own [OpenAPI specification](../api/api.yml).
 The API is exposed on the container's port `8080`.
 
@@ -13,7 +19,9 @@ This defines a default response for requests that route to a specific operation.
 Operations are added with a POST request to `/operation/{operationId}`.
 Where `{operationId}` is the id of the operation you wish to mock.
 
-To add an operation you MUST define a default response for the operation.
+> [!IMPORTANT]
+> A default response is required.
+> An operation is considered undefined if it cannot guarantee a defined response.
 
 #### Example: Add the showPetById Operation
 
@@ -67,7 +75,8 @@ curl -X DELETE http://localhost:8080/operation/listPets
 
 ### Add Matcher
 
-This defines a specific response to give if a request *matches* the defined criteria.
+Specific responses can be given by defining matchers.
+The response is given if it *matches* the defined criteria.
 
 > [!IMPORTANT]
 > You MUST [add the operation](#add-operation) before you can add a matcher to it.

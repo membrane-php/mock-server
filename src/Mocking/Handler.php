@@ -15,7 +15,7 @@ final readonly class Handler
         private ResponseFactory $responseFactory,
     ) {}
 
-    public function __invoke(DTO $dto): ?ResponseInterface
+    public function __invoke(DTO $dto): ResponseInterface
     {
         $operationId = $dto->request['request']['operationId']
             ?? throw new \RuntimeException('No operation id'); // in practice this cannot happen.

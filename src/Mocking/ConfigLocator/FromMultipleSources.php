@@ -6,6 +6,9 @@ namespace Membrane\MockServer\Mocking\ConfigLocator;
 
 use Membrane\MockServer\Mocking\ConfigLocator;
 
+/**
+ * @phpstan-import-type Config from ConfigLocator
+ */
 final readonly class FromMultipleSources implements ConfigLocator
 {
     /** @var ConfigLocator[] */
@@ -18,6 +21,7 @@ final readonly class FromMultipleSources implements ConfigLocator
         $this->configLocators = [$configLocator, ...$configLocators];
     }
 
+    /** @return ?Config */
     public function getOperationConfig(string $operationId): ?array
     {
         foreach ($this->configLocators as $configLocator) {

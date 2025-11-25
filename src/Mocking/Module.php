@@ -27,9 +27,9 @@ use Psr\Container\ContainerInterface;
  * @phpstan-import-type  MatcherFactoryConfig from \Membrane\MockServer\Matcher\Module
  *
  * @phpstan-type ResponseConfig array{
- *     headers?: array<string, string|list<string>>,
- *     body?: mixed[]|string,
  *     code: int,
+ *     headers?: array<string, string|string[]>,
+ *     body?: mixed[]|string,
  * }
  */
 final class Module implements \Atto\Framework\Module\ModuleInterface

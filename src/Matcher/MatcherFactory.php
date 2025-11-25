@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Membrane\MockServer\Matcher;
 
 /**
- * @phpstan-import-type MatcherConfig from \Membrane\MockServer\Mocking\Module
+ * @phpstan-import-type MatcherConfig from Module
  */
 interface MatcherFactory
 {

@@ -27,7 +27,7 @@ jobs:
         with:
           version: "0.19.6"
           verb: call
-          args: dev lintCheck
+          args: dev lint-check
 
       - name: PHPStan
         uses: dagger/dagger-for-github@v5

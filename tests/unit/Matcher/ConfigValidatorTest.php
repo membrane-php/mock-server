@@ -27,7 +27,6 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[\PHPUnit\Framework\Attributes\CoversClass(ConfigValidator::class)]
 final class ConfigValidatorTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * @param AliasesConfig $aliases
      * @param MatcherFactoryConfig $config
@@ -38,7 +37,7 @@ final class ConfigValidatorTest extends \PHPUnit\Framework\TestCase
         Result $expected,
         array $aliases,
         array $config,
-    ): void{
+    ): void {
         $sut = new ConfigValidator(
             new Membrane(new Builder()),
             $aliases,

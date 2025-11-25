@@ -27,7 +27,7 @@ final class Exists implements \Membrane\MockServer\Matcher\MatcherFactory
             throw InvalidConfig::fromResult($result);
         }
 
-        assert ($result->value instanceof Matcher\Exists);
+        assert($result->value instanceof Matcher\Exists);
         return $result->value;
     }
 }

@@ -80,7 +80,7 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
         $addListPets = $this->callApi(
             'post',
             '/operation/listPets',
-            ['default' => ['response' => ['code' => 200]]]
+            ['default' => ['response' => ['code' => 200]]],
         );
 
         $deleteListPets = $this->callApi('delete', '/operation/listPets');
@@ -115,13 +115,13 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
                     'args' => ['field' => ['path', 'petId'], 'value' => 6],
                 ],
                 'response' => $expected,
-            ]
+            ],
         );
         self::assertSame(201, $addMatcherForId6->getStatusCode());
 
         $showPetById6 = $this->callMocking('get', '/pets/6');
         self::assertSame($expected['code'], $showPetById6->getStatusCode());
-        self::assertSame($expected['body'], (string)$showPetById6->getBody());
+        self::assertSame($expected['body'], (string) $showPetById6->getBody());
     }
 
     #[Test]
@@ -205,7 +205,7 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
 
         $showPetById6 = $this->callMocking('get', '/pets/6');
         self::assertSame($matchId6['response']['code'], $showPetById6->getStatusCode());
-        self::assertSame($matchId6['response']['body'], (string)$showPetById6->getBody());
+        self::assertSame($matchId6['response']['body'], (string) $showPetById6->getBody());
 
         $showPetByIdMinus1 = $this->callMocking('get', '/pets/-1');
         self::assertSame($matchNegativeIds['response']['code'], $showPetByIdMinus1->getStatusCode());
@@ -280,12 +280,12 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
             ],
         );
 
-        $matcherForId6 = json_decode((string)$addMatcherForId6->getBody());
+        $matcherForId6 = json_decode((string) $addMatcherForId6->getBody());
 
 
         $deleteMatcherForId6 = $this->callApi(
             'delete',
-            "/operation/showPetById/matcher/$matcherForId6->id"
+            "/operation/showPetById/matcher/$matcherForId6->id",
         );
 
         self::assertSame(204, $deleteMatcherForId6->getStatusCode());
@@ -298,7 +298,7 @@ final class ApiTest extends \PHPUnit\Framework\TestCase
     public function youWillDeleteMatchersWhenDeletingOperation(): void
     {
         $default = ['response' => ['code' => 404]];
-        $addShowPetById = fn () => $this->callApi(
+        $addShowPetById = fn() => $this->callApi(
             'post',
             '/operation/showPetById',
             ['default' => $default],

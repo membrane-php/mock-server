@@ -31,8 +31,8 @@ final readonly class FromDatabase implements ConfigLocator
         return array_merge(
             $operation->jsonSerialize(),
             ['matchers' => array_values(array_map(
-                    fn($m) => $m->jsonSerialize(),
-                    $matchers,
+                fn($m) => $m->jsonSerialize(),
+                $matchers,
             ))],
         );
     }

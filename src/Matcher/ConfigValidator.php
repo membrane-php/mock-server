@@ -58,10 +58,10 @@ final readonly class ConfigValidator
             $result = new FieldSet(
                 'args',
                 new BeforeSet(new RequiredFields('submatchers')),
-                new Collection('submatchers', new BeforeSet(new Count(1)))
+                new Collection('submatchers', new BeforeSet(new Count(1))),
             )->process(new FieldName('submatchers'), $config['args']);
 
-            foreach ((array)$config['args'] as $subMatcher) {
+            foreach ((array) $config['args'] as $subMatcher) {
                 $result->merge($this->validate($subMatcher));
             }
 

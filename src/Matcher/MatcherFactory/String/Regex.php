@@ -28,7 +28,7 @@ final class Regex implements \Membrane\MockServer\Matcher\MatcherFactory
             throw InvalidConfig::fromResult($result);
         }
 
-        assert ($result->value instanceof Matcher\String\Regex);
+        assert($result->value instanceof Matcher\String\Regex);
         return $result->value;
     }
 }

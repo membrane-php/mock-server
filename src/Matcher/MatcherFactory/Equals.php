@@ -28,7 +28,7 @@ final class Equals implements \Membrane\MockServer\Matcher\MatcherFactory
             throw InvalidConfig::fromResult($result);
         }
 
-        assert ($result->value instanceof Matcher\Equals);
+        assert($result->value instanceof Matcher\Equals);
         return $result->value;
     }
 }

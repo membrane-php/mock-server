@@ -76,7 +76,7 @@ final class HandlerTest extends \PHPUnit\Framework\TestCase
 
         self::assertSame(
             $expected->getStatusCode(),
-            $actual->getStatusCode()
+            $actual->getStatusCode(),
         );
         self::assertSame(
             $expected->getBody()->getContents(),

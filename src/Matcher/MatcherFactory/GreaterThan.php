@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Membrane\MockServer\Matcher\MatcherFactory;
 
-use Membrane\Attribute\Builder;use Membrane\Attribute\ClassWithAttributes;use Membrane\Membrane;use Membrane\MockServer\Exception\InvalidConfig;use Membrane\MockServer\Matcher\Matcher;
+use Membrane\Attribute\Builder;
+use Membrane\Attribute\ClassWithAttributes;
+use Membrane\Membrane;
+use Membrane\MockServer\Exception\InvalidConfig;
+use Membrane\MockServer\Matcher\Matcher;
 
 /**
  * @phpstan-type Config array{
@@ -25,7 +29,7 @@ final class GreaterThan implements \Membrane\MockServer\Matcher\MatcherFactory
             throw InvalidConfig::fromResult($result);
         }
 
-        assert ($result->value instanceof Matcher\GreaterThan);
+        assert($result->value instanceof Matcher\GreaterThan);
         return $result->value;
     }
 }

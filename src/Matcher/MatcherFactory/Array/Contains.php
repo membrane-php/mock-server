@@ -26,7 +26,7 @@ final class Contains implements \Membrane\MockServer\Matcher\MatcherFactory
             throw InvalidConfig::fromResult($result);
         }
 
-        assert ($result->value instanceof Matcher\Array\Contains);
+        assert($result->value instanceof Matcher\Array\Contains);
         return $result->value;
     }
 }

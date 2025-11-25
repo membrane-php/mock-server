@@ -24,53 +24,51 @@ use Membrane\Validator\Type\IsString;
 
 /**
  * @phpstan-import-type AliasesConfig from Module
- * @phpstan-import-type MatcherFactoryConfig from Module
  */
 final readonly class ConfigValidator
 {
-
     /** @param AliasesConfig $aliases */
     public function __construct(
         private Membrane $membrane,
         private array $aliases,
     ) {}
 
-    /** @param MatcherFactoryConfig $config */
+    /**
+     * @param array<mixed> $config
+     *        A valid array matches the MatcherFactoryConfig from Matcher Module
+     */
     public function validate(array $config): Result
     {
-        $processor = new FieldSet(
+        $result = new FieldSet(
             'matcher-config',
             new BeforeSet(new RequiredFields('type', 'args')),
             new Field('type', new IsString(), new Contained(array_keys($this->aliases))),
-        );
+        )->process(new FieldName('config'), $config);
 
-        $result = $processor->process(new FieldName('config'), $config);
-
-        if (! $result->isValid()) {
+        if ($result->isValid()) {
+            assert(isset($config['type'])
+                && isset($config['args']));
+        } else {
             return $result;
         }
 
         $type = $this->aliases[$config['type']];
 
         if (in_array($type, [AllOf::class, AnyOf::class, Not::class])) {
-            $processor = new FieldSet(
+            $result = new FieldSet(
                 'args',
                 new BeforeSet(new RequiredFields('submatchers')),
-                new Collection('submatchers', new BeforeSet(new Count(1)))
-            );
+                new Collection('submatchers', new BeforeSet(new Count(1))),
+            )->process(new FieldName('submatchers'), $config['args']);
 
-            $result = $processor
-                ->process(new FieldName('submatchers'), $config['args']);
-
-            foreach ((array)$config['args'] as $subMatcher) {
+            foreach ((array) $config['args'] as $subMatcher) {
                 $result->merge($this->validate($subMatcher));
             }
 
             return $result;
         }
 
-        $spec = new ClassWithAttributes($type);
-
-        return $this->membrane->process($config['args'], $spec);
+        return $this->membrane
+            ->process($config['args'], new ClassWithAttributes($type));
     }
 }

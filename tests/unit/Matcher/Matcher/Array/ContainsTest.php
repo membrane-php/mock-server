@@ -96,7 +96,7 @@ final class ContainsTest extends \PHPUnit\Framework\TestCase
             [
                 'field' => ['query', 'tags'],
                 'values' => ['cat'],
-            ]
+            ],
         ];
 
         yield 'three values' => [
@@ -109,7 +109,7 @@ final class ContainsTest extends \PHPUnit\Framework\TestCase
             [
                 'field' => ['query', 'tags'],
                 'values' => ['cat', 'dog', 'degu'],
-            ]
+            ],
         ];
     }
 }

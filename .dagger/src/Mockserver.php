@@ -25,11 +25,11 @@ class Mockserver
         #[DefaultPath('.')]
         #[Ignore(
             '*.md',
+            '.cache/',
             '.dagger/',
             '.dockerignore',
             '.gitignore',
             '.idea/',
-            '.cache/',
             'dagger.json',
             'generated/',
             'LICENSE',

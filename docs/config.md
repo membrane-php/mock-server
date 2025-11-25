@@ -13,6 +13,11 @@ This is the minimum viable config:
 <?php return [];
 ```
 
+> [!NOTE]
+> The endpoints defined by the config can be overriden by the API at runtime.
+> Anything defined by the config cannot be deleted by the API.
+> Calling reset on the API will not affect endpoints defined by the config.
+
 ## Define an Operation
 
 Your config defines behaviour for operations in your API.

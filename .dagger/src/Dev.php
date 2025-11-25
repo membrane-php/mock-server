@@ -21,11 +21,12 @@ class Dev
     #[DaggerFunction]
     public function lintCheck(): Container
     {
-        return (new Base())
+        return new Base()
             ->withVendor(
                 $this->src->file('composer.json'),
                 $this->src->file('composer.lock'),
             )
+            ->withSrc($this->src)
             ->asContainer()
             ->withExec([
                 './vendor/bin/php-cs-fixer',
@@ -42,7 +43,7 @@ class Dev
         string $suite = 'default',
     ): Container {
         // Take advantage of Dagger's caching by using the same base for service and container
-        $base = (new Base())
+        $base = new Base()
             ->withPdo()
             ->withPcov()
             ->withNginx($this->src->file('docker/nginx.conf'))
@@ -55,5 +56,21 @@ class Dev
         return $base->asContainer()
             ->withServiceBinding('mockserver', $service)
             ->withExec(['./vendor/bin/phpunit', "--testsuite=$suite"]);
+    }
+
+    #[DaggerFunction]
+    public function analyze(): Container
+    {
+        return new Base()
+            ->withVendor(
+                $this->src->file('composer.json'),
+                $this->src->file('composer.lock'),
+            )
+            ->withSrc($this->src)
+            ->asContainer()
+            ->withExec([
+                './vendor/bin/phpstan',
+                'analyze',
+            ]);
     }
 }

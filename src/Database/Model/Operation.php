@@ -10,7 +10,7 @@ use Atto\Hydrator\Attribute\Subtype;
 use Atto\Orm\Attribute\Id;
 
 /**
- * @phpstan-import-type OperationConfig from \Membrane\MockServer\Mocking\Module
+ * @phpstan-import-type ResponseConfig from \Membrane\MockServer\Mocking\Module
  */
 #[\Atto\Orm\Attribute\Entity]
 #[\Atto\Hydrator\Attribute\Hydratable]
@@ -38,7 +38,10 @@ final readonly class Operation implements \JsonSerializable
     }
 
     /**
-     * @return OperationConfig
+     * @return array{
+     *     operationId: string,
+     *     default: array{response: ResponseConfig},
+     * }
      */
     public function jsonSerialize(): array
     {

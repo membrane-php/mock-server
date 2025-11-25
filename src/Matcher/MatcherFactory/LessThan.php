@@ -29,7 +29,7 @@ final class LessThan implements \Membrane\MockServer\Matcher\MatcherFactory
             throw InvalidConfig::fromResult($result);
         }
 
-        assert ($result->value instanceof Matcher\LessThan);
+        assert($result->value instanceof Matcher\LessThan);
         return $result->value;
     }
 }

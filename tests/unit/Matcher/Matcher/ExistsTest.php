@@ -93,7 +93,7 @@ final class ExistsTest extends \PHPUnit\Framework\TestCase
             new Exists(
                 new Field('id', 'path'),
                 new Field('pageLimit', 'query'),
-                new Field('species', 'requestBody', 'pet')
+                new Field('species', 'requestBody', 'pet'),
             ),
             ['fields' => [
                 ['path', 'id'],

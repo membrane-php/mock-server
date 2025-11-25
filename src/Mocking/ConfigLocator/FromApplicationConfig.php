@@ -7,15 +7,18 @@ namespace Membrane\MockServer\Mocking\ConfigLocator;
 use Membrane\MockServer\Mocking\ConfigLocator;
 
 /**
- * @phpstan-import-type OperationConfig from \Membrane\MockServer\Mocking\Module
+ * @phpstan-import-type Config from ConfigLocator
  */
 final readonly class FromApplicationConfig implements ConfigLocator
 {
-    /** @param array<string, OperationConfig> $operationMap */
+    /**
+     * @param array<string, Config> $operationMap
+     */
     public function __construct(
         private array $operationMap,
     ) {}
 
+    /** @return ?Config */
     public function getOperationConfig(string $operationId): ?array
     {
         return $this->operationMap[$operationId] ?? null;

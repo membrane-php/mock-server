@@ -23,7 +23,7 @@ class Base
     {
         $this->container = dag()
             ->container()
-            ->from('php:8.3-fpm-alpine')
+            ->from('php:8.4-fpm-alpine')
             ->withExposedPort(8080)
             ->withExposedPort(8081)
             ->withWorkdir('/app');

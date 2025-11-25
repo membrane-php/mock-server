@@ -1,0 +1,23 @@
+name: Run Tests
+
+on:
+  push
+
+jobs:
+  dagger:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Dagger Run Tests
+        uses: dagger/dagger-for-github@v5
+        with:
+          version: "0.19.6"
+          verb: call
+          args: dev test

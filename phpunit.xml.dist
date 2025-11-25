@@ -41,7 +41,8 @@
             restrictNotices="true"
             restrictWarnings="true">
         <include>
-            <directory>src</directory>
+          <directory>src</directory>
+          <directory>tests/fixture</directory>
         </include>
     </source>
 </phpunit>

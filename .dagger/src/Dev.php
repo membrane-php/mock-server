@@ -66,6 +66,7 @@ class Dev
                 $this->src->file('composer.json'),
                 $this->src->file('composer.lock'),
             )
+            ->withSrc($this->src)
             ->asContainer()
             ->withExec([
                 './vendor/bin/phpstan',

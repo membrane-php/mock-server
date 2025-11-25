@@ -12,7 +12,10 @@ The API is exposed on the container's port `8080`.
 Our OpenAPI leaves servers unspecified; the server is determined by how you run the container.
 For example, running the container locally, with the API bound to port `8080` on the host, your server would be: http://localhost:8080
 
-### Add Operation
+> [!NOTE]
+> The API can override endpoints defined by the config, but cannot delete them.
+
+## Add Operation
 
 This defines a default response for requests that route to a specific operation.
 
@@ -23,7 +26,7 @@ Where `{operationId}` is the id of the operation you wish to mock.
 > A default response is required.
 > An operation is considered undefined if it cannot guarantee a defined response.
 
-#### Example: Add the showPetById Operation
+### Example: Add the showPetById Operation
 
 ```sh
 curl \
@@ -39,7 +42,7 @@ curl \
 http://localhost:8080/operation/showPetById
 ```
 
-#### Example: Add the listPets Operation
+### Example: Add the listPets Operation
 
 ```sh
 curl \
@@ -57,7 +60,7 @@ curl \
 http://localhost:8080/operation/listPets
 ```
 
-### Delete Operation
+## Delete Operation
 
 This removes the operation if it was defined through the API.
 It will also remove any matchers defined for the operation through the API.
@@ -67,13 +70,13 @@ It will not remove a [statically configured operation](config.md).
 Operations are deleted with a DELETE request to `/operation/{operationId}`.
 Where `{operationId}` is the id of the operation you wish to delete.
 
-#### Example: Delete the listPets Operation
+### Example: Delete the listPets Operation
 
 ```
 curl -X DELETE http://localhost:8080/operation/listPets
 ```
 
-### Add Matcher
+## Add Matcher
 
 Specific responses can be given by defining matchers.
 The response is given if it *matches* the defined criteria.
@@ -86,7 +89,7 @@ Where `{operationId}` is the id of an operation you have [already defined](#add-
 
 Matchers allow for alternative responses under different circumstances.
 
-#### Example: Match listPets With a Limit Less Than Two
+### Example: Match listPets With a Limit Less Than Two
 
 ```sh
 curl \
@@ -110,7 +113,7 @@ http://localhost:8080/operation/listPets/matcher
 It takes a field to look at, and a value it should be less than.
 This matcher would check the `query` string for the `limit` and check if it is a `value` less than 2.
 
-### Delete Matcher
+## Delete Matcher
 
 This will remove a matcher defined through the API.
 It will not remove a [statically configured matcher](config.md).
@@ -149,7 +152,7 @@ To delete it, we would take the `operationId` and `id` to form the following req
 curl -X DELETE http://localhost:8080/operation/listPets/matcher/gk726ejixlvf9b7cy68u
 ```
 
-### Reset
+## Reset
 
 This removes all operations and matchers defined through the API.
 

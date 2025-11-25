@@ -1,4 +1,4 @@
-name: Run Tests
+name: Checks
 
 on:
   push
@@ -15,9 +15,23 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Dagger Run Tests
+      - name: PHPUnit
         uses: dagger/dagger-for-github@v5
         with:
           version: "0.19.6"
           verb: call
           args: dev test
+
+      - name: PHP CS Fixer
+        uses: dagger/dagger-for-github@v5
+        with:
+          version: "0.19.6"
+          verb: call
+          args: dev lintCheck
+
+      - name: PHPStan
+        uses: dagger/dagger-for-github@v5
+        with:
+          version: "0.19.6"
+          verb: call
+          args: dev analyze
